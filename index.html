@@ -672,9 +672,9 @@ footer .credits b{font-weight:700;color:var(--ink)}
 
 
 
+
 <script>
-const SHEET_URL =
-  "https://opensheet.elk.sh/2PACX-1vREyWb-4u0bziM1qlsuySsD3WuLYDKhT0o9RoP0KaQvhNLcBHTdJVCTUJ4faIKkvWV2VRtBrKJDrfPS/Sheet1";
+const SHEET_URL = "https://opensheet.elk.sh/2PACX-1vREyWb-4u0bziM1qlsuySsD3WuLYDKhT0o9RoP0KaQvhNLcBHTdJVCTUJ4faIKkvWV2VRtBrKJDrfPS/Sheet1";
 
 async function loadNews() {
   try {
@@ -684,45 +684,52 @@ async function loadNews() {
     const container = document.getElementById("news-container");
 
     if (!container) {
-      console.error("Missing #news-container element");
+      console.error("news-container not found");
       return;
     }
 
     container.innerHTML = "";
 
-    stories.forEach(story => {
-      const headline = story.headline || "";
-      const subhead = story.subhead || "";
-      const link = story.link || "#";
-      const image = story.image || "";
+    stories.forEach(function(story) {
 
       const article = document.createElement("article");
       article.className = "story";
 
-      article.innerHTML = `
-        ${image ? `<img src="${image}" alt="${headline}" class="story-image">` : ""}
+      if (story.image) {
+        const img = document.createElement("img");
+        img.src = story.image;
+        img.alt = story.headline || "";
+        img.className = "story-image";
+        article.appendChild(img);
+      }
 
-        <h2 class="story-headline">
-          <a href="${link}">
-            ${headline}
-          </a>
-        </h2>
+      const headline = document.createElement("h2");
+      headline.className = "story-headline";
 
-        <p class="story-subhead">
-          ${subhead}
-        </p>
-      `;
+      const link = document.createElement("a");
+      link.href = story.link || "#";
+      link.textContent = story.headline || "Untitled";
+
+      headline.appendChild(link);
+
+      const subhead = document.createElement("p");
+      subhead.className = "story-subhead";
+      subhead.textContent = story.subhead || "";
+
+      article.appendChild(headline);
+      article.appendChild(subhead);
 
       container.appendChild(article);
     });
 
   } catch (error) {
-    console.error("Google Sheets load error:", error);
+    console.error("Google Sheets error:", error);
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadNews);
+window.addEventListener("load", loadNews);
 </script>
+
 
 
 </body>
