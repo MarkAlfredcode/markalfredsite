@@ -411,7 +411,7 @@ footer .credits b{font-weight:700;color:var(--ink)}
     <div class="col side" id="fold-left"></div>
 
     <div class="center">
-      <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+      <div id="fold-center-img"><div class="photo ar-wide"><span class="tag">Photograph</span></div></div>
       <div class="credit" id="fold-center-credit">Photo by Mark Alfred</div>
     </div>
 
@@ -490,6 +490,17 @@ function renderFold(rows) {
       '<a href="'+ esc(right.link) +'" class="hl hl-md" style="font-style:italic">'+ right.headline +'</a>'+
       '<div class="body-txt"><p>'+ right.body +'</p></div>'+
       '<a href="'+ esc(right.link) +'" class="readmore">Read More</a>';
+  }
+  var center = rows.filter(function(r){ return r.section==='fold-center'; })[0];
+  var cImg = document.getElementById('fold-center-img');
+  var cCredit = document.getElementById('fold-center-credit');
+  if (center && cImg) {
+    if (center.image) {
+      cImg.innerHTML = center.link && center.link !== '#'
+        ? '<a href="'+ esc(center.link) +'"><img src="'+ esc(center.image) +'" alt="'+ esc(center.caption||'') +'" style="width:100%;display:block;object-fit:cover;"></a>'
+        : '<img src="'+ esc(center.image) +'" alt="'+ esc(center.caption||'') +'" style="width:100%;display:block;object-fit:cover;">';
+    }
+    if (cCredit && center.caption) cCredit.textContent = center.caption;
   }
 }
 
