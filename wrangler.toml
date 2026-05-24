@@ -1,8 +1,12 @@
-name = "mark-alfred-news"
-main = "index.js"
+name = "markalfred"
 type = "javascript"
+main = "functions/api/feed.js"
 
 [env.production]
 routes = [
-  { pattern = "example.com", zone_name = "example.com" }
+  { pattern = "markalfred.me/*", zone_name = "markalfred.me" }
 ]
+
+[build]
+command = ""
+cwd = ""
