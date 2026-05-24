@@ -671,32 +671,30 @@ footer .credits b{font-weight:700;color:var(--ink)}
 <div id="news-container" class="news-grid"></div>
 
 
+
 <script>
 const SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vREyWb-4u0bziM1qlsuySsD3WuLYDKhT0o9RoP0KaQvhNLcBHTdJVCTUJ4faIKkvWV2VRtBrKJDrfPS/pub?output=csv";
+  "https://opensheet.elk.sh/2PACX-1vREyWb-4u0bziM1qlsuySsD3WuLYDKhT0o9RoP0KaQvhNLcBHTdJVCTUJ4faIKkvWV2VRtBrKJDrfPS/Sheet1";
 
 async function loadNews() {
   try {
     const response = await fetch(SHEET_URL);
-    const csv = await response.text();
-
-    const rows = csv
-      .split("
-")
-      .slice(1)
-      .filter(row => row.trim() !== "");
+    const stories = await response.json();
 
     const container = document.getElementById("news-container");
 
+    if (!container) {
+      console.error("Missing #news-container element");
+      return;
+    }
+
     container.innerHTML = "";
 
-    rows.forEach(row => {
-      const cols = row.split(",");
-
-      const headline = cols[0]?.replace(/"/g, "") || "";
-      const subhead = cols[1]?.replace(/"/g, "") || "";
-      const link = cols[2]?.replace(/"/g, "") || "#";
-      const image = cols[3]?.replace(/"/g, "") || "";
+    stories.forEach(story => {
+      const headline = story.headline || "";
+      const subhead = story.subhead || "";
+      const link = story.link || "#";
+      const image = story.image || "";
 
       const article = document.createElement("article");
       article.className = "story";
@@ -717,13 +715,15 @@ async function loadNews() {
 
       container.appendChild(article);
     });
+
   } catch (error) {
-    console.error("Error loading Google Sheet:", error);
+    console.error("Google Sheets load error:", error);
   }
 }
 
-loadNews();
+document.addEventListener("DOMContentLoaded", loadNews);
 </script>
+
 
 </body>
 </html>
