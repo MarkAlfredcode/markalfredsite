@@ -523,7 +523,8 @@ function renderPhotos(rows) {
       article.className = 'story story-center';
       article.innerHTML = imgHTML + creditHTML +
         '<span class="outlet">'+ esc(item.outlet) +'</span>'+
-        '<a href="'+ esc(item.link) +'" class="hl hl-lg">'+ item.headline +'</a>';
+        '<a href="'+ esc(item.link) +'" class="hl hl-lg">'+ item.headline +'</a>'+
+        '<a href="'+ esc(item.link) +'" class="readmore">Read The Story</a>';
     } else if (layout === 'split-left') {
       article.className = 'story';
       article.innerHTML =
