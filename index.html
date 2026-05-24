@@ -467,96 +467,75 @@ footer .credits b{font-weight:700;color:var(--ink)}
   if (w) w.textContent = days[now.getDay()];
 })();
 
-// ── Sheet ────────────────────────────────────────────────────────────────────
-var SHEET_CSV = 'https://docs.google.com/spreadsheets/d/1mOBrRryrFK8H-wtWZbiYYrAp2YHjBseJpT0xmjA7s-s/export?format=csv';
-
-function parseCSV(text) {
-  var lines = text.trim().split('\n');
-  var headers = lines[0].split(',').map(function(h){ return h.trim().replace(/^"|"$/g,''); });
-  return lines.slice(1).map(function(line) {
-    var vals = [], cur = '', inQ = false;
-    for (var i = 0; i < line.length; i++) {
-      var c = line[i];
-      if (c === '"') { inQ = !inQ; }
-      else if (c === ',' && !inQ) { vals.push(cur.trim().replace(/^"|"$/g,'')); cur = ''; }
-      else { cur += c; }
-    }
-    vals.push(cur.trim().replace(/^"|"$/g,''));
-    var obj = {};
-    headers.forEach(function(h, i){ obj[h] = vals[i] || ''; });
-    return obj;
-  });
-}
-
+// ── Render helpers ───────────────────────────────────────────────────────────
 function esc(s) {
   return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function renderFold(rows) {
-  var left  = rows.filter(function(r){ return r.section === 'fold-left'; })[0];
-  var right = rows.filter(function(r){ return r.section === 'fold-right'; })[0];
+  var left  = rows.filter(function(r){ return r.section==='fold-left';  })[0];
+  var right = rows.filter(function(r){ return r.section==='fold-right'; })[0];
   var lEl = document.getElementById('fold-left');
   var rEl = document.getElementById('fold-right');
   if (lEl && left) {
     lEl.innerHTML =
-      '<span class="kicker">' + esc(left.kicker) + '</span>' +
-      '<a href="' + esc(left.link) + '" class="hl hl-md">' + left.headline + '</a>' +
-      '<div class="body-txt"><p>' + left.body + '</p></div>' +
-      '<a href="' + esc(left.link) + '" class="readmore">Read More</a>';
+      '<span class="kicker">'+ esc(left.kicker) +'</span>'+
+      '<a href="'+ esc(left.link) +'" class="hl hl-md">'+ left.headline +'</a>'+
+      '<div class="body-txt"><p>'+ left.body +'</p></div>'+
+      '<a href="'+ esc(left.link) +'" class="readmore">Read More</a>';
   }
   if (rEl && right) {
     rEl.innerHTML =
-      '<span class="kicker ink">' + esc(right.kicker) + '</span>' +
-      '<a href="' + esc(right.link) + '" class="hl hl-md" style="font-style:italic">' + right.headline + '</a>' +
-      '<div class="body-txt"><p>' + right.body + '</p></div>' +
-      '<a href="' + esc(right.link) + '" class="readmore">Read More</a>';
+      '<span class="kicker ink">'+ esc(right.kicker) +'</span>'+
+      '<a href="'+ esc(right.link) +'" class="hl hl-md" style="font-style:italic">'+ right.headline +'</a>'+
+      '<div class="body-txt"><p>'+ right.body +'</p></div>'+
+      '<a href="'+ esc(right.link) +'" class="readmore">Read More</a>';
   }
 }
 
 function renderPhotos(rows) {
-  var photos = rows.filter(function(r){ return r.section === 'photo'; });
+  var photos = rows.filter(function(r){ return r.section==='photo'; });
   var container = document.getElementById('photos-container');
   if (!container || !photos.length) return;
-
   var secHead = container.querySelector('.sec-head');
   container.innerHTML = '';
   if (secHead) container.appendChild(secHead);
-
   photos.forEach(function(item) {
     var article = document.createElement('article');
     var layout  = item.layout || 'wide';
     var imgHTML = item.image
-      ? '<img src="' + esc(item.image) + '" alt="' + esc(item.headline) + '" style="width:100%;display:block;object-fit:cover;">'
-      : '<div class="photo ' + (layout === 'wide' ? 'ar-wide' : 'ar-sq') + '"><span class="tag">Photograph</span></div>';
-    var creditHTML = item.caption ? '<div class="credit">' + esc(item.caption) + '</div>' : '';
-
+      ? '<img src="'+ esc(item.image) +'" alt="'+ esc(item.headline) +'" style="width:100%;display:block;object-fit:cover;">'
+      : '<div class="photo '+ (layout==='wide'?'ar-wide':'ar-sq') +'"><span class="tag">Photograph</span></div>';
+    var creditHTML = item.caption ? '<div class="credit">'+ esc(item.caption) +'</div>' : '';
+    var bodyHTML   = item.body    ? '<div class="body-txt">'+ item.body +'</div>' : '';
     if (layout === 'wide') {
       article.className = 'story story-center';
-      article.innerHTML =
-        imgHTML + creditHTML +
-        '<span class="outlet">' + esc(item.outlet) + '</span>' +
-        '<a href="' + esc(item.link) + '" class="hl hl-lg">' + item.headline + '</a>';
+      article.innerHTML = imgHTML + creditHTML +
+        '<span class="outlet">'+ esc(item.outlet) +'</span>'+
+        '<a href="'+ esc(item.link) +'" class="hl hl-lg">'+ item.headline +'</a>';
     } else if (layout === 'split-left') {
       article.className = 'story';
       article.innerHTML =
-        '<div class="split">' +
-          '<div class="img">' + imgHTML + creditHTML + '</div>' +
-          '<div class="txt">' +
-            '<span class="outlet" style="font-style:normal;font-family:\'Archivo\',sans-serif;font-weight:800;">' + esc(item.outlet) + '</span>' +
-            '<a href="' + esc(item.link) + '" class="hl hl-md">' + item.headline + '</a>' +
-            '<a href="' + esc(item.link) + '" class="readmore">Read The Story</a>' +
-          '</div>' +
+        '<div class="split">'+
+          '<div class="img">'+ imgHTML + creditHTML +'</div>'+
+          '<div class="txt">'+
+            '<span class="outlet" style="font-style:normal;font-family:\'Archivo\',sans-serif;font-weight:800;">'+ esc(item.outlet) +'</span>'+
+            '<a href="'+ esc(item.link) +'" class="hl hl-md">'+ item.headline +'</a>'+
+            bodyHTML+
+            '<a href="'+ esc(item.link) +'" class="readmore">Read The Story</a>'+
+          '</div>'+
         '</div>';
     } else {
       article.className = 'story';
       article.innerHTML =
-        '<div class="split rev">' +
-          '<div class="txt">' +
-            '<span class="outlet">' + esc(item.outlet) + '</span>' +
-            '<a href="' + esc(item.link) + '" class="hl hl-md">' + item.headline + '</a>' +
-            '<a href="' + esc(item.link) + '" class="readmore">Read The Story</a>' +
-          '</div>' +
-          '<div class="img">' + imgHTML + creditHTML + '</div>' +
+        '<div class="split rev">'+
+          '<div class="txt">'+
+            '<span class="outlet">'+ esc(item.outlet) +'</span>'+
+            '<a href="'+ esc(item.link) +'" class="hl hl-md">'+ item.headline +'</a>'+
+            bodyHTML+
+            '<a href="'+ esc(item.link) +'" class="readmore">Read The Story</a>'+
+          '</div>'+
+          '<div class="img">'+ imgHTML + creditHTML +'</div>'+
         '</div>';
     }
     container.appendChild(article);
@@ -564,7 +543,7 @@ function renderPhotos(rows) {
 }
 
 function renderLatest(rows) {
-  var items = rows.filter(function(r){ return r.section === 'latest'; });
+  var items = rows.filter(function(r){ return r.section==='latest'; });
   var container = document.getElementById('latest-container');
   if (!container) return;
   container.innerHTML = '';
@@ -572,21 +551,74 @@ function renderLatest(rows) {
     var article = document.createElement('article');
     article.className = 'brief';
     article.innerHTML =
-      '<span class="src">' + esc(item.outlet) + '</span>' +
-      '<a href="' + esc(item.link) + '" class="hl hl-sm">' + item.headline + '</a>' +
-      '<div class="blurb">' + esc(item.subhead) + '</div>' +
-      '<a href="' + esc(item.link) + '" class="readmore">Read More</a>';
+      '<span class="src">'+ esc(item.outlet) +'</span>'+
+      '<a href="'+ esc(item.link) +'" class="hl hl-sm">'+ item.headline +'</a>'+
+      '<div class="blurb">'+ esc(item.subhead) +'</div>'+
+      '<a href="'+ esc(item.link) +'" class="readmore">Read More</a>';
     container.appendChild(article);
   });
 }
 
+function parseCSV(text) {
+  var lines = text.trim().split('\n');
+  var headers = lines[0].split(',').map(function(h){ return h.trim().replace(/^"|"$/g,''); });
+  return lines.slice(1).map(function(line) {
+    var vals=[],cur='',inQ=false;
+    for (var i=0;i<line.length;i++) {
+      var c=line[i];
+      if (c==='"'){inQ=!inQ;}
+      else if (c===','&&!inQ){vals.push(cur.trim().replace(/^"|"$/g,''));cur='';}
+      else{cur+=c;}
+    }
+    vals.push(cur.trim().replace(/^"|"$/g,''));
+    var obj={};
+    headers.forEach(function(h,i){obj[h]=vals[i]||'';});
+    return obj;
+  });
+}
+
+// ── Fallback content (renders immediately) ──────────────────────────────────
+var FALLBACK = [
+  {section:'fold-left',  kicker:'Congress',    link:'#', headline:'Republicans Target ‘RedNote’ After Law Barring TikTok', body:'With just a few days left before a looming ban on TikTok, users are flocking to another Chinese-based short-form-video platform: Xiaohongshu. Lawmakers who voted to ban TikTok now say that app is also in their crosshairs.'},
+  {section:'fold-right', kicker:'White House', link:'#', headline:'‘Mostly Trolling’: GOP Laughs Off Trump on ‘Absorbing’ Canada', body:'GOP lawmakers might not be sure what Donald Trump wants from them at any given moment, but he’s being crystal clear on one point: He wants the United States to “absorb” Canada and make it the newest state.'},
+  {section:'photo', outlet:'The Guardian',          link:'#', layout:'wide',       caption:'Photo by Mark Alfred for The Guardian', headline:'Those worried about Australia’s sovereign capability under Aukus miss the point.'},
+  {section:'photo', outlet:'NOTUS',                 link:'#', layout:'split-left', caption:'Photo by Mark Alfred for NOTUS', headline:'Trump’s Final Rally — Maybe Ever — Ends With Some Reflections, Some Swears and Some Doubts'},
+  {section:'photo', outlet:'The Wall Street Journal',link:'#', layout:'wide',      caption:'Photo by Mark Alfred for WSJ', headline:'Next Congress Likely to Tussle Over Cyber Oversight'},
+  {section:'photo', outlet:'reason',                link:'#', layout:'split-right',caption:'Photo by Mark Alfred', headline:'Trump Repeats an ‘Urban Legend’ by Invoking ‘Fentanyl Laced Marijuana’', body:'At least he draws the right conclusion from this imaginary hazard, acknowledging the dangers created by prohibition.'},
+  {section:'photo', outlet:'The Wall Street Journal',link:'#', layout:'wide',      caption:'Photo by Mark Alfred for WSJ', headline:'American Personnel Abroad Face Chaos and Confusion as USAID Shuts Down'},
+  {section:'photo', outlet:'The Wall Street Journal',link:'#', layout:'split-right',caption:'Photo by Mark Alfred for WSJ', headline:'Trump Is Changing the World Order With Unprecedented Speed', body:'Global leaders, chief executives and lawmakers are navigating whipsaw changes touching healthcare, schools and the global supply chain.'},
+  {section:'photo', outlet:'DW',                    link:'#', layout:'wide',       caption:'Photo by Mark Alfred for DW', headline:'US Congress certifies Trump as 2024 election winner'},
+  {section:'photo', outlet:'The New York Post',     link:'#', layout:'split-left', caption:'Photo by Mark Alfred for NYP', headline:'Millions across the US brace for plummeting temperatures and winter storms'},
+  {section:'photo', outlet:'FORTUNE',               link:'#', layout:'wide',       caption:'Photo by Mark Alfred for FORTUNE', headline:'Geopolitical Atlas, Indo-Pacific: An Atypical Cold War'},
+  {section:'photo', outlet:'The New York Post',     link:'#', layout:'split-left', caption:'Photo by Mark Alfred for NYP', headline:'Trump imposes new tariffs on Mexico, Canada and China', body:'First, it hits the neighboring countries and the rivals in the Far East. Mexico and China react promptly to Trump’s move.'},
+  {section:'latest', outlet:'NOTUS', link:'#', headline:'All GOP Senators Sound Open to Kash Patel. Many Are Enthusiastic About Him.',           subhead:'Reporting from Capitol Hill on the confirmation fight and the senators still weighing their votes.'},
+  {section:'latest', outlet:'NOTUS', link:'#', headline:'California’s Disaster Insurance Problems Are a Political Nightmare for Lawmakers',   subhead:'A look at how the state’s insurance market is reshaping the politics of climate and housing.'},
+  {section:'latest', outlet:'NOTUS', link:'#', headline:'Lawmakers Scoff at Surgeon General’s Call to Label Alcohol a Cancer Risk',           subhead:'The proposal lands with a thud on the Hill, where appetite for new warning labels is thin.'},
+  {section:'latest', outlet:'NOTUS', link:'#', headline:'Lawmakers Are Flocking to Join DOGE but No One Knows What They’ll Do There',          subhead:'The new caucus has no shortage of members — and no clear mandate.'},
+  {section:'latest', outlet:'NOTUS', link:'#', headline:'California Republicans Want to Claw Back Funding for Their Own State on High-Speed Rail', subhead:'A delegation split over a project that has run years behind and billions over budget.'},
+  {section:'latest', outlet:'NOTUS', link:'#', headline:'The Bulk of Biden’s Infrastructure Spending Will Likely Stay Put Under Trump',        subhead:'Despite the rhetoric, the money is largely committed — and hard to unwind.'},
+  {section:'latest', outlet:'NOTUS', link:'#', headline:'Frontline Democrats Urge Support for Jared Huffman in Natural Resources Race',           subhead:'An intraparty contest tests the caucus’s appetite for generational change.'},
+  {section:'latest', outlet:'NOTUS', link:'#', headline:'‘RedNote’ Becomes a ‘Red Scare’: Republicans Already Want to Ban This TikTok Alternative', subhead:'A new app, the same old national-security fight, playing out in real time.'},
+  {section:'latest', outlet:'NOTUS', link:'#', headline:'Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation',                subhead:'Pressure builds for the release of records as the nomination fight intensifies.'}
+];
+
+// Render fallback immediately
+renderFold(FALLBACK);
+renderPhotos(FALLBACK);
+renderLatest(FALLBACK);
+
+// Override with sheet data when ready (expects section, outlet, kicker, image, caption, headline, subhead, body, link, layout columns)
+var SHEET_CSV = 'https://docs.google.com/spreadsheets/d/1mOBrRryrFK8H-wtWZbiYYrAp2YHjBseJpT0xmjA7s-s/export?format=csv';
 fetch(SHEET_CSV)
   .then(function(r){ return r.text(); })
   .then(function(text) {
     var rows = parseCSV(text);
-    renderFold(rows);
-    renderPhotos(rows);
-    renderLatest(rows);
+    var hasContent = rows.some(function(r){ return r.section && r.headline; });
+    if (hasContent) {
+      renderFold(rows);
+      renderPhotos(rows);
+      renderLatest(rows);
+    }
   })
   .catch(function(e){ console.error('Sheet load failed:', e); });
 </script>
