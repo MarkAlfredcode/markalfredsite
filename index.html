@@ -368,8 +368,8 @@ footer .credits b{font-weight:700;color:var(--ink)}
 
   <!-- utility bar -->
   <div class="utility">
-    <div class="date">For the first and only time it is<br>February 2, 2025</div>
-    <div class="day">Sunday</div>
+    <div class="date">For the first and only time it is<br><span id="js-date"></span></div>
+    <div class="day" id="js-day"></div>
   </div>
 
   <!-- masthead -->
@@ -382,20 +382,21 @@ footer .credits b{font-weight:700;color:var(--ink)}
     <ul>
       <li><a href="#">News</a></li>
       <li><a href="#">Photojournalism</a></li>
+      <li><a href="#">Exclusives</a></li>
       <li><a href="#">About</a></li>
     </ul>
     <div class="social">
       <a href="#" title="X" aria-label="X">𝕏</a>
-      <a href="#" title="NOTUS" aria-label="NOTUS">N</a>
-      <a href="#" title="LinkedIn" aria-label="LinkedIn">in</a>
+      <a href="https://www.notus.org/mark-alfred" title="NOTUS" aria-label="NOTUS">N</a>
+      <a href="https://www.linkedin.com/in/mark-alfred/" title="LinkedIn" aria-label="LinkedIn">in</a>
     </div>
     <ul>
-      <li><a href="#">Investigations</a></li>
+      <li><a href="#">The Star</a></li>
       <li><a href="#">Politics</a></li>
       <li><a href="#">Trump</a></li>
-      <li><a href="#">Sports</a></li>
       <li><a href="#">Local</a></li>
       <li><a href="#">Games</a></li>
+      <li><a href="#">Send a News Tip</a></li>
     </ul>
   </nav>
 
@@ -407,160 +408,25 @@ footer .credits b{font-weight:700;color:var(--ink)}
 
   <!-- top fold -->
   <section class="fold">
-    <div class="col side">
-      <span class="kicker">Congress</span>
-      <a href="#" class="hl hl-md">Republicans Target &lsquo;RedNote&rsquo; After Law Barring TikTok</a>
-      <div class="body-txt">
-        <p>With just a few days left before a looming ban on TikTok, users are flocking to another Chinese-based short-form-video platform: Xiaohongshu.</p>
-        <p>Lawmakers who voted to ban TikTok now say that app is also in their crosshairs.</p>
-        <p class="byline-q">&ldquo;It&rsquo;s just another way to skirt the idea that they want to influence our children in negative ways,&rdquo; Rep. Rich McCormick told NOTUS. &ldquo;We will legislate against them.&rdquo;</p>
-      </div>
-      <a href="#" class="readmore">Read More</a>
-    </div>
+    <div class="col side" id="fold-left"></div>
 
     <div class="center">
       <div class="photo ar-wide"><span class="tag">Photograph</span></div>
-      <div class="credit">Photo by Mark Alfred for XXXX OUTLET</div>
+      <div class="credit" id="fold-center-credit">Photo by Mark Alfred</div>
     </div>
 
-    <div class="col side">
-      <span class="kicker ink">White House</span>
-      <a href="#" class="hl hl-md" style="font-style:italic">&lsquo;Mostly Trolling&rsquo;: GOP Laughs Off Trump on &lsquo;Absorbing&rsquo; Canada</a>
-      <div class="body-txt">
-        <p>WASHINGTON &mdash; GOP lawmakers might not be sure what Donald Trump wants from them at any given moment, but as he prepares to take office, he&rsquo;s being crystal clear on one point: He wants the United States to &ldquo;absorb&rdquo; Canada and make it the newest state.</p>
-        <p>&ldquo;Many people in Canada LOVE being the 51st State,&rdquo; Trump wrote in one of his many recent Truth Social posts about claiming Canada.</p>
-      </div>
-      <a href="#" class="readmore">Read More</a>
-    </div>
+    <div class="col side" id="fold-right"></div>
   </section>
 
   <!-- main two zones -->
   <div class="main">
 
     <!-- LEFT: In Photos -->
-    <section class="zone-left">
+    <section class="zone-left" id="photos-container">
       <div class="sec-head">
         <h2>In Photos</h2>
         <div class="sub">Photojournalism published in The New York Times, The Wall Street Journal, NOTUS, The Guardian and more.</div>
       </div>
-
-      <!-- 1: wide centered -->
-      <article class="story story-center">
-        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
-        <div class="credit">Photo by Mark Alfred for XXXX</div>
-        <span class="outlet">The Guardian</span>
-        <a href="#" class="hl hl-lg">Those worried about Australia&rsquo;s sovereign capability under Aukus miss the point.</a>
-      </article>
-
-      <!-- 2: photo left / text right -->
-      <article class="story">
-        <div class="split">
-          <div class="img">
-            <div class="photo ar-sq"><span class="tag">Photograph</span></div>
-            <div class="credit">Photo by Mark Alfred for XXXX</div>
-          </div>
-          <div class="txt">
-            <span class="outlet" style="font-style:normal;font-family:'Archivo',sans-serif;font-weight:800;">NOTUS</span>
-            <a href="#" class="hl hl-md">Trump&rsquo;s Final Rally &mdash; Maybe Ever &mdash; Ends With Some Reflections, Some Swears and Some Doubts</a>
-            <a href="#" class="readmore">Read The Story</a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 3: wide centered -->
-      <article class="story story-center">
-        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
-        <div class="credit">Photo by Mark Alfred for XXXX</div>
-        <span class="outlet">The Wall Street Journal</span>
-        <a href="#" class="hl hl-lg">Next Congress Likely to Tussle Over Cyber Oversight</a>
-      </article>
-
-      <!-- 4: text left / photo right -->
-      <article class="story">
-        <div class="split rev">
-          <div class="txt">
-            <span class="outlet">reason</span>
-            <a href="#" class="hl hl-md">Trump Repeats an &lsquo;Urban Legend&rsquo; by Invoking &lsquo;Fentanyl Laced Marijuana&rsquo;</a>
-            <div class="body-txt">At least he draws the right conclusion from this imaginary hazard, acknowledging the dangers created by prohibition.</div>
-            <a href="#" class="readmore">Read The Story</a>
-          </div>
-          <div class="img">
-            <div class="photo ar-sq"><span class="tag">Photograph</span></div>
-            <div class="credit">Photo by Mark Alfred for XXXX OUTLET</div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 5: wide centered -->
-      <article class="story story-center">
-        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
-        <div class="credit">Photo by Mark Alfred for XXXX</div>
-        <span class="outlet">The Wall Street Journal</span>
-        <a href="#" class="hl hl-lg">American Personnel Abroad Face Chaos and Confusion as USAID Shuts Down</a>
-      </article>
-
-      <!-- 6: text left / photo right -->
-      <article class="story">
-        <div class="split rev">
-          <div class="txt">
-            <span class="outlet">The Wall Street Journal</span>
-            <a href="#" class="hl hl-md">Trump Is Changing the World Order With Unprecedented Speed</a>
-            <div class="body-txt">Global leaders, chief executives and lawmakers are navigating whipsaw changes touching healthcare, schools and the global supply chain.</div>
-            <a href="#" class="readmore">Read The Story</a>
-          </div>
-          <div class="img">
-            <div class="photo ar-sq"><span class="tag">Photograph</span></div>
-            <div class="credit">Photo by Mark Alfred for XXXX OUTLET</div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 7: wide centered -->
-      <article class="story story-center">
-        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
-        <div class="credit">Photo by Mark Alfred for XXXX</div>
-        <span class="outlet">DW</span>
-        <a href="#" class="hl hl-lg">US Congress certifies Trump as 2024 election winner</a>
-      </article>
-
-      <!-- 8: photo left / text right -->
-      <article class="story">
-        <div class="split">
-          <div class="img">
-            <div class="photo ar-sq"><span class="tag">Photograph</span></div>
-            <div class="credit">Photo by Mark Alfred for XXXX</div>
-          </div>
-          <div class="txt">
-            <span class="outlet">The New York Post</span>
-            <a href="#" class="hl hl-md">Millions across the US brace for plummeting temperatures and winter storms</a>
-            <a href="#" class="readmore">Read The Story</a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 9: wide centered -->
-      <article class="story story-center">
-        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
-        <div class="credit">Photo by Mark Alfred for XXXX</div>
-        <span class="outlet">FORTUNE</span>
-        <a href="#" class="hl hl-lg">Geopolitical Atlas, Indo-Pacific: An Atypical Cold War</a>
-      </article>
-
-      <!-- 10: photo left / text right -->
-      <article class="story">
-        <div class="split">
-          <div class="img">
-            <div class="photo ar-sq"><span class="tag">Photograph</span></div>
-            <div class="credit">Photo by Mark Alfred for XXXX</div>
-          </div>
-          <div class="txt">
-            <span class="outlet">The New York Post</span>
-            <a href="#" class="hl hl-md">Trump imposes new tariffs on Mexico, Canada and China</a>
-            <div class="body-txt">First, it hits the neighboring countries and the rivals in the Far East. Mexico and China react promptly to Trump&rsquo;s move.</div>
-            <a href="#" class="readmore">Read The Story</a>
-          </div>
-        </div>
-      </article>
     </section>
 
     <!-- RIGHT: Read the Latest -->
@@ -569,90 +435,7 @@ footer .credits b{font-weight:700;color:var(--ink)}
         <h2>Read the Latest</h2>
         <div class="sub">Award-winning coverage of local and national politics.</div>
       </div>
-
-      <article class="brief">
-        <span class="src">NOTUS</span>
-        <a href="#" class="hl hl-sm">All GOP Senators Sound Open to Kash Patel. Many Are Enthusiastic About Him.</a>
-        <div class="blurb">Reporting from Capitol Hill on the confirmation fight and the senators still weighing their votes.</div>
-        <a href="#" class="readmore">Read More</a>
-      </article>
-
-      <article class="brief">
-        <span class="src">NOTUS</span>
-        <a href="#" class="hl hl-sm">California&rsquo;s Disaster Insurance Problems Are a Political Nightmare for Lawmakers</a>
-        <div class="blurb">A look at how the state&rsquo;s insurance market is reshaping the politics of climate and housing.</div>
-        <a href="#" class="readmore">Read More</a>
-      </article>
-
-      <article class="brief">
-        <span class="src">NOTUS</span>
-        <a href="#" class="hl hl-sm">Lawmakers Scoff at Surgeon General&rsquo;s Call to Label Alcohol a Cancer Risk</a>
-        <div class="blurb">The proposal lands with a thud on the Hill, where appetite for new warning labels is thin.</div>
-        <a href="#" class="readmore">Read More</a>
-      </article>
-
-      <article class="brief">
-        <span class="src">NOTUS</span>
-        <a href="#" class="hl hl-sm">Lawmakers Are Flocking to Join DOGE but No One Knows What They&rsquo;ll Do There</a>
-        <div class="blurb">The new caucus has no shortage of members &mdash; and no clear mandate.</div>
-        <a href="#" class="readmore">Read More</a>
-      </article>
-
-      <article class="brief">
-        <span class="src">NOTUS</span>
-        <a href="#" class="hl hl-sm">California Republicans Want to Claw Back Funding for Their Own State on High-Speed Rail</a>
-        <div class="blurb">A delegation split over a project that has run years behind and billions over budget.</div>
-        <a href="#" class="readmore">Read More</a>
-      </article>
-
-      <article class="brief">
-        <span class="src">NOTUS</span>
-        <a href="#" class="hl hl-sm">The Bulk of Biden&rsquo;s Infrastructure Spending Will Likely Stay Put Under Trump</a>
-        <div class="blurb">Despite the rhetoric, the money is largely committed &mdash; and hard to unwind.</div>
-        <a href="#" class="readmore">Read More</a>
-      </article>
-
-      <article class="brief">
-        <span class="src">NOTUS</span>
-        <a href="#" class="hl hl-sm">Frontline Democrats Urge Support for Jared Huffman in Natural Resources Race</a>
-        <div class="blurb">An intraparty contest tests the caucus&rsquo;s appetite for generational change.</div>
-        <a href="#" class="readmore">Read More</a>
-      </article>
-
-      <article class="brief">
-        <span class="src">NOTUS</span>
-        <a href="#" class="hl hl-sm">&lsquo;RedNote&rsquo; Becomes a &lsquo;Red Scare&rsquo;: Republicans Already Want to Ban This TikTok Alternative</a>
-        <div class="blurb">A new app, the same old national-security fight, playing out in real time.</div>
-        <a href="#" class="readmore">Read More</a>
-      </article>
-
-      <article class="brief">
-        <span class="src">NOTUS</span>
-        <a href="#" class="hl hl-sm">Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation</a>
-        <div class="blurb">Pressure builds for the release of records as the nomination fight intensifies.</div>
-        <a href="#" class="readmore">Read More</a>
-      </article>
-
-      <article class="brief">
-        <span class="src">NOTUS</span>
-        <a href="#" class="hl hl-sm">Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation</a>
-        <div class="blurb">Pressure builds for the release of records as the nomination fight intensifies.</div>
-        <a href="#" class="readmore">Read More</a>
-      </article>
-
-      <article class="brief">
-        <span class="src">NOTUS</span>
-        <a href="#" class="hl hl-sm">Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation</a>
-        <div class="blurb">Pressure builds for the release of records as the nomination fight intensifies.</div>
-        <a href="#" class="readmore">Read More</a>
-      </article>
-
-      <article class="brief">
-        <span class="src">NOTUS</span>
-        <a href="#" class="hl hl-sm">Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation</a>
-        <div class="blurb">Pressure builds for the release of records as the nomination fight intensifies.</div>
-        <a href="#" class="readmore">Read More</a>
-      </article>
+      <div id="latest-container"></div>
     </aside>
   </div>
 
@@ -668,66 +451,144 @@ footer .credits b{font-weight:700;color:var(--ink)}
 </div>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a00d1823d826c97f',t:'MTc3OTYzNDAzMw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"d5365105563a4a4ca6b984abc2e8bcd7","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 
-<div id="news-container" class="news-grid"></div>
 
 
 
 
 <script>
-const SHEET_URL = "https://opensheet.elk.sh/2PACX-1vREyWb-4u0bziM1qlsuySsD3WuLYDKhT0o9RoP0KaQvhNLcBHTdJVCTUJ4faIKkvWV2VRtBrKJDrfPS/Sheet1";
+// ── Date ────────────────────────────────────────────────────────────────────
+(function() {
+  var days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var now    = new Date();
+  var d = document.getElementById('js-date');
+  var w = document.getElementById('js-day');
+  if (d) d.textContent = months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+  if (w) w.textContent = days[now.getDay()];
+})();
 
-async function loadNews() {
-  try {
-    const response = await fetch(SHEET_URL);
-    const stories = await response.json();
+// ── Sheet ────────────────────────────────────────────────────────────────────
+var SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vREyWb-4u0bziM1qlsuySsD3WuLYDKhT0o9RoP0KaQvhNLcBHTdJVCTUJ4faIKkvWV2VRtBrKJDrfPS/pub?output=csv';
 
-    const container = document.getElementById("news-container");
-
-    if (!container) {
-      console.error("news-container not found");
-      return;
+function parseCSV(text) {
+  var lines = text.trim().split('\n');
+  var headers = lines[0].split(',').map(function(h){ return h.trim().replace(/^"|"$/g,''); });
+  return lines.slice(1).map(function(line) {
+    var vals = [], cur = '', inQ = false;
+    for (var i = 0; i < line.length; i++) {
+      var c = line[i];
+      if (c === '"') { inQ = !inQ; }
+      else if (c === ',' && !inQ) { vals.push(cur.trim().replace(/^"|"$/g,'')); cur = ''; }
+      else { cur += c; }
     }
+    vals.push(cur.trim().replace(/^"|"$/g,''));
+    var obj = {};
+    headers.forEach(function(h, i){ obj[h] = vals[i] || ''; });
+    return obj;
+  });
+}
 
-    container.innerHTML = "";
+function esc(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
-    stories.forEach(function(story) {
-
-      const article = document.createElement("article");
-      article.className = "story";
-
-      if (story.image) {
-        const img = document.createElement("img");
-        img.src = story.image;
-        img.alt = story.headline || "";
-        img.className = "story-image";
-        article.appendChild(img);
-      }
-
-      const headline = document.createElement("h2");
-      headline.className = "story-headline";
-
-      const link = document.createElement("a");
-      link.href = story.link || "#";
-      link.textContent = story.headline || "Untitled";
-
-      headline.appendChild(link);
-
-      const subhead = document.createElement("p");
-      subhead.className = "story-subhead";
-      subhead.textContent = story.subhead || "";
-
-      article.appendChild(headline);
-      article.appendChild(subhead);
-
-      container.appendChild(article);
-    });
-
-  } catch (error) {
-    console.error("Google Sheets error:", error);
+function renderFold(rows) {
+  var left  = rows.filter(function(r){ return r.section === 'fold-left'; })[0];
+  var right = rows.filter(function(r){ return r.section === 'fold-right'; })[0];
+  var lEl = document.getElementById('fold-left');
+  var rEl = document.getElementById('fold-right');
+  if (lEl && left) {
+    lEl.innerHTML =
+      '<span class="kicker">' + esc(left.kicker) + '</span>' +
+      '<a href="' + esc(left.link) + '" class="hl hl-md">' + left.headline + '</a>' +
+      '<div class="body-txt"><p>' + left.body + '</p></div>' +
+      '<a href="' + esc(left.link) + '" class="readmore">Read More</a>';
+  }
+  if (rEl && right) {
+    rEl.innerHTML =
+      '<span class="kicker ink">' + esc(right.kicker) + '</span>' +
+      '<a href="' + esc(right.link) + '" class="hl hl-md" style="font-style:italic">' + right.headline + '</a>' +
+      '<div class="body-txt"><p>' + right.body + '</p></div>' +
+      '<a href="' + esc(right.link) + '" class="readmore">Read More</a>';
   }
 }
 
-window.addEventListener("load", loadNews);
+function renderPhotos(rows) {
+  var photos = rows.filter(function(r){ return r.section === 'photo'; });
+  var container = document.getElementById('photos-container');
+  if (!container || !photos.length) return;
+
+  var secHead = container.querySelector('.sec-head');
+  container.innerHTML = '';
+  if (secHead) container.appendChild(secHead);
+
+  photos.forEach(function(item) {
+    var article = document.createElement('article');
+    var layout  = item.layout || 'wide';
+    var imgHTML = item.image
+      ? '<img src="' + esc(item.image) + '" alt="' + esc(item.headline) + '" style="width:100%;display:block;object-fit:cover;">'
+      : '<div class="photo ' + (layout === 'wide' ? 'ar-wide' : 'ar-sq') + '"><span class="tag">Photograph</span></div>';
+    var creditHTML = item.caption ? '<div class="credit">' + esc(item.caption) + '</div>' : '';
+
+    if (layout === 'wide') {
+      article.className = 'story story-center';
+      article.innerHTML =
+        imgHTML + creditHTML +
+        '<span class="outlet">' + esc(item.outlet) + '</span>' +
+        '<a href="' + esc(item.link) + '" class="hl hl-lg">' + item.headline + '</a>';
+    } else if (layout === 'split-left') {
+      article.className = 'story';
+      article.innerHTML =
+        '<div class="split">' +
+          '<div class="img">' + imgHTML + creditHTML + '</div>' +
+          '<div class="txt">' +
+            '<span class="outlet" style="font-style:normal;font-family:\'Archivo\',sans-serif;font-weight:800;">' + esc(item.outlet) + '</span>' +
+            '<a href="' + esc(item.link) + '" class="hl hl-md">' + item.headline + '</a>' +
+            '<a href="' + esc(item.link) + '" class="readmore">Read The Story</a>' +
+          '</div>' +
+        '</div>';
+    } else {
+      article.className = 'story';
+      article.innerHTML =
+        '<div class="split rev">' +
+          '<div class="txt">' +
+            '<span class="outlet">' + esc(item.outlet) + '</span>' +
+            '<a href="' + esc(item.link) + '" class="hl hl-md">' + item.headline + '</a>' +
+            '<a href="' + esc(item.link) + '" class="readmore">Read The Story</a>' +
+          '</div>' +
+          '<div class="img">' + imgHTML + creditHTML + '</div>' +
+        '</div>';
+    }
+    container.appendChild(article);
+  });
+}
+
+function renderLatest(rows) {
+  var items = rows.filter(function(r){ return r.section === 'latest'; });
+  var container = document.getElementById('latest-container');
+  if (!container) return;
+  container.innerHTML = '';
+  items.forEach(function(item) {
+    var article = document.createElement('article');
+    article.className = 'brief';
+    article.innerHTML =
+      '<span class="src">' + esc(item.outlet) + '</span>' +
+      '<a href="' + esc(item.link) + '" class="hl hl-sm">' + item.headline + '</a>' +
+      '<div class="blurb">' + esc(item.subhead) + '</div>' +
+      '<a href="' + esc(item.link) + '" class="readmore">Read More</a>';
+    container.appendChild(article);
+  });
+}
+
+fetch(SHEET_CSV)
+  .then(function(r){ return r.text(); })
+  .then(function(text) {
+    var rows = parseCSV(text);
+    renderFold(rows);
+    renderPhotos(rows);
+    renderLatest(rows);
+  })
+  .catch(function(e){ console.error('Sheet load failed:', e); });
 </script>
 
 
