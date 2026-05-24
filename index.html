@@ -403,7 +403,7 @@ footer .credits b{font-weight:700;color:var(--ink)}
   <!-- breaking banner -->
   <div class="banner">
     <div class="flag"></div>
-    <div class="text">Trade War Begins: U.S. Levies Sweeping Tariffs on Mexico, Canada and China</div>
+    <a id="banner-link" class="text" href="#" style="text-decoration:none;color:inherit;">Trade War Begins: U.S. Levies Sweeping Tariffs on Mexico, Canada and China</a>
   </div>
 
   <!-- top fold -->
@@ -617,6 +617,16 @@ var FALLBACK = [
 renderFold(FALLBACK);
 renderPhotos(FALLBACK);
 renderLatest(FALLBACK);
+(function(){
+  var banner = FALLBACK.filter(function(r){ return r.section==='banner'; })[0];
+  if (banner) {
+    var bEl = document.getElementById('banner-link');
+    if (bEl) {
+      if (banner.headline) bEl.textContent = banner.headline;
+      if (banner.link && banner.link !== '#') bEl.href = banner.link;
+    }
+  }
+})();
 
 // Override with sheet data when ready (expects section, outlet, kicker, image, caption, headline, subhead, body, link, layout columns)
 var SHEET_CSV = 'https://docs.google.com/spreadsheets/d/1mOBrRryrFK8H-wtWZbiYYrAp2YHjBseJpT0xmjA7s-s/export?format=csv';
@@ -629,6 +639,14 @@ fetch(SHEET_CSV)
       renderFold(rows);
       renderPhotos(rows);
       renderLatest(rows);
+    }
+    var banner = rows.filter(function(r){ return r.section==='banner'; })[0];
+    if (banner) {
+      var bEl = document.getElementById('banner-link');
+      if (bEl) {
+        if (banner.headline) bEl.textContent = banner.headline;
+        if (banner.link && banner.link !== '#') bEl.href = banner.link;
+      }
     }
   })
   .catch(function(e){ console.error('Sheet load failed:', e); });
