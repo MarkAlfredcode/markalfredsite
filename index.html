@@ -116,8 +116,6 @@ nav a:hover{color:var(--red)}
   transition:background .15s,color .15s;
 }
 .social a:hover{background:var(--ink);color:var(--paper)}
-nav li > span.nav-plain{color:var(--ink);font-family:"Archivo",sans-serif;font-size:13px;font-weight:600;letter-spacing:.01em;cursor:default;opacity:.55}
-.social svg{display:block;pointer-events:none}
 
 /* ---------- red breaking banner ---------- */
 .banner{
@@ -220,10 +218,6 @@ a.hl:hover{color:var(--red)}
   font-family:"Archivo",sans-serif;font-size:10px;font-weight:600;
   letter-spacing:.18em;text-transform:uppercase;color:rgba(20,18,12,.4);
   z-index:1;
-}
-.photo img{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;display:block;z-index:2;
 }
 .ar-wide{aspect-ratio:16/9}
 .ar-tall{aspect-ratio:4/5}
@@ -330,18 +324,9 @@ footer .credits b{font-weight:700;color:var(--ink)}
 
   <!-- utility bar -->
   <div class="utility">
-    <div class="date" id="utdate">For the first and only time it is<br>February 2, 2025</div>
-    <div class="day" id="utday">Sunday</div>
+    <div class="date">For the first and only time it is<br>February 2, 2025</div>
+    <div class="day">Sunday</div>
   </div>
-<script>
-(function(){
-  var d=new Date();
-  var M=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var W=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  document.getElementById('utdate').innerHTML='For the first and only time it is<br>'+M[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
-  document.getElementById('utday').textContent=W[d.getDay()].toUpperCase();
-})();
-</script>
 
   <!-- masthead -->
   <header class="masthead">
@@ -353,56 +338,279 @@ footer .credits b{font-weight:700;color:var(--ink)}
     <ul>
       <li><a href="#">News</a></li>
       <li><a href="#">Photojournalism</a></li>
-      <li><span class="nav-plain">Exclusives</span></li>
       <li><a href="#">About</a></li>
     </ul>
     <div class="social">
-      <a href="#" title="X / Twitter" aria-label="X">𝕏</a>
-      <a href="https://www.notus.org/mark-alfred" title="NOTUS" aria-label="NOTUS" target="_blank" rel="noopener">N</a>
-      <a href="https://bsky.app/profile/markalfred.bsky.social" title="Bluesky" aria-label="Bluesky" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 320" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M180 141.964C163.699 110.262 119.308 51.148 78.862 31.868 55.986 21.046 31.555 15.67 9.523 29.32-4.741 38.15-3.906 55.842 2.31 68.98c9.079 19.148 31.82 38.473 59.962 35.937C28.089 115.507 0 139.609 0 167.945c0 38.489 82.066 103.571 122.406 56.57 4.617-5.411 8.94-11.352 13.113-17.487-6.35 21.576-12.375 46.08-13.742 68.55C118.68 298.44 131.5 320 158 320c17 0 25.637-9.43 29.57-23.08C192.25 311.16 201.54 320 216 320c26.5 0 39.32-21.56 36.223-44.422-1.367-22.47-7.392-46.974-13.742-68.55 4.173 6.135 8.496 12.076 13.113 17.487 40.34 47.001 122.406-18.081 122.406-56.57 0-28.336-28.089-52.438-62.272-63.028 28.142 2.536 50.883-16.789 59.962-35.937 6.216-13.138 7.051-30.83-7.213-39.66-22.032-13.65-46.463-8.274-69.339 2.548-40.446 19.28-84.837 78.394-101.138 110.096z"/></svg></a>
-      <a href="https://www.linkedin.com/in/mark-alfred/" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
-      <a href="#" title="Signal: MarkAlfred.14" aria-label="Signal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M50 5C25.1 5 5 24.2 5 48c0 9.5 2.8 18.4 7.7 25.8L5 95l22.6-6.8c6.8 3.5 14.6 5.5 22.4 5.5 24.9 0 45-19.2 45-43S74.9 5 50 5z"/></svg></a>
+      <a href="#" title="X" aria-label="X">𝕏</a>
+      <a href="#" title="NOTUS" aria-label="NOTUS">N</a>
+      <a href="#" title="LinkedIn" aria-label="LinkedIn">in</a>
     </div>
     <ul>
-      <li><span class="nav-plain">The Star</span></li>
+      <li><a href="#">Investigations</a></li>
       <li><a href="#">Politics</a></li>
       <li><a href="#">Trump</a></li>
+      <li><a href="#">Sports</a></li>
       <li><a href="#">Local</a></li>
       <li><a href="#">Games</a></li>
-      <li><a href="#">Send a News Tip</a></li>
     </ul>
   </nav>
 
-    <!-- breaking banner -->
+  <!-- breaking banner -->
   <div class="banner">
     <div class="flag"></div>
     <div class="text">Trade War Begins: U.S. Levies Sweeping Tariffs on Mexico, Canada and China</div>
   </div>
 
-<!-- top fold (data-driven) -->
-  <section class="fold" id="fold"></section>
+  <!-- top fold -->
+  <section class="fold">
+    <div class="col side">
+      <span class="kicker">Congress</span>
+      <a href="#" class="hl hl-md">Republicans Target &lsquo;RedNote&rsquo; After Law Barring TikTok</a>
+      <div class="body-txt">
+        <p>With just a few days left before a looming ban on TikTok, users are flocking to another Chinese-based short-form-video platform: Xiaohongshu.</p>
+        <p>Lawmakers who voted to ban TikTok now say that app is also in their crosshairs.</p>
+        <p class="byline-q">&ldquo;It&rsquo;s just another way to skirt the idea that they want to influence our children in negative ways,&rdquo; Rep. Rich McCormick told NOTUS. &ldquo;We will legislate against them.&rdquo;</p>
+      </div>
+      <a href="#" class="readmore">Read More</a>
+    </div>
 
-    <!-- main two zones -->
+    <div class="center">
+      <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+      <div class="credit">Photo by Mark Alfred for XXXX OUTLET</div>
+    </div>
+
+    <div class="col side">
+      <span class="kicker ink">White House</span>
+      <a href="#" class="hl hl-md" style="font-style:italic">&lsquo;Mostly Trolling&rsquo;: GOP Laughs Off Trump on &lsquo;Absorbing&rsquo; Canada</a>
+      <div class="body-txt">
+        <p>WASHINGTON &mdash; GOP lawmakers might not be sure what Donald Trump wants from them at any given moment, but as he prepares to take office, he&rsquo;s being crystal clear on one point: He wants the United States to &ldquo;absorb&rdquo; Canada and make it the newest state.</p>
+        <p>&ldquo;Many people in Canada LOVE being the 51st State,&rdquo; Trump wrote in one of his many recent Truth Social posts about claiming Canada.</p>
+      </div>
+      <a href="#" class="readmore">Read More</a>
+    </div>
+  </section>
+
+  <!-- main two zones -->
   <div class="main">
 
-<!-- LEFT: In Photos (data-driven) -->
+    <!-- LEFT: In Photos -->
     <section class="zone-left">
       <div class="sec-head">
         <h2>In Photos</h2>
         <div class="sub">Photojournalism published in The New York Times, The Wall Street Journal, NOTUS, The Guardian and more.</div>
       </div>
-      <div id="inphotos"></div>
+
+      <!-- 1: wide centered -->
+      <article class="story story-center">
+        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+        <div class="credit">Photo by Mark Alfred for XXXX</div>
+        <span class="outlet">The Guardian</span>
+        <a href="#" class="hl hl-lg">Those worried about Australia&rsquo;s sovereign capability under Aukus miss the point.</a>
+      </article>
+
+      <!-- 2: photo left / text right -->
+      <article class="story">
+        <div class="split">
+          <div class="img">
+            <div class="photo ar-sq"><span class="tag">Photograph</span></div>
+            <div class="credit">Photo by Mark Alfred for XXXX</div>
+          </div>
+          <div class="txt">
+            <span class="outlet" style="font-style:normal;font-family:'Archivo',sans-serif;font-weight:800;">NOTUS</span>
+            <a href="#" class="hl hl-md">Trump&rsquo;s Final Rally &mdash; Maybe Ever &mdash; Ends With Some Reflections, Some Swears and Some Doubts</a>
+            <a href="#" class="readmore">Read The Story</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3: wide centered -->
+      <article class="story story-center">
+        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+        <div class="credit">Photo by Mark Alfred for XXXX</div>
+        <span class="outlet">The Wall Street Journal</span>
+        <a href="#" class="hl hl-lg">Next Congress Likely to Tussle Over Cyber Oversight</a>
+      </article>
+
+      <!-- 4: text left / photo right -->
+      <article class="story">
+        <div class="split rev">
+          <div class="txt">
+            <span class="outlet">reason</span>
+            <a href="#" class="hl hl-md">Trump Repeats an &lsquo;Urban Legend&rsquo; by Invoking &lsquo;Fentanyl Laced Marijuana&rsquo;</a>
+            <div class="body-txt">At least he draws the right conclusion from this imaginary hazard, acknowledging the dangers created by prohibition.</div>
+            <a href="#" class="readmore">Read The Story</a>
+          </div>
+          <div class="img">
+            <div class="photo ar-sq"><span class="tag">Photograph</span></div>
+            <div class="credit">Photo by Mark Alfred for XXXX OUTLET</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5: wide centered -->
+      <article class="story story-center">
+        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+        <div class="credit">Photo by Mark Alfred for XXXX</div>
+        <span class="outlet">The Wall Street Journal</span>
+        <a href="#" class="hl hl-lg">American Personnel Abroad Face Chaos and Confusion as USAID Shuts Down</a>
+      </article>
+
+      <!-- 6: text left / photo right -->
+      <article class="story">
+        <div class="split rev">
+          <div class="txt">
+            <span class="outlet">The Wall Street Journal</span>
+            <a href="#" class="hl hl-md">Trump Is Changing the World Order With Unprecedented Speed</a>
+            <div class="body-txt">Global leaders, chief executives and lawmakers are navigating whipsaw changes touching healthcare, schools and the global supply chain.</div>
+            <a href="#" class="readmore">Read The Story</a>
+          </div>
+          <div class="img">
+            <div class="photo ar-sq"><span class="tag">Photograph</span></div>
+            <div class="credit">Photo by Mark Alfred for XXXX OUTLET</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 7: wide centered -->
+      <article class="story story-center">
+        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+        <div class="credit">Photo by Mark Alfred for XXXX</div>
+        <span class="outlet">DW</span>
+        <a href="#" class="hl hl-lg">US Congress certifies Trump as 2024 election winner</a>
+      </article>
+
+      <!-- 8: photo left / text right -->
+      <article class="story">
+        <div class="split">
+          <div class="img">
+            <div class="photo ar-sq"><span class="tag">Photograph</span></div>
+            <div class="credit">Photo by Mark Alfred for XXXX</div>
+          </div>
+          <div class="txt">
+            <span class="outlet">The New York Post</span>
+            <a href="#" class="hl hl-md">Millions across the US brace for plummeting temperatures and winter storms</a>
+            <a href="#" class="readmore">Read The Story</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 9: wide centered -->
+      <article class="story story-center">
+        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+        <div class="credit">Photo by Mark Alfred for XXXX</div>
+        <span class="outlet">FORTUNE</span>
+        <a href="#" class="hl hl-lg">Geopolitical Atlas, Indo-Pacific: An Atypical Cold War</a>
+      </article>
+
+      <!-- 10: photo left / text right -->
+      <article class="story">
+        <div class="split">
+          <div class="img">
+            <div class="photo ar-sq"><span class="tag">Photograph</span></div>
+            <div class="credit">Photo by Mark Alfred for XXXX</div>
+          </div>
+          <div class="txt">
+            <span class="outlet">The New York Post</span>
+            <a href="#" class="hl hl-md">Trump imposes new tariffs on Mexico, Canada and China</a>
+            <div class="body-txt">First, it hits the neighboring countries and the rivals in the Far East. Mexico and China react promptly to Trump&rsquo;s move.</div>
+            <a href="#" class="readmore">Read The Story</a>
+          </div>
+        </div>
+      </article>
     </section>
 
-    <!-- RIGHT: Read the Latest (feed-driven) -->
+    <!-- RIGHT: Read the Latest -->
     <aside class="zone-right">
       <div class="sec-head">
         <h2>Read the Latest</h2>
         <div class="sub">Award-winning coverage of local and national politics.</div>
       </div>
-      <div id="latest"></div>
+
+      <article class="brief">
+        <span class="src">NOTUS</span>
+        <a href="#" class="hl hl-sm">All GOP Senators Sound Open to Kash Patel. Many Are Enthusiastic About Him.</a>
+        <div class="blurb">Reporting from Capitol Hill on the confirmation fight and the senators still weighing their votes.</div>
+        <a href="#" class="readmore">Read More</a>
+      </article>
+
+      <article class="brief">
+        <span class="src">NOTUS</span>
+        <a href="#" class="hl hl-sm">California&rsquo;s Disaster Insurance Problems Are a Political Nightmare for Lawmakers</a>
+        <div class="blurb">A look at how the state&rsquo;s insurance market is reshaping the politics of climate and housing.</div>
+        <a href="#" class="readmore">Read More</a>
+      </article>
+
+      <article class="brief">
+        <span class="src">NOTUS</span>
+        <a href="#" class="hl hl-sm">Lawmakers Scoff at Surgeon General&rsquo;s Call to Label Alcohol a Cancer Risk</a>
+        <div class="blurb">The proposal lands with a thud on the Hill, where appetite for new warning labels is thin.</div>
+        <a href="#" class="readmore">Read More</a>
+      </article>
+
+      <article class="brief">
+        <span class="src">NOTUS</span>
+        <a href="#" class="hl hl-sm">Lawmakers Are Flocking to Join DOGE but No One Knows What They&rsquo;ll Do There</a>
+        <div class="blurb">The new caucus has no shortage of members &mdash; and no clear mandate.</div>
+        <a href="#" class="readmore">Read More</a>
+      </article>
+
+      <article class="brief">
+        <span class="src">NOTUS</span>
+        <a href="#" class="hl hl-sm">California Republicans Want to Claw Back Funding for Their Own State on High-Speed Rail</a>
+        <div class="blurb">A delegation split over a project that has run years behind and billions over budget.</div>
+        <a href="#" class="readmore">Read More</a>
+      </article>
+
+      <article class="brief">
+        <span class="src">NOTUS</span>
+        <a href="#" class="hl hl-sm">The Bulk of Biden&rsquo;s Infrastructure Spending Will Likely Stay Put Under Trump</a>
+        <div class="blurb">Despite the rhetoric, the money is largely committed &mdash; and hard to unwind.</div>
+        <a href="#" class="readmore">Read More</a>
+      </article>
+
+      <article class="brief">
+        <span class="src">NOTUS</span>
+        <a href="#" class="hl hl-sm">Frontline Democrats Urge Support for Jared Huffman in Natural Resources Race</a>
+        <div class="blurb">An intraparty contest tests the caucus&rsquo;s appetite for generational change.</div>
+        <a href="#" class="readmore">Read More</a>
+      </article>
+
+      <article class="brief">
+        <span class="src">NOTUS</span>
+        <a href="#" class="hl hl-sm">&lsquo;RedNote&rsquo; Becomes a &lsquo;Red Scare&rsquo;: Republicans Already Want to Ban This TikTok Alternative</a>
+        <div class="blurb">A new app, the same old national-security fight, playing out in real time.</div>
+        <a href="#" class="readmore">Read More</a>
+      </article>
+
+      <article class="brief">
+        <span class="src">NOTUS</span>
+        <a href="#" class="hl hl-sm">Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation</a>
+        <div class="blurb">Pressure builds for the release of records as the nomination fight intensifies.</div>
+        <a href="#" class="readmore">Read More</a>
+      </article>
+
+      <article class="brief">
+        <span class="src">NOTUS</span>
+        <a href="#" class="hl hl-sm">Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation</a>
+        <div class="blurb">Pressure builds for the release of records as the nomination fight intensifies.</div>
+        <a href="#" class="readmore">Read More</a>
+      </article>
+
+      <article class="brief">
+        <span class="src">NOTUS</span>
+        <a href="#" class="hl hl-sm">Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation</a>
+        <div class="blurb">Pressure builds for the release of records as the nomination fight intensifies.</div>
+        <a href="#" class="readmore">Read More</a>
+      </article>
+
+      <article class="brief">
+        <span class="src">NOTUS</span>
+        <a href="#" class="hl hl-sm">Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation</a>
+        <div class="blurb">Pressure builds for the release of records as the nomination fight intensifies.</div>
+        <a href="#" class="readmore">Read More</a>
+      </article>
     </aside>
-    </div>
+  </div>
 
   <!-- footer -->
   <footer>
@@ -414,217 +622,6 @@ footer .credits b{font-weight:700;color:var(--ink)}
   </footer>
 
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-<script>
-/* ============================================================
-   CONTENT CONFIG — fill these two lines when your URLs are ready
-   ============================================================
-   SHEET: Google Sheet → File → Share → Publish to web → CSV
-   Columns: zone | kicker | outlet | headline | description | image | credit | link
-   zone values: top-left  |  top-hero  |  top-right  |  in-photos
-   ------------------------------------------------------------ */
-var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vREyWb-4u0bziM1qlsuySsD3WuLYDKhT0o9RoP0KaQvhNLcBHTdJVCTUJ4faIKkvWV2VRtBrKJDrfPS/pub?gid=0&single=true&output=csv';
-var FEED_URL      = '/api/feed';  /* Cloudflare Pages Function — live NOTUS feed */
-var IMAGE_BASE    = 'images/';
-
-/* ── sample data (mirrors original front page; used until URLs are set) ── */
-var SAMPLE_FEATURED = [
-  {zone:'top-left', kicker:'Congress', outlet:'NOTUS',
-   headline:"Republicans Target 'RedNote' After Law Barring TikTok",
-   description:"With just a few days left before a looming ban on TikTok, users are flocking to another Chinese-based short-form-video platform: Xiaohongshu.\nLawmakers who voted to ban TikTok now say that app is also in their crosshairs.",
-   image:'', credit:'', link:'#'},
-  {zone:'top-hero', headline:'Capitol at night',
-   image:'', credit:'Photo by Mark Alfred for XXXX OUTLET', link:''},
-  {zone:'top-right', kicker:'White House',
-   headline:"'Mostly Trolling': GOP Laughs Off Trump on 'Absorbing' Canada",
-   description:"WASHINGTON \u2014 GOP lawmakers might not be sure what Donald Trump wants from them at any given moment, but he wants the United States to \u2018absorb\u2019 Canada and make it the newest state.",
-   image:'', credit:'', link:'#'},
-  {zone:'in-photos', outlet:'The Guardian',
-   headline:"Those worried about Australia's sovereign capability under Aukus miss the point.",
-   description:'', image:'', credit:'Photo by Mark Alfred for XXXX', link:'#'},
-  {zone:'in-photos', outlet:'NOTUS',
-   headline:"Trump's Final Rally \u2014 Maybe Ever \u2014 Ends With Some Reflections, Some Swears and Some Doubts",
-   description:'', image:'', credit:'Photo by Mark Alfred for XXXX', link:'#'},
-  {zone:'in-photos', outlet:'The Wall Street Journal',
-   headline:'Next Congress Likely to Tussle Over Cyber Oversight',
-   description:'', image:'', credit:'Photo by Mark Alfred for XXXX', link:'#'},
-  {zone:'in-photos', outlet:'reason',
-   headline:"Trump Repeats an 'Urban Legend' by Invoking 'Fentanyl Laced Marijuana'",
-   description:'At least he draws the right conclusion from this imaginary hazard, acknowledging the dangers created by prohibition.',
-   image:'', credit:'Photo by Mark Alfred for XXXX OUTLET', link:'#'},
-  {zone:'in-photos', outlet:'The Wall Street Journal',
-   headline:'American Personnel Abroad Face Chaos and Confusion as USAID Shuts Down',
-   description:'', image:'', credit:'Photo by Mark Alfred for XXXX', link:'#'},
-  {zone:'in-photos', outlet:'The Wall Street Journal',
-   headline:'Trump Is Changing the World Order With Unprecedented Speed',
-   description:'Global leaders, chief executives and lawmakers are navigating whipsaw changes touching healthcare, schools and the global supply chain.',
-   image:'', credit:'Photo by Mark Alfred for XXXX OUTLET', link:'#'},
-  {zone:'in-photos', outlet:'DW',
-   headline:'US Congress certifies Trump as 2024 election winner',
-   description:'', image:'', credit:'Photo by Mark Alfred for XXXX', link:'#'},
-  {zone:'in-photos', outlet:'The New York Post',
-   headline:'Millions across the US brace for plummeting temperatures and winter storms',
-   description:'', image:'', credit:'Photo by Mark Alfred for XXXX', link:'#'},
-  {zone:'in-photos', outlet:'FORTUNE',
-   headline:'Geopolitical Atlas, Indo-Pacific: An Atypical Cold War',
-   description:'', image:'', credit:'Photo by Mark Alfred for XXXX', link:'#'},
-  {zone:'in-photos', outlet:'The New York Post',
-   headline:'Trump imposes new tariffs on Mexico, Canada and China',
-   description:"Mexico and China react promptly to Trump's move.",
-   image:'', credit:'Photo by Mark Alfred for XXXX OUTLET', link:'#'}
-];
-
-var SAMPLE_LATEST = [
-  {source:'NOTUS', title:'All GOP Senators Sound Open to Kash Patel. Many Are Enthusiastic About Him.', summary:'Reporting from Capitol Hill on the confirmation fight and the senators still weighing their votes.', link:'#'},
-  {source:'NOTUS', title:"California's Disaster Insurance Problems Are a Political Nightmare for Lawmakers", summary:"A look at how the state's insurance market is reshaping the politics of climate and housing.", link:'#'},
-  {source:'NOTUS', title:"Lawmakers Scoff at Surgeon General's Call to Label Alcohol a Cancer Risk", summary:'The proposal lands with a thud on the Hill, where appetite for new warning labels is thin.', link:'#'},
-  {source:'NOTUS', title:"Lawmakers Are Flocking to Join DOGE but No One Knows What They'll Do There", summary:'The new caucus has no shortage of members \u2014 and no clear mandate.', link:'#'},
-  {source:'NOTUS', title:'California Republicans Want to Claw Back Funding for Their Own State on High-Speed Rail', summary:'A delegation split over a project that has run years behind and billions over budget.', link:'#'},
-  {source:'NOTUS', title:"The Bulk of Biden's Infrastructure Spending Will Likely Stay Put Under Trump", summary:'Despite the rhetoric, the money is largely committed \u2014 and hard to unwind.', link:'#'},
-  {source:'NOTUS', title:'Frontline Democrats Urge Support for Jared Huffman in Natural Resources Race', summary:"An intraparty contest tests the caucus's appetite for generational change.", link:'#'},
-  {source:'NOTUS', title:"'RedNote' Becomes a 'Red Scare': Republicans Already Want to Ban This TikTok Alternative", summary:'A new app, the same old national-security fight, playing out in real time.', link:'#'},
-  {source:'NOTUS', title:'Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation', summary:'Pressure builds for the release of records as the nomination fight intensifies.', link:'#'},
-  {source:'NOTUS', title:'Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation', summary:'Pressure builds for the release of records as the nomination fight intensifies.', link:'#'},
-  {source:'NOTUS', title:'Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation', summary:'Pressure builds for the release of records as the nomination fight intensifies.', link:'#'},
-  {source:'NOTUS', title:'Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation', summary:'Pressure builds for the release of records as the nomination fight intensifies.', link:'#'}
-];
-
-/* ── helpers ─────────────────────────────────────────────────────────────── */
-function esc(s){
-  return (s||'').replace(/[&<>"]/g,function(c){
-    return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
-  });
-}
-function stripHtml(h){
-  var d=document.createElement('div');d.innerHTML=h||'';
-  return(d.textContent||d.innerText||'').trim();
-}
-function imgSrc(v){
-  if(!v)return'';
-  return/^https?:\/\//.test(v)?v:IMAGE_BASE+v;
-}
-function photoBlock(ar,image,alt,credit){
-  var inner=image
-    ?('<img src="'+esc(imgSrc(image))+'" alt="'+esc(alt||'')+'">')
-    :'<span class="tag">Photograph</span>';
-  return '<div class="photo '+ar+'">'+inner+'</div>'
-    +(credit?'<div class="credit">'+esc(credit)+'</div>':'<div class="credit">&nbsp;</div>');
-}
-
-/* ── renderers ───────────────────────────────────────────────────────────── */
-function renderFold(rows){
-  var left=null,hero=null,right=null;
-  rows.forEach(function(r){
-    if(r.zone==='top-left')left=r;
-    else if(r.zone==='top-hero')hero=r;
-    else if(r.zone==='top-right')right=r;
-  });
-  function sideCol(r,isRight){
-    if(!r)return'<div class="col side"></div>';
-    var desc='';
-    (r.description||'').split('\n').forEach(function(p){
-      if(p.trim())desc+='<p>'+esc(p)+'</p>';
-    });
-    return '<div class="col side">'
-      +'<span class="kicker'+(isRight?' ink':'')+'">'+esc(r.kicker||r.outlet||'')+'</span>'
-      +'<a href="'+esc(r.link||'#')+'" class="hl hl-md">'+esc(r.headline||'')+'</a>'
-      +(desc?'<div class="body-txt">'+desc+'</div>':'')
-      +(r.link&&r.link!=='#'?'<a href="'+esc(r.link)+'" class="readmore">Read More</a>':'')
-      +'</div>';
-  }
-  var center=hero
-    ?'<div class="center">'+photoBlock('ar-wide',hero.image,hero.headline,hero.credit)+'</div>'
-    :'<div class="center"></div>';
-  document.getElementById('fold').innerHTML=sideCol(left,false)+center+sideCol(right,true);
-}
-
-function renderInPhotos(rows){
-  var items=rows.filter(function(r){return r.zone==='in-photos';});
-  var html='';
-  var splitCount=0;
-  items.forEach(function(r,i){
-    var photo=photoBlock(i%2===0?'ar-wide':'ar-sq',r.image,r.headline,r.credit);
-    if(i%2===0){
-      html+='<article class="story story-center">'
-        +photo
-        +'<span class="outlet">'+esc(r.outlet||'')+'</span>'
-        +'<a href="'+esc(r.link||'#')+'" class="hl hl-lg">'+esc(r.headline||'')+'</a>'
-        +'</article>';
-    }else{
-      var imgDiv='<div class="img">'+photo+'</div>';
-      var txtDiv='<div class="txt">'
-        +'<span class="outlet">'+esc(r.outlet||'')+'</span>'
-        +'<a href="'+esc(r.link||'#')+'" class="hl hl-md">'+esc(r.headline||'')+'</a>'
-        +(r.description?'<div class="body-txt">'+esc(r.description)+'</div>':'')
-        +(r.link?'<a href="'+esc(r.link)+'" class="readmore" target="_blank" rel="noopener">Read The Story</a>':'')
-        +'</div>';
-      var photoLeft=(splitCount%2===0);splitCount++;
-      html+='<article class="story"><div class="split">'
-        +(photoLeft?imgDiv+txtDiv:txtDiv+imgDiv)
-        +'</div></article>';
-    }
-  });
-  document.getElementById('inphotos').innerHTML=html;
-}
-
-function renderLatest(items){
-  document.getElementById('latest').innerHTML=items.map(function(it){
-    var summary=stripHtml(it.summary||it.description||'');
-    if(summary.length>160)summary=summary.slice(0,157)+'...';
-    return'<article class="brief">'
-      +'<span class="src">'+esc(it.source||it.outlet||'')+'</span>'
-      +'<a href="'+esc(it.link||'#')+'" class="hl hl-sm" target="_blank" rel="noopener">'+esc(it.title||'')+'</a>'
-      +(summary?'<div class="blurb">'+esc(summary)+'</div>':'')
-      +'<a href="'+esc(it.link||'#')+'" class="readmore" target="_blank" rel="noopener">Read More</a>'
-      +'</article>';
-  }).join('');
-}
-
-/* ── data loaders ────────────────────────────────────────────────────────── */
-function normalizeRow(o){
-  var r={};
-  Object.keys(o).forEach(function(k){
-    r[String(k).trim().toLowerCase()]=(o[k]==null?'':String(o[k]).trim());
-  });
-  return r;
-}
-
-function loadFeatured(){
-  if(!SHEET_CSV_URL)return Promise.resolve(SAMPLE_FEATURED);
-  return new Promise(function(resolve){
-    Papa.parse(SHEET_CSV_URL,{
-      download:true,header:true,skipEmptyLines:true,
-      complete:function(r){resolve(r.data.map(normalizeRow));},
-      error:function(){resolve(SAMPLE_FEATURED);}
-    });
-  });
-}
-
-function loadLatest(){
-  if(!FEED_URL)return Promise.resolve(SAMPLE_LATEST);
-  return fetch(FEED_URL)
-    .then(function(r){return r.json();})
-    .then(function(data){
-      var items=Array.isArray(data)?data:(data.items||[]);
-      return items.map(function(it){
-        return{
-          source:it.source||it.author||it.feed_title||'',
-          title:it.title||'',
-          summary:it.description||it.summary||it.content_text||'',
-          link:it.link||it.url||'#'
-        };
-      });
-    })
-    .catch(function(){return SAMPLE_LATEST;});
-}
-
-/* ── init ────────────────────────────────────────────────────────────────── */
-loadFeatured().then(function(featured){
-  renderFold(featured);
-  renderInPhotos(featured);
-});
-loadLatest().then(renderLatest);
-</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a00d1823d826c97f',t:'MTc3OTYzNDAzMw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"d5365105563a4a4ca6b984abc2e8bcd7","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
