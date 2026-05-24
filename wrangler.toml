@@ -1,12 +1,8 @@
 name = "markalfred"
-type = "javascript"
 main = "functions/api/feed.js"
+compatibility_date = "2026-05-24"
 
 [env.production]
 routes = [
   { pattern = "markalfred.me/*", zone_name = "markalfred.me" }
 ]
-
-[build]
-command = ""
-cwd = ""
