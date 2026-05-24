@@ -630,7 +630,7 @@ renderLatest(FALLBACK);
 })();
 
 // Override with sheet data when ready (expects section, outlet, kicker, image, caption, headline, subhead, body, link, layout columns)
-var SHEET_CSV = 'https://docs.google.com/spreadsheets/d/15G0ycatOCTQCh4Ai44TsQPgW-WC1XbPveEsB-U-0aCE/export?format=csv';
+var SHEET_CSV = 'https://docs.google.com/spreadsheets/d/1RM6u8XWMbiHNGd28FC1sWYGEpufMEi3i6UdWRqnle-M/export?format=csv';
 fetch(SHEET_CSV)
   .then(function(r){ return r.text(); })
   .then(function(text) {
