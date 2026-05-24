@@ -1,0 +1,8 @@
+name = "mark-alfred-news"
+main = "index.js"
+type = "javascript"
+
+[env.production]
+routes = [
+  { pattern = "example.com", zone_name = "example.com" }
+]
