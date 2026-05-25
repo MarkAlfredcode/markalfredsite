@@ -200,12 +200,6 @@ a.hl:hover{color:var(--red)}
     radial-gradient(circle at 75% 70%, #b7b2a6 0%, transparent 60%),
     linear-gradient(135deg,#b9b4a7,#9a958a);
 }
-.photo::after{
-  content:"";position:absolute;inset:0;opacity:.5;mix-blend-mode:multiply;
-  background-image:radial-gradient(var(--ink) .5px, transparent .6px);
-  background-size:4px 4px;
-}
-.photo:has(img)::after{display:none}
 .photo:has(img){background:none}
 .photo .tag{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
