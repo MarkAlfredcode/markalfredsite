@@ -205,6 +205,8 @@ a.hl:hover{color:var(--red)}
   background-image:radial-gradient(var(--ink) .5px, transparent .6px);
   background-size:4px 4px;
 }
+.photo:has(img)::after{display:none}
+.photo:has(img){background:none}
 .photo .tag{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   font-family:"Archivo",sans-serif;font-size:10px;font-weight:600;
