@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exclusives — Mark Alfred Dot News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── subpage layout ── */
+.page-hero{
+  display:grid;
+  grid-template-columns:1.6fr 1fr;
+  align-items:stretch;
+  border-bottom:3px double var(--rule);
+  padding-bottom:22px;
+}
+.hero-left{
+  display:flex;
+  flex-direction:column;
+  border-right:1px solid var(--rule);
+  padding-right:20px;
+}
+.section-tag{
+  display:block;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(44px,6vw,70px);
+  font-weight:700;
+  line-height:.9;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  -webkit-text-stroke:.5px var(--ink);
+  text-stroke:.5px var(--ink);
+  paint-order:stroke fill;
+  padding:14px 0 10px;
+  text-transform:uppercase;
+  position:relative;
+  z-index:0;
+}
+.hero-photo{
+  width:100%;
+  aspect-ratio:3/2;
+  position:relative;
+  z-index:2;
+  margin-top:-28px;
+}
+.v-credit{
+  position:absolute;
+  left:5px;
+  bottom:10px;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+  font-family:"Archivo",sans-serif;
+  font-size:8.5px;
+  color:rgba(22,19,12,.45);
+  letter-spacing:.05em;
+  white-space:nowrap;
+  z-index:2;
+}
+.hero-right{
+  padding-left:20px;
+  display:flex;
+  flex-direction:column;
+}
+.hero-hed{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:14px 4px;
+  border-bottom:1px solid var(--rule-soft);
+}
+.hero-hed:last-child{border-bottom:none}
+.hero-hed.lead{align-items:flex-start;justify-content:flex-start;text-align:left;}
+.hero-hed.lead .hero-deck{text-align:left;}
+.hero-hed.lead .readmore{align-self:center;margin-top:12px;}
+.hero-hed .hl{display:block}
+.hero-hed.lead .hl{font-size:clamp(17px,1.9vw,22px)}
+.hero-hed .hl{font-size:clamp(15px,1.7vw,20px)}
+
+/* exclusive badge */
+.kicker.excl{
+  background:var(--red);
+  color:#fff;
+  padding:2px 7px;
+  display:inline-block;
+  margin-bottom:7px;
+  font-size:10px;
+  letter-spacing:.15em;
+}
+
+/* ── story rows ── */
+.page-story{
+  display:grid;
+  grid-template-columns:1fr 1.6fr;
+  gap:28px;
+  padding:22px 0;
+  border-bottom:1px solid var(--rule);
+  align-items:start;
+}
+.page-story:last-child{border-bottom:none}
+.s-txt .s-hl{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(18px,2vw,23px);
+  font-weight:400;
+  line-height:1.1;
+  letter-spacing:-0.01em;
+  color:var(--ink);
+  text-decoration:none;
+  display:block;
+  margin-bottom:9px;
+  -webkit-text-stroke:.6px currentColor;
+  text-stroke:.6px currentColor;
+  paint-order:stroke fill;
+  transition:color .15s;
+}
+.s-txt .s-hl:hover{color:var(--red)}
+.s-txt .body-txt{margin-top:0}
+.s-img .credit{margin-top:3px}
+nav a{color:var(--muted)}
+nav a:hover{color:var(--red)}
+.social a{border-color:var(--rule-soft)}
+
+@media(max-width:860px){
+  .page-hero{grid-template-columns:1fr}
+  .hero-left{border-right:none;padding-right:0;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+  .hero-right{padding-left:0;padding-top:14px}
+  .page-story{grid-template-columns:1fr;gap:14px}
+  .s-img{order:-1}
+}
+.masthead-sm{
+  font-family:"Chomsky",serif;
+  font-size:clamp(18px,2.4vw,28px);
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1;
+  text-align:center;
+  text-transform:none;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  white-space:nowrap;
+}
+.masthead-sm a{color:var(--ink);text-decoration:none}
+.hero-deck{
+  font-size:13px;
+  line-height:1.42;
+  color:var(--ink-soft);
+  margin-top:8px;
+  text-align:center;
+  hyphens:auto;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="utility">
+    <div class="date">For the first and only time it is<br><span id="js-date"></span></div>
+    <div class="masthead-sm"><a href="index.html">Mark Alfred Dot News</a></div>
+    <div class="day" id="js-day"></div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="news.html">News</a></li>
+      <li><a href="photojournalism.html">Photojournalism</a></li>
+      <li><a href="exclusives.html" style="color:var(--red)">Exclusives</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <div class="social">
+      <a href="#" title="X" aria-label="X">𝕏</a>
+      <a href="https://www.notus.org/mark-alfred" title="NOTUS" aria-label="NOTUS">N</a>
+      <a href="https://www.linkedin.com/in/mark-alfred/" title="LinkedIn" aria-label="LinkedIn">in</a>
+    </div>
+    <ul>
+      <li><a href="#">The Star</a></li>
+      <li><a href="#">Politics</a></li>
+      <li><a href="#">Trump</a></li>
+      <li><a href="#">Local</a></li>
+      <li><a href="#">Games</a></li>
+      <li><a href="#">Send a News Tip</a></li>
+    </ul>
+  </nav>
+
+  <!-- hero: section tag + image LEFT | 3 headlines RIGHT -->
+  <div class="page-hero">
+    <div class="hero-left">
+      <span class="section-tag">Exclusives</span>
+      <div class="photo hero-photo">
+        <span class="tag">Photograph</span>
+        <span class="v-credit">Photo by Mark Alfred / NOTUS</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-hed lead">
+        <span class="kicker excl">Exclusive</span>
+        <a class="hl" href="#">The Bulk of Biden's Infrastructure Spending Will Likely Be Put Under Trump</a>
+        <p class="hero-deck">Corner spent more than a year investigating how the Biden administration structured its signature infrastructure law in ways that leave the bulk of unspent funds exposed to executive rescission or redirection.</p>
+              <a class="readmore" href="#">Read More</a>
+      </div>
+      <div class="hero-hed">
+        <a class="hl" href="#">Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation</a>
+              <a class="readmore" href="#">Read More</a>
+      </div>
+      <div class="hero-hed">
+        <a class="hl" href="#">'RedNote' Becomes a 'Red Scare': Republicans Already Want to Ban This TikTok Alternative</a>
+              <a class="readmore" href="#">Read More</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- story rows: text LEFT | image RIGHT -->
+  <div class="page-stories">
+
+    <div class="page-story">
+      <div class="s-txt">
+        <span class="kicker excl">Exclusive</span>
+        <a class="s-hl" href="#">Frontline Democrats Urge Support for Jared Huffman in Natural Resources Race</a>
+        <p class="body-txt">A bloc of vulnerable House Democrats is quietly pressing leadership to back their preferred candidate ahead of a closely watched committee election that could shape the party's environmental agenda for years.</p>
+        <a class="readmore" href="#">Read More</a>
+      </div>
+      <div class="s-img">
+        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+        <div class="credit">Photo by Mark Alfred / NOTUS</div>
+      </div>
+    </div>
+
+    <div class="page-story">
+      <div class="s-txt">
+        <span class="kicker excl">Exclusive</span>
+        <a class="s-hl" href="#">California Republicans Want to Claw Back Funding for Their Own State on High-Speed Rail</a>
+        <p class="body-txt">A faction of House Republicans from California is pressing to redirect billions away from the state's beleaguered rail project, creating an unusual intraparty rift with Sacramento over how to use federal infrastructure dollars.</p>
+        <a class="readmore" href="#">Read More</a>
+      </div>
+      <div class="s-img">
+        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+        <div class="credit">Photo by Mark Alfred / NOTUS</div>
+      </div>
+    </div>
+
+    <div class="page-story">
+      <div class="s-txt">
+        <span class="kicker excl">Exclusive</span>
+        <a class="s-hl" href="#">Lawmakers Scoff at Surgeon General's Bid to Label Alcohol a Cancer Risk</a>
+        <p class="body-txt">The advisory, which recommended warning labels on alcohol, landed to immediate skepticism on both sides of the aisle. Members questioned the science and the political timing heading into a crowded legislative calendar.</p>
+        <a class="readmore" href="#">Read More</a>
+      </div>
+      <div class="s-img">
+        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+        <div class="credit">Photo by Mark Alfred / NOTUS</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="wordmark">Mark Alfred Dot News</div>
+    <div class="credits">Designed and Developed by <b>Mark Alfred</b></div>
+  </footer>
+
+</div>
+<script>
+(function(){
+  var now=new Date();
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var e=document.getElementById('js-date');
+  var d=document.getElementById('js-day');
+  if(e) e.textContent=months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
+  if(d) d.textContent=days[now.getDay()].toUpperCase();
+})();
+</script>
+</body>
+</html>
