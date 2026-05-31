@@ -223,101 +223,101 @@ nav a:hover{color:var(--red)}
   if(d) d.textContent=days[now.getDay()].toUpperCase();
 })();
 
-function esc(s){return(s||’’).replace(/&/g,’&amp;’).replace(/</g,’&lt;’).replace(/>/g,’&gt;’).replace(/"/g,’&quot;’);}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 // Rows are positional: 0=hero-lead, 1=hero-2, 2=hero-3, 3+=story rows
 function renderHero(rows){
   var lead=rows[0],h2=rows[1],h3=rows[2];
   if(lead){
-    var hp=document.querySelector(‘.hero-photo’);
+    var hp=document.querySelector('.hero-photo');
     if(hp){
       if(lead.image){
-        hp.innerHTML=’<img src="’+esc(lead.image)+’" alt="’+esc(lead.caption||’’)+’" style="width:100%;height:100%;object-fit:cover;display:block;">’
-          +(lead.caption?’<span class="v-credit">’+esc(lead.caption)+’</span>’:’’);
+        hp.innerHTML='<img src="'+esc(lead.image)+'" alt="'+esc(lead.caption||'')+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
+          +(lead.caption?'<span class="v-credit">'+esc(lead.caption)+'</span>':'');
       } else {
-        var vc=hp.querySelector(‘.v-credit’);
+        var vc=hp.querySelector('.v-credit');
         if(vc&&lead.caption) vc.textContent=lead.caption;
       }
     }
-    var lh=document.querySelector(‘.hero-hed.lead’);
+    var lh=document.querySelector('.hero-hed.lead');
     if(lh) lh.innerHTML=
-      ‘<span class="kicker excl">Exclusive</span>’+
-      ‘<a class="hl" href="’+esc(lead.link||’#’)+’">’+lead.headline+’</a>’+
-      (lead.body?’<p class="hero-deck">’+esc(lead.body)+’</p>’:’’)+
-      ‘<a class="readmore" href="’+esc(lead.link||’#’)+’">Read More</a>’;
+      '<span class="kicker excl">Exclusive</span>'+
+      '<a class="hl" href="'+esc(lead.link||'#')+'">'+lead.headline+'</a>'+
+      (lead.body?'<p class="hero-deck">'+esc(lead.body)+'</p>':'')+
+      '<a class="readmore" href="'+esc(lead.link||'#')+'">Read More</a>';
   }
-  var heds=document.querySelectorAll(‘.hero-hed:not(.lead)’);
+  var heds=document.querySelectorAll('.hero-hed:not(.lead)');
   if(h2&&heds[0]) heds[0].innerHTML=
-    ‘<a class="hl" href="’+esc(h2.link||’#’)+’">’+h2.headline+’</a>’+
-    ‘<a class="readmore" href="’+esc(h2.link||’#’)+’">Read More</a>’;
+    '<a class="hl" href="'+esc(h2.link||'#')+'">'+h2.headline+'</a>'+
+    '<a class="readmore" href="'+esc(h2.link||'#')+'">Read More</a>';
   if(h3&&heds[1]) heds[1].innerHTML=
-    ‘<a class="hl" href="’+esc(h3.link||’#’)+’">’+h3.headline+’</a>’+
-    ‘<a class="readmore" href="’+esc(h3.link||’#’)+’">Read More</a>’;
+    '<a class="hl" href="'+esc(h3.link||'#')+'">'+h3.headline+'</a>'+
+    '<a class="readmore" href="'+esc(h3.link||'#')+'">Read More</a>';
 }
 
 function renderStories(rows){
   var stories=rows.slice(3);
-  var container=document.querySelector(‘.page-stories’);
+  var container=document.querySelector('.page-stories');
   if(!container||!stories.length) return;
-  container.innerHTML=’’;
+  container.innerHTML='';
   stories.forEach(function(item){
     var imgHTML=item.image
-      ?’<img src="’+esc(item.image)+’" alt="’+esc(item.headline)+’" style="width:100%;max-height:200px;display:block;object-fit:cover;">’
-      :’<div class="photo ar-sq"><span class="tag">Photograph</span></div>’;
-    var creditHTML=item.caption?’<div class="credit">’+esc(item.caption)+’</div>’:’’;
-    var div=document.createElement(‘div’);
-    div.className=’page-story’;
+      ?'<img src="'+esc(item.image)+'" alt="'+esc(item.headline)+'" style="width:100%;max-height:200px;display:block;object-fit:cover;">'
+      :'<div class="photo ar-sq"><span class="tag">Photograph</span></div>';
+    var creditHTML=item.caption?'<div class="credit">'+esc(item.caption)+'</div>':'';
+    var div=document.createElement('div');
+    div.className='page-story';
     div.innerHTML=
-      ‘<div class="s-txt">’+
-        ‘<span class="kicker excl">Exclusive</span>’+
-        ‘<a class="s-hl" href="’+esc(item.link||’#’)+’">’+item.headline+’</a>’+
-        (item.body?’<p class="body-txt">’+item.body+’</p>’:’’)+
-        ‘<a class="readmore" href="’+esc(item.link||’#’)+’">Read More</a>’+
-      ‘</div>’+
-      ‘<div class="s-img">’+imgHTML+creditHTML+’</div>’;
+      '<div class="s-txt">'+
+        '<span class="kicker excl">Exclusive</span>'+
+        '<a class="s-hl" href="'+esc(item.link||'#')+'">'+item.headline+'</a>'+
+        (item.body?'<p class="body-txt">'+item.body+'</p>':'')+
+        '<a class="readmore" href="'+esc(item.link||'#')+'">Read More</a>'+
+      '</div>'+
+      '<div class="s-img">'+imgHTML+creditHTML+'</div>';
     container.appendChild(div);
   });
 }
 
 function parseCSV(text){
-  var lines=text.trim().split(‘\n’);
-  var headers=lines[0].split(‘,’).map(function(h){return h.trim().replace(/^"|"$/g,’’);});
+  var lines=text.trim().split('\n');
+  var headers=lines[0].split(',').map(function(h){return h.trim().replace(/^"|"$/g,'');});
   return lines.slice(1).map(function(line){
-    var vals=[],cur=’’,inQ=false;
+    var vals=[],cur='',inQ=false;
     for(var i=0;i<line.length;i++){
       var c=line[i];
-      if(c===’"’){inQ=!inQ;}
-      else if(c===’,’&&!inQ){vals.push(cur.trim().replace(/^"|"$/g,’’));cur=’’;}
+      if(c==='"'){inQ=!inQ;}
+      else if(c===','&&!inQ){vals.push(cur.trim().replace(/^"|"$/g,''));cur='';}
       else{cur+=c;}
     }
-    vals.push(cur.trim().replace(/^"|"$/g,’’));
+    vals.push(cur.trim().replace(/^"|"$/g,''));
     var obj={};
-    headers.forEach(function(h,i){obj[h]=vals[i]||’’;});
+    headers.forEach(function(h,i){obj[h]=vals[i]||'';});
     return obj;
   });
 }
 
-var S3=’https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/’;
+var S3='https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/';
 var FALLBACK=[
-  {outlet:’NOTUS’,kicker:’Trump White House’,image:S3+’25/e3/181a3f444fcda77babed56d142ff/ap25057685054523.jpg’,caption:’President Donald Trump listens during a Cabinet meeting at the White House. (AP)’,headline:"Trump Wanted ‘More Action Against Universities.’ His Staff Scrambled to Punish Penn.",body:’Internal White House emails reveal a frenzied campaign to strip federal funds from Penn — and target another university the administration never publicized.’,link:’https://www.notus.org/trump-white-house/white-house-penn-funding-cut-san-jose-state-secret-internal-emails’},
-  {outlet:’NOTUS’,kicker:’Congress’,image:S3+’9f/d4/a446c72044dbab68478976e51ed6/ap25051660756934.jpg’,caption:’Jacquelyn Martin/AP’,headline:’The People Running the Government Are Letting It All Hang Out on Venmo’,link:’https://www.notus.org/congress/people-running-government-public-venmo-white-house’},
-  {outlet:’NOTUS’,kicker:’Policy’,image:S3+’f4/fb/06f8144346e5ad54af8c952e014b/ap25072633312408.jpg’,caption:’Jose Luis Magana/AP’,headline:"Nearly a Billion Dollars in DOGE ‘Savings’ Disappeared Overnight",link:’https://www.notus.org/policy/doge-claimed-savings-removed’},
-  {outlet:’NOTUS’,kicker:’Policy’,image:S3+’c4/71/ed163fc144bf907ff2ac6b0abfa6/ap25141641957566.jpg’,caption:’Aaron Schwartz/Sipa USA via AP’,headline:"Inside DOGE’s EPA Team and Its Multimillion-Dollar Mistakes",body:’Internal emails paint the clearest picture to date of the Environmental Protection Agency’s full-throated embrace of DOGE and its subsequent stumbles.’,link:’https://www.notus.org/policy/doge-environmental-protection-agency-mistakes’},
-  {outlet:’NOTUS’,kicker:’Donald Trump’,image:S3+’e9/86/7d019e0d48738e7cc40de33c44c4/ap25294765829536.jpg’,caption:’Manuel Balce Ceneta/AP’,headline:’Trump Will Fund New Archway With $15 Million From the National Endowment for the Humanities’,body:’A spending plan confirms taxpayer dollars will be used for the project.’,link:’https://www.notus.org/donald-trump/trump-arch-taxpayer-funds’},
-  {outlet:’NOTUS’,kicker:’Congress’,image:S3+’df/81/3e93e5bf4367b683da8e5ad7c66e/congress-native-americans-22087591531401.jpg’,caption:’J. Scott Applewhite/AP’,headline:"Raúl Grijalva Is Running to Lead Natural Resources Again. Democrats Say He’s Not Up to the Job.",body:’Three weeks ago, Rep. Raúl Grijalva wrote a letter to Democrats on the Natural Resources Committee saying he fully intends on leading the panel again next Congress.’,link:’https://www.notus.org/congress/raul-grijalva-natural-resources-democrats-jared-huffman’},
-  {outlet:’NOTUS’,kicker:’2026 Election’,image:S3+’e6/8c/7db2da6c4887806de53b3b5edf9e/ap20213480536288.jpg’,caption:’Tom Williams/AP’,headline:"How a Democrat Touts Her ‘Grassroots Campaign’ That’s Mostly Corporate Support",body:’Major corporations, not small-dollar donors, fuel Rep. Linda Sánchez’s reelection campaign.’,link:’https://www.notus.org/2026-election/linda-sanchez-grassroots-money-campaign’},
-  {outlet:’NOTUS’,kicker:’Trump White House’,image:S3+’56/e5/b6c7b99747029fc66bd2175e9072/ap25149753646421.jpg’,caption:’Francis Chung/POLITICO/AP’,headline:’How A 25-Year-Old DOGE Staffer Set Policy at USDA’,body:’New court documents show how an effort to slash climate-related funds played out at one agency.’,link:’https://www.notus.org/trump-white-house/doge-gavin-kliger-us-department-of-agriculture-climate-policy’},
-  {outlet:’NOTUS’,kicker:’Trump White House’,image:S3+’bb/1f/8b219f6b4b628fce46c4c63c8cca/dc-u-s-congress-senate-appropriations-committee-he-25176770447108.jpg’,caption:’Graeme Sloan/Sipa USA via AP’,headline:’Billions in Taxpayer Dollars Have Become Virtually Untraceable’,body:"The Trump administration’s aggressive approach to overhauling the executive branch has obscured how federal dollars are actually being spent — even for members of Congress.",link:’https://www.notus.org/trump-white-house/billions-taxpayer-dollars-virtually-untraceable-appropriations-trump-omb-russ-vought’},
-  {outlet:’NOTUS’,kicker:’Health & Science’,image:S3+’ce/88/e2f4215240f2b1f23f18af034f8e/ap25053789860117.jpg’,caption:’John McDonnell/AP’,headline:"The Trump Administration Cut Cancer and Alzheimer’s Research Funding at Columbia University",body:’His administration terminated a $5 million grant to the Herbert Irving Comprehensive Cancer Center — and listed the exact dollar amount among DOGE’s “savings.”’,link:’https://www.notus.org/health-science/columbia-university-grant-cuts’},
-  {outlet:’NOTUS’,kicker:’Policy’,image:S3+’e1/ae/cb126bc9464f8d381323bac674f4/ap25120619379198.jpg’,caption:’Evan Vucci/AP’,headline:’DOGE Vastly Overstated Its Real Estate Cuts — Then Spent Two Months Backtracking’,body:’DOGE took credit for more than $600 million in real estate savings but has repeatedly cut back its own claims.’,link:’https://www.notus.org/policy/doge-claimed-savings-real-estate-changing-numbers’},
-  {outlet:’NOTUS’,kicker:’White House’,image:S3+’9c/01/c0ee2aab4b16990ed0f1d30b5357/trump-25043089627387.jpg’,caption:’Alex Brandon/AP’,headline:’DOGE Posts — Then Redacts — What Appears to Be Sensitive HUD Contract Data’,body:’Despite DOGE’s attempt to redact the information, it is still readily visible in the post on X.’,link:’https://www.notus.org/whitehouse/doge-posts-then-redacts-sensitive-hud-contract-data’},
-  {outlet:’NOTUS’,kicker:’Money’,image:S3+’60/e7/29270b62464ba7227af26af50dd6/screenshot-2026-04-16-at-2-43-36-pm.png’,caption:’Screenshot courtesy of C-SPAN’,headline:’High-Ranking Treasury Official Personally Invested in Oil, Nuclear Funds Days Before Iran War Began’,body:’Assistant Secretary Jonathan Burke selected the funds on Feb. 20 after he was required to offload his existing investments.’,link:’https://www.notus.org/money/treasury-jonathan-burke-personal-investments-oil-nuclear-cyber-war-iran’},
-  {outlet:’NOTUS’,kicker:’Money’,image:S3+’25/8f/2e5230b34453a3d8758e32406bf5/ap26316100495.jpeg’,caption:’Larry MacDougal/AP’,headline:’FAA Chief Dumps Millions in Airline Stock Months After His Ethics Agreement Deadline’,body:’Bryan Bedford held a multimillion-dollar stake in an airline company his agency oversees.’,link:’https://www.notus.org/money/bryan-bedford-faa-republic-stock-sale-aviation’}
+  {outlet:'NOTUS',kicker:'Trump White House',image:S3+'25/e3/181a3f444fcda77babed56d142ff/ap25057685054523.jpg',caption:'President Donald Trump listens during a Cabinet meeting at the White House. (AP)',headline:"Trump Wanted 'More Action Against Universities.' His Staff Scrambled to Punish Penn.",body:'Internal White House emails reveal a frenzied campaign to strip federal funds from Penn — and target another university the administration never publicized.',link:'https://www.notus.org/trump-white-house/white-house-penn-funding-cut-san-jose-state-secret-internal-emails'},
+  {outlet:'NOTUS',kicker:'Congress',image:S3+'9f/d4/a446c72044dbab68478976e51ed6/ap25051660756934.jpg',caption:'Jacquelyn Martin/AP',headline:'The People Running the Government Are Letting It All Hang Out on Venmo',link:'https://www.notus.org/congress/people-running-government-public-venmo-white-house'},
+  {outlet:'NOTUS',kicker:'Policy',image:S3+'f4/fb/06f8144346e5ad54af8c952e014b/ap25072633312408.jpg',caption:'Jose Luis Magana/AP',headline:"Nearly a Billion Dollars in DOGE 'Savings' Disappeared Overnight",link:'https://www.notus.org/policy/doge-claimed-savings-removed'},
+  {outlet:'NOTUS',kicker:'Policy',image:S3+'c4/71/ed163fc144bf907ff2ac6b0abfa6/ap25141641957566.jpg',caption:'Aaron Schwartz/Sipa USA via AP',headline:"Inside DOGE's EPA Team and Its Multimillion-Dollar Mistakes",body:'Internal emails paint the clearest picture to date of the Environmental Protection Agency's full-throated embrace of DOGE and its subsequent stumbles.',link:'https://www.notus.org/policy/doge-environmental-protection-agency-mistakes'},
+  {outlet:'NOTUS',kicker:'Donald Trump',image:S3+'e9/86/7d019e0d48738e7cc40de33c44c4/ap25294765829536.jpg',caption:'Manuel Balce Ceneta/AP',headline:'Trump Will Fund New Archway With $15 Million From the National Endowment for the Humanities',body:'A spending plan confirms taxpayer dollars will be used for the project.',link:'https://www.notus.org/donald-trump/trump-arch-taxpayer-funds'},
+  {outlet:'NOTUS',kicker:'Congress',image:S3+'df/81/3e93e5bf4367b683da8e5ad7c66e/congress-native-americans-22087591531401.jpg',caption:'J. Scott Applewhite/AP',headline:"Raúl Grijalva Is Running to Lead Natural Resources Again. Democrats Say He's Not Up to the Job.",body:'Three weeks ago, Rep. Raúl Grijalva wrote a letter to Democrats on the Natural Resources Committee saying he fully intends on leading the panel again next Congress.',link:'https://www.notus.org/congress/raul-grijalva-natural-resources-democrats-jared-huffman'},
+  {outlet:'NOTUS',kicker:'2026 Election',image:S3+'e6/8c/7db2da6c4887806de53b3b5edf9e/ap20213480536288.jpg',caption:'Tom Williams/AP',headline:"How a Democrat Touts Her 'Grassroots Campaign' That's Mostly Corporate Support",body:'Major corporations, not small-dollar donors, fuel Rep. Linda Sánchez's reelection campaign.',link:'https://www.notus.org/2026-election/linda-sanchez-grassroots-money-campaign'},
+  {outlet:'NOTUS',kicker:'Trump White House',image:S3+'56/e5/b6c7b99747029fc66bd2175e9072/ap25149753646421.jpg',caption:'Francis Chung/POLITICO/AP',headline:'How A 25-Year-Old DOGE Staffer Set Policy at USDA',body:'New court documents show how an effort to slash climate-related funds played out at one agency.',link:'https://www.notus.org/trump-white-house/doge-gavin-kliger-us-department-of-agriculture-climate-policy'},
+  {outlet:'NOTUS',kicker:'Trump White House',image:S3+'bb/1f/8b219f6b4b628fce46c4c63c8cca/dc-u-s-congress-senate-appropriations-committee-he-25176770447108.jpg',caption:'Graeme Sloan/Sipa USA via AP',headline:'Billions in Taxpayer Dollars Have Become Virtually Untraceable',body:"The Trump administration's aggressive approach to overhauling the executive branch has obscured how federal dollars are actually being spent — even for members of Congress.",link:'https://www.notus.org/trump-white-house/billions-taxpayer-dollars-virtually-untraceable-appropriations-trump-omb-russ-vought'},
+  {outlet:'NOTUS',kicker:'Health & Science',image:S3+'ce/88/e2f4215240f2b1f23f18af034f8e/ap25053789860117.jpg',caption:'John McDonnell/AP',headline:"The Trump Administration Cut Cancer and Alzheimer's Research Funding at Columbia University",body:'His administration terminated a $5 million grant to the Herbert Irving Comprehensive Cancer Center — and listed the exact dollar amount among DOGE's "savings."',link:'https://www.notus.org/health-science/columbia-university-grant-cuts'},
+  {outlet:'NOTUS',kicker:'Policy',image:S3+'e1/ae/cb126bc9464f8d381323bac674f4/ap25120619379198.jpg',caption:'Evan Vucci/AP',headline:'DOGE Vastly Overstated Its Real Estate Cuts — Then Spent Two Months Backtracking',body:'DOGE took credit for more than $600 million in real estate savings but has repeatedly cut back its own claims.',link:'https://www.notus.org/policy/doge-claimed-savings-real-estate-changing-numbers'},
+  {outlet:'NOTUS',kicker:'White House',image:S3+'9c/01/c0ee2aab4b16990ed0f1d30b5357/trump-25043089627387.jpg',caption:'Alex Brandon/AP',headline:'DOGE Posts — Then Redacts — What Appears to Be Sensitive HUD Contract Data',body:'Despite DOGE's attempt to redact the information, it is still readily visible in the post on X.',link:'https://www.notus.org/whitehouse/doge-posts-then-redacts-sensitive-hud-contract-data'},
+  {outlet:'NOTUS',kicker:'Money',image:S3+'60/e7/29270b62464ba7227af26af50dd6/screenshot-2026-04-16-at-2-43-36-pm.png',caption:'Screenshot courtesy of C-SPAN',headline:'High-Ranking Treasury Official Personally Invested in Oil, Nuclear Funds Days Before Iran War Began',body:'Assistant Secretary Jonathan Burke selected the funds on Feb. 20 after he was required to offload his existing investments.',link:'https://www.notus.org/money/treasury-jonathan-burke-personal-investments-oil-nuclear-cyber-war-iran'},
+  {outlet:'NOTUS',kicker:'Money',image:S3+'25/8f/2e5230b34453a3d8758e32406bf5/ap26316100495.jpeg',caption:'Larry MacDougal/AP',headline:'FAA Chief Dumps Millions in Airline Stock Months After His Ethics Agreement Deadline',body:'Bryan Bedford held a multimillion-dollar stake in an airline company his agency oversees.',link:'https://www.notus.org/money/bryan-bedford-faa-republic-stock-sale-aviation'}
 ];
 renderHero(FALLBACK);
 renderStories(FALLBACK);
 
-var SHEET_CSV=’https://docs.google.com/spreadsheets/d/e/2PACX-1vTxG1-O_pAnuEfQPqHRHacye8pBf0dN3NHzITJdchGEeM_7xVjVJavZ7zBsvrJtSfumMFCs-jRn8jrl/pub?gid=2100641153&single=true&output=csv’;
+var SHEET_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vTxG1-O_pAnuEfQPqHRHacye8pBf0dN3NHzITJdchGEeM_7xVjVJavZ7zBsvrJtSfumMFCs-jRn8jrl/pub?gid=2100641153&single=true&output=csv';
 fetch(SHEET_CSV)
   .then(function(r){return r.text();})
   .then(function(text){
@@ -327,7 +327,7 @@ fetch(SHEET_CSV)
       renderStories(rows);
     }
   })
-  .catch(function(e){console.error(‘Sheet load failed:’,e);});
+  .catch(function(e){console.error('Sheet load failed:',e);});
 </script>
 </body>
 </html>
