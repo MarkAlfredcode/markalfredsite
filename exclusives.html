@@ -170,34 +170,11 @@ nav a:hover{color:var(--red)}
   color:rgba(255,255,255,.55);z-index:4;
 }
 
-/* stories + gallery two-column */
+/* stories full-width */
 .stories-wrap{
-  display:grid;grid-template-columns:1fr 280px;gap:40px;align-items:start;
   padding-top:22px;
 }
 .page-stories{padding-top:0}
-.gallery-rail{border-left:1px solid var(--rule-soft);padding-left:24px}
-.rail-head{
-  font-family:"Libre Caslon Text",serif;font-style:italic;
-  font-size:13px;color:var(--ink-soft);margin:0 0 18px;
-  padding-bottom:10px;border-bottom:1px solid var(--rule-soft);
-}
-.gallery-item{
-  padding-bottom:22px;margin-bottom:22px;
-  border-bottom:1px solid var(--rule-soft);
-}
-.gallery-item:last-child{border-bottom:none;margin-bottom:0}
-.gallery-item img{width:100%;max-height:160px;object-fit:cover;display:block;margin-bottom:6px;}
-.gallery-caption{font-family:"Archivo",sans-serif;font-size:9.5px;color:var(--muted);margin-bottom:6px;}
-.gallery-hl{
-  font-family:Georgia,"Times New Roman",serif;font-size:clamp(14px,1.4vw,17px);
-  font-weight:400;line-height:1.2;color:var(--ink);text-decoration:none;display:block;
-}
-.gallery-hl:hover{color:var(--red)}
-@media(max-width:860px){
-  .stories-wrap{grid-template-columns:1fr}
-  .gallery-rail{border-left:none;padding-left:0;border-top:1px solid var(--rule-soft);padding-top:22px;}
-}
 .hero-deck{
   font-size:13px;
   line-height:1.42;
@@ -254,13 +231,9 @@ nav a:hover{color:var(--red)}
     </div>
   </div>
 
-  <!-- story rows LEFT | photo gallery RIGHT -->
+  <!-- story rows -->
   <div class="stories-wrap">
     <div class="page-stories"></div>
-    <div class="gallery-rail">
-      <p class="rail-head">Original stories capturing scenes from...</p>
-      <div id="gallery-items"></div>
-    </div>
   </div>
 
   <footer>
@@ -290,12 +263,7 @@ function renderHero(rows){
     if(hp){
       if(lead.image){
         hp.innerHTML='<img src="'+esc(lead.image)+'" alt="'+esc(lead.caption||'')+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
-          +(lead.caption?'<span class="v-credit">'+esc(lead.caption)+'</span>':'')
-          +(lead.overlay_hl?
-            '<div class="hero-photo-overlay">'+
-              '<span class="overlay-kicker">Exclusive</span>'+
-              '<a class="overlay-hl" href="'+esc(lead.overlay_link||'#')+'">'+lead.overlay_hl+'</a>'+
-            '</div>':'');
+          +(lead.caption?'<span class="v-credit">'+esc(lead.caption)+'</span>':'');
       } else {
         var vc=hp.querySelector('.v-credit');
         if(vc&&lead.caption) vc.textContent=lead.caption;
@@ -324,7 +292,7 @@ function renderStories(rows){
   container.innerHTML='';
   stories.forEach(function(item){
     var imgHTML=item.image
-      ?'<img src="'+esc(item.image)+'" alt="'+esc(item.headline)+'" style="width:100%;max-height:200px;display:block;object-fit:cover;">'
+      ?'<img src="'+esc(item.image)+'" alt="'+esc(item.headline)+'" style="width:100%;display:block;object-fit:cover;">'
       :'<div class="photo ar-sq"><span class="tag">Photograph</span></div>';
     var creditHTML=item.caption?'<div class="credit">'+esc(item.caption)+'</div>':'';
     var div=document.createElement('div');
@@ -341,21 +309,6 @@ function renderStories(rows){
   });
 }
 
-function renderGallery(rows){
-  var items=rows.filter(function(r){return r.section==='gallery';});
-  var container=document.getElementById('gallery-items');
-  if(!container) return;
-  container.innerHTML='';
-  items.forEach(function(item){
-    var div=document.createElement('div');
-    div.className='gallery-item';
-    div.innerHTML=
-      (item.image?'<img src="'+esc(item.image)+'" alt="'+esc(item.headline)+'">'  :'')+
-      (item.caption?'<div class="gallery-caption">'+esc(item.caption)+'</div>':'')+
-      '<a class="gallery-hl" href="'+esc(item.link||'#')+'">'+item.headline+'</a>';
-    container.appendChild(div);
-  });
-}
 
 function parseCSV(text){
   var lines=text.trim().split('\n');
@@ -377,7 +330,7 @@ function parseCSV(text){
 
 var S3='https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/';
 var FALLBACK=[
-  {outlet:"NOTUS",kicker:"Trump White House",image:"https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/trump.jpg",caption:"Photo by Mark Alfred",headline:"Trump Wanted ‘More Action Against Universities.’ His Staff Scrambled to Punish Penn.",subhead:"Internal White House emails reveal a frenzied campaign to strip federal funds from Penn — and target another university the administration never publicized.",body:"President Donald Trump had already cut hundreds of millions to Columbia University over antisemitism allegations and put 59 other colleges on notice when word came down to staff that he wanted to punish more campuses.",overlay_hl:"Billions in Taxpayer Dollars Have Become Virtually Untraceable",overlay_link:"https://www.notus.org/trump-white-house/billions-taxpayer-dollars-virtually-untraceable-appropriations-trump-omb-russ-vought",link:"https://www.notus.org/trump-white-house/white-house-penn-funding-cut-san-jose-state-secret-internal-emails"},
+  {outlet:"NOTUS",kicker:"Trump White House",image:"https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/trump.jpg",caption:"Photo by Mark Alfred",headline:"Trump Wanted ‘More Action Against Universities.’ His Staff Scrambled to Punish Penn.",subhead:"Internal White House emails reveal a frenzied campaign to strip federal funds from Penn — and target another university the administration never publicized.",body:"President Donald Trump had already cut hundreds of millions to Columbia University over antisemitism allegations and put 59 other colleges on notice when word came down to staff that he wanted to punish more campuses.",link:"https://www.notus.org/trump-white-house/white-house-penn-funding-cut-san-jose-state-secret-internal-emails"},
   {outlet:"NOTUS",kicker:"Congress",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/9f/d4/a446c72044dbab68478976e51ed6/ap25051660756934.jpg",caption:"Jacquelyn Martin/AP",headline:"The People Running the Government Are Letting It All Hang Out on Venmo",body:"",link:"https://www.notus.org/congress/people-running-government-public-venmo-white-house"},
   {outlet:"NOTUS",kicker:"Policy",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/f4/fb/06f8144346e5ad54af8c952e014b/ap25072633312408.jpg",caption:"Jose Luis Magana/AP",headline:"Nearly a Billion Dollars in DOGE ‘Savings’ Disappeared Overnight",body:"",link:"https://www.notus.org/policy/doge-claimed-savings-removed"},
   {outlet:"NOTUS",kicker:"Policy",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/c4/71/ed163fc144bf907ff2ac6b0abfa6/ap25141641957566.jpg",caption:"Aaron Schwartz/Sipa USA via AP",headline:"Inside DOGE’s EPA Team and Its Multimillion-Dollar Mistakes",body:"Internal emails paint the clearest picture to date of the Environmental Protection Agency’s full-throated embrace of DOGE and its subsequent stumbles.",link:"https://www.notus.org/policy/doge-environmental-protection-agency-mistakes"},
@@ -391,13 +344,9 @@ var FALLBACK=[
   {outlet:"NOTUS",kicker:"White House",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/9c/01/c0ee2aab4b16990ed0f1d30b5357/trump-25043089627387.jpg",caption:"Alex Brandon/AP",headline:"DOGE Posts — Then Redacts — What Appears to Be Sensitive HUD Contract Data",body:"Despite DOGE’s attempt to redact the information, it is still readily visible in the post on X.",link:"https://www.notus.org/whitehouse/doge-posts-then-redacts-sensitive-hud-contract-data"},
   {outlet:"NOTUS",kicker:"Money",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/60/e7/29270b62464ba7227af26af50dd6/screenshot-2026-04-16-at-2-43-36-pm.png",caption:"Screenshot courtesy of C-SPAN",headline:"High-Ranking Treasury Official Personally Invested in Oil, Nuclear Funds Days Before Iran War Began",body:"Assistant Secretary Jonathan Burke selected the funds on Feb. 20 after he was required to offload his existing investments.",link:"https://www.notus.org/money/treasury-jonathan-burke-personal-investments-oil-nuclear-cyber-war-iran"},
   {outlet:"NOTUS",kicker:"Money",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/25/8f/2e5230b34453a3d8758e32406bf5/ap26316100495.jpeg",caption:"Larry MacDougal/AP",headline:"FAA Chief Dumps Millions in Airline Stock Months After His Ethics Agreement Deadline",body:"Bryan Bedford held a multimillion-dollar stake in an airline company his agency oversees.",link:"https://www.notus.org/money/bryan-bedford-faa-republic-stock-sale-aviation"},
-  {section:"gallery",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/c4/71/ed163fc144bf907ff2ac6b0abfa6/ap25141641957566.jpg",caption:"Aaron Schwartz/Sipa USA via AP",headline:"Inside The Trump Administration",link:"https://www.notus.org/policy/doge-environmental-protection-agency-mistakes"},
-  {section:"gallery",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/df/81/3e93e5bf4367b683da8e5ad7c66e/congress-native-americans-22087591531401.jpg",caption:"J. Scott Applewhite/AP",headline:"Behind The Scenes on Capitol Hill",link:"https://www.notus.org/congress/raul-grijalva-natural-resources-democrats-jared-huffman"},
-  {section:"gallery",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/bb/1f/8b219f6b4b628fce46c4c63c8cca/dc-u-s-congress-senate-appropriations-committee-he-25176770447108.jpg",caption:"Graeme Sloan/Sipa USA via AP",headline:"Inside The Trump Administration",link:"https://www.notus.org/trump-white-house/billions-taxpayer-dollars-virtually-untraceable-appropriations-trump-omb-russ-vought"}
 ];
 renderHero(FALLBACK);
 renderStories(FALLBACK);
-renderGallery(FALLBACK);
 
 var SHEET_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vTxG1-O_pAnuEfQPqHRHacye8pBf0dN3NHzITJdchGEeM_7xVjVJavZ7zBsvrJtSfumMFCs-jRn8jrl/pub?gid=2100641153&single=true&output=csv';
 fetch(SHEET_CSV)
@@ -407,7 +356,6 @@ fetch(SHEET_CSV)
     if(rows.some(function(r){return r.headline;})){
       renderHero(rows);
       renderStories(rows);
-      renderGallery(rows);
     }
   })
   .catch(function(e){console.error('Sheet load failed:',e);});
