@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Mark Alfred Dot News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── subpage layout (shared with other pages) ── */
+.section-tag{
+  display:block;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(36px,5.6vw,70px);
+  font-weight:700;
+  line-height:.9;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  -webkit-text-stroke:.5px var(--ink);
+  text-stroke:.5px var(--ink);
+  paint-order:stroke fill;
+  padding:14px 0 10px;
+  text-transform:uppercase;
+  white-space:nowrap;
+  position:relative;
+  z-index:0;
+}
+.masthead-sm{
+  font-family:"Chomsky",serif;
+  font-size:clamp(18px,2.4vw,28px);
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1;
+  text-transform:none;
+  position:static;
+  transform:none;
+  white-space:nowrap;
+}
+.masthead-sm a{color:var(--ink);text-decoration:none}
+.utility{align-items:center;padding:8px 0}
+nav a{color:var(--muted)}
+nav a:hover{color:var(--red)}
+.social a{border-color:var(--rule-soft)}
+
+/* ── about page ── */
+.about-hero{
+  display:grid;
+  grid-template-columns:463px 1fr;
+  column-gap:136px;
+  align-items:start;
+  border-bottom:3px solid var(--rule);
+  padding-bottom:30px;
+}
+.about-hero .section-tag{grid-column:1;grid-row:1}
+.about-photo{
+  grid-column:1;
+  grid-row:2;
+  width:100%;
+  height:auto;
+  aspect-ratio:463/579;
+  object-fit:cover;
+  display:block;
+  margin-top:13px;
+}
+.about-bio{
+  grid-column:2;
+  grid-row:2;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+  line-height:24px;
+  color:var(--ink);
+  padding-right:96px;
+}
+.about-bio p{margin-bottom:24px}
+.about-bio p:last-child{margin-bottom:0}
+
+@media(max-width:860px){
+  .about-hero{grid-template-columns:1fr;column-gap:0}
+  .about-hero .section-tag,.about-photo,.about-bio{grid-column:1}
+  .about-bio{padding-right:0}
+  .section-tag{white-space:normal}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="utility">
+    <div class="masthead-sm"><a href="index.html">Mark Alfred Dot News</a></div>
+    <div class="day" id="js-day"></div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="news.html">News</a></li>
+      <li><a href="photojournalism.html">Photojournalism</a></li>
+      <li><a href="exclusives.html">Exclusives</a></li>
+      <li><a href="about.html" style="color:var(--red)">About</a></li>
+    </ul>
+    <div class="social">
+      <a href="#" title="X" aria-label="X">𝕏</a>
+      <a href="https://www.notus.org/mark-alfred" title="NOTUS" aria-label="NOTUS">N</a>
+      <a href="https://www.linkedin.com/in/mark-alfred/" title="LinkedIn" aria-label="LinkedIn">in</a>
+    </div>
+    <ul>
+      <li><a href="#">The Star</a></li>
+      <li><a href="#">Politics</a></li>
+      <li><a href="#">Trump</a></li>
+      <li><a href="#">Local</a></li>
+      <li><a href="#">Games</a></li>
+      <li><a href="#">Send a News Tip</a></li>
+    </ul>
+  </nav>
+
+  <div class="about-hero">
+    <span class="section-tag">Hi, I’m Mark</span>
+    <img class="about-photo" src="https://www.figma.com/api/mcp/asset/eab8efa1-3478-4b6a-8e29-91b6cc18cba7" alt="Mark Alfred on the White House steps">
+    <div class="about-bio">
+      <p>Mark Alfred is an award-winning politics reporter covering the second Trump administration and the midterm elections.</p>
+      <p>He is a UC Santa Barbara graduate, where he served as an editor of the student newspaper — winning Best News Series Statewide at the California College Media Awards two years in a row and earning the George Obern Award for Excellence by Chancellor Henry T. Yang for “outstanding writing and reporting.”</p>
+      <p>Mark covered the Biden administration, Trump campaign and congressional happenings first at the Daily Beast, then for NOTUS as a White House reporter and fellow.</p>
+      <p>His exclusive reporting during Trump 2.0 shed light on conversations inside the administration and various agencies as the president and DOGE embarked on a radical reshaping of the federal government.</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wordmark">Mark Alfred Dot News</div>
+    <div class="credits">Designed and Developed by <b>Mark Alfred</b></div>
+  </footer>
+
+</div>
+<script>
+(function(){
+  var now=new Date();
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var d=document.getElementById('js-day');
+  if(d) d.textContent=days[now.getDay()].toUpperCase();
+})();
+</script>
+</body>
+</html>
