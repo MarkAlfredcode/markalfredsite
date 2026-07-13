@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exclusives — Mark Alfred Dot News</title>
+<title>Test1 — Mark Alfred Dot News</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
@@ -189,7 +189,7 @@ nav a:hover{color:var(--red)}
     <ul>
       <li><a href="news.html">News</a></li>
       <li><a href="photojournalism.html">Photojournalism</a></li>
-      <li><a href="exclusives.html" style="color:var(--red)">Exclusives</a></li>
+      <li><a href="exclusives.html">Exclusives</a></li>
       <li><a href="#">About</a></li>
     </ul>
     <div class="social">
@@ -291,7 +291,7 @@ function renderHero(rows){
 }
 
 function renderStories(rows){
-  var stories=rows.slice(3).filter(function(r){return r.section!=='gallery';});
+  var stories=rows.slice(3);
   var container=document.getElementById('page-stories');
   if(!container||!stories.length) return;
   container.innerHTML='';
@@ -309,29 +309,10 @@ function renderStories(rows){
   });
 }
 
-function parseCSV(text){
-  var lines=text.trim().split('\n');
-  var headers=lines[0].split(',').map(function(h){return h.trim().replace(/^"|"$/g,'');});
-  return lines.slice(1).map(function(line){
-    var vals=[],cur='',inQ=false;
-    for(var i=0;i<line.length;i++){
-      var c=line[i];
-      if(c==='"'){inQ=!inQ;}
-      else if(c===','&&!inQ){vals.push(cur.trim().replace(/^"|"$/g,''));cur='';}
-      else{cur+=c;}
-    }
-    vals.push(cur.trim().replace(/^"|"$/g,''));
-    var obj={};
-    headers.forEach(function(h,i){obj[h]=vals[i]||'';});
-    return obj;
-  });
-}
-
 var FALLBACK=[
   {outlet:"NOTUS",kicker:"Trump White House",image:"https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/trump.jpg",caption:"Mark Alfred",headline:"Trump Wanted ‘More Action Against Universities.’ His Staff Scrambled to Punish Penn.",subhead:"Internal White House emails reveal a frenzied campaign to strip federal funds from Penn — and target another university the administration never publicized.",link:"https://www.notus.org/trump-white-house/white-house-penn-funding-cut-san-jose-state-secret-internal-emails"},
   {headline:"The People Running the Government Are Letting It All Hang Out on Venmo",link:"https://www.notus.org/congress/people-running-government-public-venmo-white-house"},
   {headline:"Nearly a Billion Dollars in DOGE ‘Savings’ Disappeared Overnight",link:"https://www.notus.org/policy/doge-claimed-savings-removed"},
-  {outlet:"NOTUS",kicker:"Trump White House",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/e9/86/7d019e0d48738e7cc40de33c44c4/ap25294765829536.jpg",caption:"Manuel Balce Ceneta/AP",headline:"Trump Will Fund New Archway With $15 Million From the National Endowment for the Humanities",body:"A spending plan confirms taxpayer dollars will be used for the project.",link:"https://www.notus.org/donald-trump/trump-arch-taxpayer-funds"},
   {outlet:"NOTUS",kicker:"Policy",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/c4/71/ed163fc144bf907ff2ac6b0abfa6/ap25141641957566.jpg",caption:"Aaron Schwartz/Sipa USA via AP",headline:"Inside DOGE’s EPA Team and Its Multimillion-Dollar Mistakes",body:"Internal emails paint the clearest picture to date of the Environmental Protection Agency’s full-throated embrace of DOGE and its subsequent stumbles.",link:"https://www.notus.org/policy/doge-environmental-protection-agency-mistakes"},
   {outlet:"NOTUS",kicker:"Congress",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/df/81/3e93e5bf4367b683da8e5ad7c66e/congress-native-americans-22087591531401.jpg",caption:"J. Scott Applewhite/AP",headline:"Raül Grijalva Is Running to Lead Natural Resources Again. Democrats Say He’s Not Up to the Job.",body:"Three weeks ago, Rep. Raül Grijalva wrote a letter to Democrats on the Natural Resources Committee saying he fully intends on leading the panel again next Congress.",link:"https://www.notus.org/congress/raul-grijalva-natural-resources-democrats-jared-huffman"},
   {outlet:"NOTUS",kicker:"2026 Election",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/e6/8c/7db2da6c4887806de53b3b5edf9e/ap20213480536288.jpg",caption:"Tom Williams/AP",headline:"How a Democrat Touts Her ‘Grassroots Campaign’ That’s Mostly Corporate Support",body:"Major corporations, not small-dollar donors, fuel Rep. Linda Sánchez’s reelection campaign.",link:"https://www.notus.org/2026-election/linda-sanchez-grassroots-money-campaign"},
@@ -341,25 +322,10 @@ var FALLBACK=[
   {outlet:"NOTUS",kicker:"Policy",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/e1/ae/cb126bc9464f8d381323bac674f4/ap25120619379198.jpg",caption:"Evan Vucci/AP",headline:"DOGE Vastly Overstated Its Real Estate Cuts — Then Spent Two Months Backtracking",body:"DOGE took credit for more than $600 million in real estate savings but has repeatedly cut back its own claims.",link:"https://www.notus.org/policy/doge-claimed-savings-real-estate-changing-numbers"},
   {outlet:"NOTUS",kicker:"White House",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/9c/01/c0ee2aab4b16990ed0f1d30b5357/trump-25043089627387.jpg",caption:"Alex Brandon/AP",headline:"DOGE Posts — Then Redacts — What Appears to Be Sensitive HUD Contract Data",body:"Despite DOGE’s attempt to redact the information, it is still readily visible in the post on X.",link:"https://www.notus.org/whitehouse/doge-posts-then-redacts-sensitive-hud-contract-data"},
   {outlet:"NOTUS",kicker:"Money",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/60/e7/29270b62464ba7227af26af50dd6/screenshot-2026-04-16-at-2-43-36-pm.png",caption:"Screenshot courtesy of C-SPAN",headline:"High-Ranking Treasury Official Personally Invested in Oil, Nuclear Funds Days Before Iran War Began",body:"Assistant Secretary Jonathan Burke selected the funds on Feb. 20 after he was required to offload his existing investments.",link:"https://www.notus.org/money/treasury-jonathan-burke-personal-investments-oil-nuclear-cyber-war-iran"},
-  {outlet:"NOTUS",kicker:"Money",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/25/8f/2e5230b34453a3d8758e32406bf5/ap26316100495.jpeg",caption:"Larry MacDougal/AP",headline:"FAA Chief Dumps Millions in Airline Stock Months After His Ethics Agreement Deadline",body:"Bryan Bedford held a multimillion-dollar stake in an airline company his agency oversees.",link:"https://www.notus.org/money/bryan-bedford-faa-republic-stock-sale-aviation"},
-  {section:"gallery",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/c4/71/ed163fc144bf907ff2ac6b0abfa6/ap25141641957566.jpg",caption:"Aaron Schwartz/Sipa USA via AP",headline:"Inside The Trump Administration",link:"https://www.notus.org/policy/doge-environmental-protection-agency-mistakes"},
-  {section:"gallery",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/df/81/3e93e5bf4367b683da8e5ad7c66e/congress-native-americans-22087591531401.jpg",caption:"J. Scott Applewhite/AP",headline:"Behind The Scenes on Capitol Hill",link:"https://www.notus.org/congress/raul-grijalva-natural-resources-democrats-jared-huffman"},
-  {section:"gallery",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/bb/1f/8b219f6b4b628fce46c4c63c8cca/dc-u-s-congress-senate-appropriations-committee-he-25176770447108.jpg",caption:"Graeme Sloan/Sipa USA via AP",headline:"Inside The Trump Administration",link:"https://www.notus.org/trump-white-house/billions-taxpayer-dollars-virtually-untraceable-appropriations-trump-omb-russ-vought"}
+  {outlet:"NOTUS",kicker:"Money",image:"https://k2-prod-aji.s3.us-east-1.amazonaws.com/brightspot/25/8f/2e5230b34453a3d8758e32406bf5/ap26316100495.jpeg",caption:"Larry MacDougal/AP",headline:"FAA Chief Dumps Millions in Airline Stock Months After His Ethics Agreement Deadline",body:"Bryan Bedford held a multimillion-dollar stake in an airline company his agency oversees.",link:"https://www.notus.org/money/bryan-bedford-faa-republic-stock-sale-aviation"}
 ];
 renderHero(FALLBACK);
 renderStories(FALLBACK);
-
-var SHEET_CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vTxG1-O_pAnuEfQPqHRHacye8pBf0dN3NHzITJdchGEeM_7xVjVJavZ7zBsvrJtSfumMFCs-jRn8jrl/pub?gid=2100641153&single=true&output=csv';
-fetch(SHEET_CSV)
-  .then(function(r){return r.text();})
-  .then(function(text){
-    var rows=parseCSV(text);
-    if(rows.some(function(r){return r.headline;})){
-      renderHero(rows);
-      renderStories(rows);
-    }
-  })
-  .catch(function(e){console.error('Sheet load failed:',e);});
 </script>
 </body>
 </html>

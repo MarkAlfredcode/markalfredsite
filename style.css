@@ -17,6 +17,8 @@
 
 html{ -webkit-text-size-adjust:100%; }
 
+html, body { overscroll-behavior-y: none; }
+
 body{
   background:var(--paper);
   color:var(--ink);
