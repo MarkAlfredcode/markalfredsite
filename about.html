@@ -14,7 +14,7 @@
   display:block;
   font-family:Georgia,"Times New Roman",serif;
   font-size:clamp(36px,5.6vw,70px);
-  font-weight:700;
+  font-weight:400;
   line-height:.9;
   letter-spacing:-0.02em;
   color:var(--ink);
@@ -78,8 +78,9 @@ nav a:hover{color:var(--red)}
 
 @media(max-width:860px){
   .about-hero{grid-template-columns:1fr;column-gap:0}
-  .about-hero .section-tag,.about-photo,.about-bio{grid-column:1}
-  .about-bio{padding-right:0}
+  .about-hero .section-tag{grid-column:1;grid-row:1}
+  .about-photo{grid-column:1;grid-row:2}
+  .about-bio{grid-column:1;grid-row:3;padding-right:0;padding-top:16px}
   .section-tag{white-space:normal}
 }
 </style>
