@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>War Chest — Mark Alfred Dot News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.masthead-sm{
+  font-family:"Chomsky",serif;
+  font-size:clamp(18px,2.4vw,28px);
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1;
+  text-transform:none;
+  position:static;
+  transform:none;
+  white-space:nowrap;
+}
+.masthead-sm a{color:var(--ink);text-decoration:none}
+.utility{align-items:center;padding:8px 0}
+nav a{color:var(--muted)}
+nav a:hover{color:var(--red)}
+.social a{border-color:var(--rule-soft)}
+
+/* ── game page ── */
+.game-head{
+  text-align:center;
+  padding:26px 0 20px;
+}
+.other-game{
+  font-family:"Archivo",sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:10px;
+}
+.other-game a{color:var(--red);text-decoration:none;border-bottom:1px solid var(--red)}
+.game-title{
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:700;
+  font-size:clamp(32px,5vw,48px);
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  text-transform:uppercase;
+}
+.game-sub{
+  font-family:"Libre Caslon Text",serif;
+  font-style:italic;
+  font-size:14px;
+  color:var(--ink-soft);
+  margin-top:6px;
+}
+
+.game-wrap{
+  max-width:640px;
+  margin:0 auto;
+  padding:32px 0 40px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+}
+
+.streak{
+  font-family:"Archivo",sans-serif;
+  font-size:12.5px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.streak b{color:var(--red);font-size:16px}
+
+.cards{
+  display:flex;
+  align-items:stretch;
+  gap:0;
+  width:100%;
+  border:2px solid var(--rule);
+}
+.card{
+  flex:1;
+  padding:22px 16px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+.card.current{background:var(--paper-2)}
+.card + .card{border-left:2px solid var(--rule)}
+.card img{
+  width:104px;
+  height:104px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--ink);
+  margin-bottom:12px;
+}
+.card .name{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:17px;
+  color:var(--ink);
+  margin-bottom:3px;
+}
+.card .role{
+  font-family:"Archivo",sans-serif;
+  font-size:10.5px;
+  color:var(--muted);
+  letter-spacing:.02em;
+  margin-bottom:14px;
+  min-height:26px;
+}
+.card .cash{
+  font-family:"Archivo",sans-serif;
+  font-weight:800;
+  font-size:22px;
+  color:var(--ink);
+  letter-spacing:-0.01em;
+}
+.card .cash.hidden{color:var(--rule-soft);letter-spacing:.15em}
+.card .cash-label{
+  font-family:"Archivo",sans-serif;
+  font-size:9.5px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+.vs{
+  font-family:Georgia,"Times New Roman",serif;
+  font-style:italic;
+  font-size:14px;
+  color:var(--muted);
+  align-self:center;
+  padding:0 6px;
+}
+
+.guess-row{display:flex;gap:14px;width:100%}
+.guess-btn{
+  flex:1;
+  font-family:"Archivo",sans-serif;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  background:var(--ink);
+  color:var(--paper);
+  border:none;
+  padding:16px 10px;
+  cursor:pointer;
+  transition:background .15s;
+}
+.guess-btn:hover{background:var(--red)}
+.guess-btn:disabled{opacity:.4;cursor:default;background:var(--ink)}
+
+.result-banner{
+  font-family:"Archivo",sans-serif;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  text-align:center;
+  min-height:18px;
+}
+.result-banner.correct{color:#4a6b4d}
+.result-banner.wrong{color:var(--red)}
+
+.game-over{
+  text-align:center;
+  border-top:1px solid var(--rule-soft);
+  padding-top:20px;
+  display:none;
+  width:100%;
+}
+.game-over.show{display:block}
+.game-over .final{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:22px;
+  color:var(--ink);
+}
+.game-over .final b{color:var(--red)}
+.game-over .best{
+  font-family:"Libre Caslon Text",serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--ink-soft);
+  margin-top:4px;
+}
+.replay-btn{
+  margin-top:16px;
+  font-family:"Archivo",sans-serif;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  background:var(--red);
+  color:#fff;
+  border:none;
+  padding:10px 22px;
+  cursor:pointer;
+  transition:background .15s;
+}
+.replay-btn:hover{background:var(--red-dark)}
+
+@media(max-width:520px){
+  .cards{flex-direction:column}
+  .card + .card{border-left:none;border-top:2px solid var(--rule)}
+  .vs{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="utility">
+    <div class="masthead-sm"><a href="index.html">Mark Alfred Dot News</a></div>
+    <div class="day" id="js-day"></div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="news.html">News</a></li>
+      <li><a href="photojournalism.html">Photojournalism</a></li>
+      <li><a href="exclusives.html">Exclusives</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="social">
+      <a href="#" title="X" aria-label="X">𝕏</a>
+      <a href="https://www.notus.org/mark-alfred" title="NOTUS" aria-label="NOTUS">N</a>
+      <a href="https://www.linkedin.com/in/mark-alfred/" title="LinkedIn" aria-label="LinkedIn">in</a>
+    </div>
+    <ul>
+      <li><a href="#">The Star</a></li>
+      <li><a href="#">Politics</a></li>
+      <li><a href="#">Trump</a></li>
+      <li><a href="#">Local</a></li>
+      <li class="nav-dropdown"><a href="games.html" style="color:var(--red)">Games</a><ul class="dropdown-menu"><li><a href="games.html">Politicle</a></li><li><a href="war-chest.html">War Chest</a></li></ul></li>
+      <li><a href="#">Send a News Tip</a></li>
+    </ul>
+  </nav>
+
+  <div class="game-head">
+    <div class="game-title">War Chest</div>
+    <div class="game-sub">Higher or lower? Guess whose campaign cash-on-hand is bigger.</div>
+    <div class="other-game">Also try <a href="games.html">Politicle</a></div>
+  </div>
+
+  <div class="game-wrap">
+    <div class="streak">Streak: <b id="streak-num">0</b></div>
+
+    <div class="cards">
+      <div class="card current" id="card-a">
+        <img id="card-a-img" src="" alt="">
+        <div class="name" id="card-a-name"></div>
+        <div class="role" id="card-a-role"></div>
+        <div class="cash-label">Cash on hand</div>
+        <div class="cash" id="card-a-cash"></div>
+      </div>
+      <div class="vs">vs</div>
+      <div class="card" id="card-b">
+        <img id="card-b-img" src="" alt="">
+        <div class="name" id="card-b-name"></div>
+        <div class="role" id="card-b-role"></div>
+        <div class="cash-label">Cash on hand</div>
+        <div class="cash hidden" id="card-b-cash">?????</div>
+      </div>
+    </div>
+
+    <div class="result-banner" id="result-banner"></div>
+
+    <div class="guess-row" id="guess-row">
+      <button class="guess-btn" id="btn-higher">Higher</button>
+      <button class="guess-btn" id="btn-lower">Lower</button>
+    </div>
+
+    <div class="game-over" id="game-over">
+      <div class="final">Final streak: <b id="final-streak">0</b></div>
+      <div class="best">Best this session: <span id="best-streak">0</span></div>
+      <button class="replay-btn" id="replay-btn">Play Again</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wordmark">Mark Alfred Dot News</div>
+    <div class="credits">Designed and Developed by <b>Mark Alfred</b></div>
+  </footer>
+
+</div>
+<script>
+(function(){
+  var now=new Date();
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var d=document.getElementById('js-day');
+  if(d) d.textContent=days[now.getDay()].toUpperCase();
+})();
+
+var MEMBERS=[
+{"bioguideId":"B001314","name":"Aaron Bean","role":"Representative, FL-04","photo":"https://www.congress.gov/img/member/b001314_200.jpg","cash":1237230,"asOf":"2026-03-31"},
+{"bioguideId":"S001150","name":"Adam Schiff","role":"Senator, California","photo":"https://www.congress.gov/img/member/677d870dfdb6cf36bbb649b3_200.jpg","cash":9964397,"asOf":"2026-03-31"},
+{"bioguideId":"M001240","name":"Addison McDowell","role":"Representative, NC-06","photo":"https://www.congress.gov/img/member/67744e930b34857ecc90914f_200.jpg","cash":277771,"asOf":"2026-03-31"},
+{"bioguideId":"G000606","name":"Adelita Grijalva","role":"Representative, AZ-07","photo":"https://www.congress.gov/img/member/6915fa2585b49de40f52cacb_200.jpg","cash":427977,"asOf":"2026-07-01"},
+{"bioguideId":"G000553","name":"Al Green","role":"Representative, TX-09","photo":"https://www.congress.gov/img/member/116_rp_tx_9_green_al_200.jpg","cash":266395,"asOf":"2022-12-31"},
+{"bioguideId":"P000145","name":"Alex Padilla","role":"Senator, California","photo":"https://www.congress.gov/img/member/p000145_200.jpg","cash":7202297,"asOf":"2026-03-31"},
+{"bioguideId":"K000367","name":"Amy Klobuchar","role":"Senator, Minnesota","photo":"https://www.congress.gov/img/member/k000367_200.jpg","cash":1308966,"asOf":"2026-03-31"},
+{"bioguideId":"M001246","name":"Analilia Mejia","role":"Representative, NJ-11","photo":"https://www.congress.gov/img/member/69eb9743277642362f6112ce_200.jpg","cash":134395,"asOf":"2026-05-13"},
+{"bioguideId":"S001226","name":"Andrea Salinas","role":"Representative, OR-06","photo":"https://www.congress.gov/img/member/s001226_200.jpg","cash":589145,"asOf":"2026-04-29"},
+{"bioguideId":"O000175","name":"Andrew Ogles","role":"Representative, TN-05","photo":"https://www.congress.gov/img/member/o000175_200.jpg","cash":85061,"asOf":"2026-03-31"},
+{"bioguideId":"K000394","name":"Andy Kim","role":"Senator, New Jersey","photo":"https://www.congress.gov/img/member/677d84cbfdb6cf36bbb649a1_200.jpg","cash":1081723,"asOf":"2026-03-31"},
+{"bioguideId":"A000382","name":"Angela Alsobrooks","role":"Senator, Maryland","photo":"https://www.congress.gov/img/member/67acdbbf044eb506e25958f2_200.jpg","cash":589615,"asOf":"2026-03-31"},
+{"bioguideId":"K000383","name":"Angus King","role":"Senator, Maine","photo":"https://www.congress.gov/img/member/k000383_200.jpg","cash":68886,"asOf":"2026-03-31"},
+{"bioguideId":"L000596","name":"Anna Luna","role":"Representative, FL-13","photo":"https://www.congress.gov/img/member/l000596_200.jpg","cash":1375442,"asOf":"2026-03-31"},
+{"bioguideId":"H001091","name":"Ashley Hinson","role":"Representative, IA-02","photo":"https://www.congress.gov/img/member/677ed0c7514c773869b6b920_200.jpg","cash":1928075,"asOf":"2024-12-31"},
+{"bioguideId":"M001244","name":"Ashley Moody","role":"Senator, Florida","photo":"https://www.congress.gov/img/member/https://bioguide.congress.gov/photo/695d82c8550dfb80c3063bee.jpg","cash":7129392,"asOf":"2026-03-31"},
+{"bioguideId":"M001212","name":"Barry Moore","role":"Representative, AL-01","photo":"https://www.congress.gov/img/member/m001212_200.jpg","cash":125132,"asOf":"2024-12-31"},
+{"bioguideId":"B001318","name":"Becca Balint","role":"Representative, VT","photo":"https://www.congress.gov/img/member/b001318_200.jpg","cash":516682,"asOf":"2026-03-31"},
+{"bioguideId":"L000570","name":"Ben Luján","role":"Senator, New Mexico","photo":"https://www.congress.gov/img/member/l000570_200.jpg","cash":4165907,"asOf":"2026-05-13"},
+{"bioguideId":"S000033","name":"Bernard Sanders","role":"Senator, Vermont","photo":"https://www.congress.gov/img/member/s000033_200.jpg","cash":22877130,"asOf":"2026-03-31"},
+{"bioguideId":"M001242","name":"Bernie Moreno","role":"Senator, Ohio","photo":"https://www.congress.gov/img/member/67c8694e6159152e59828afb_200.jpg","cash":468796,"asOf":"2026-03-31"},
+{"bioguideId":"C001075","name":"Bill Cassidy","role":"Senator, Louisiana","photo":"https://www.congress.gov/img/member/c001075_200.jpg","cash":5516669,"asOf":"2026-04-26"},
+{"bioguideId":"H000601","name":"Bill Hagerty","role":"Senator, Tennessee","photo":"https://www.congress.gov/img/member/h000601_200.jpg","cash":5674879,"asOf":"2026-03-31"},
+{"bioguideId":"K000405","name":"Brad Knott","role":"Representative, NC-13","photo":"https://www.congress.gov/img/member/67742fc60b34857ecc909101_200.jpg","cash":588189,"asOf":"2026-03-31"},
+{"bioguideId":"G000603","name":"Brandon Gill","role":"Representative, TX-26","photo":"https://www.congress.gov/img/member/677428ac0b34857ecc9090b3_200.jpg","cash":1010914,"asOf":"2026-03-31"},
+{"bioguideId":"J000311","name":"Brian Jack","role":"Representative, GA-03","photo":"https://www.congress.gov/img/member/67742e330b34857ecc9090ef_200.jpg","cash":900333,"asOf":"2026-04-29"},
+{"bioguideId":"M001199","name":"Brian Mast","role":"Representative, FL-21","photo":"https://www.congress.gov/img/member/116_rp_fl_18_mast_brian_200.jpg","cash":2903162,"asOf":"2026-06-30"},
+{"bioguideId":"S001194","name":"Brian Schatz","role":"Senator, Hawaii","photo":"https://www.congress.gov/img/member/s001194_200.jpg","cash":2333474,"asOf":"2026-03-31"},
+{"bioguideId":"P000620","name":"Brittany Pettersen","role":"Representative, CO-07","photo":"https://www.congress.gov/img/member/p000620_200.jpg","cash":985234,"asOf":"2026-06-10"},
+{"bioguideId":"G000593","name":"Carlos Gimenez","role":"Representative, FL-28","photo":"https://www.congress.gov/img/member/g000593_200.jpg","cash":644571,"asOf":"2026-03-31"},
+{"bioguideId":"M001205","name":"Carol Miller","role":"Representative, WV-01","photo":"https://www.congress.gov/img/member/m001205_200.jpg","cash":729464,"asOf":"2026-04-22"},
+{"bioguideId":"C001113","name":"Catherine Cortez Masto","role":"Senator, Nevada","photo":"https://www.congress.gov/img/member/c001113_200.jpg","cash":3339755,"asOf":"2026-03-31"},
+{"bioguideId":"S000148","name":"Charles Schumer","role":"Senate Minority Leader, New York","photo":"https://www.congress.gov/img/member/s000148_200.jpg","cash":8251230,"asOf":"2026-03-31"},
+{"bioguideId":"V000128","name":"Chris Van Hollen","role":"Senator, Maryland","photo":"https://www.congress.gov/img/member/v000128_200.jpg","cash":3022509,"asOf":"2026-03-31"},
+{"bioguideId":"M001245","name":"Christian Menefee","role":"Representative, TX-18","photo":"https://www.congress.gov/img/member/698206b2eb30d3271899373e_200.jpg","cash":318035,"asOf":"2026-05-06"},
+{"bioguideId":"C001088","name":"Christopher Coons","role":"Senator, Delaware","photo":"https://www.congress.gov/img/member/c001088_200.jpg","cash":4129671,"asOf":"2026-03-31"},
+{"bioguideId":"D000530","name":"Christopher Deluzio","role":"Representative, PA-17","photo":"https://www.congress.gov/img/member/d000530_200.jpg","cash":922859,"asOf":"2026-04-29"},
+{"bioguideId":"M001169","name":"Christopher Murphy","role":"Senator, Connecticut","photo":"https://www.congress.gov/img/member/m001169_200.jpg","cash":11239355,"asOf":"2026-03-31"},
+{"bioguideId":"E000246","name":"Chuck Edwards","role":"Representative, NC-11","photo":"https://www.congress.gov/img/member/e000246_200.jpg","cash":487218,"asOf":"2026-03-31"},
+{"bioguideId":"G000386","name":"Chuck Grassley","role":"Senator, Iowa","photo":"https://www.congress.gov/img/member/g000386_200.jpg","cash":290886,"asOf":"2026-03-31"},
+{"bioguideId":"H001079","name":"Cindy Hyde-Smith","role":"Senator, Mississippi","photo":"https://www.congress.gov/img/member/h001079_200.jpg","cash":2458625,"asOf":"2026-03-31"},
+{"bioguideId":"T000478","name":"Claudia Tenney","role":"Representative, NY-24","photo":"https://www.congress.gov/img/member/t000478_200.jpg","cash":1128870,"asOf":"2026-06-03"},
+{"bioguideId":"F000485","name":"Clay Fuller","role":"Representative, GA-14","photo":"https://www.congress.gov/img/member/69eb95e5277642362f6112c5_200.jpg","cash":77174,"asOf":"2026-04-29"},
+{"bioguideId":"F000110","name":"Cleo Fields","role":"Representative, LA-06","photo":"https://www.congress.gov/img/member/677426250b34857ecc90908f_200.jpg","cash":249638,"asOf":"2026-03-31"},
+{"bioguideId":"B001288","name":"Cory Booker","role":"Senator, New Jersey","photo":"https://www.congress.gov/img/member/b001288_200.jpg","cash":22600144,"asOf":"2026-05-13"},
+{"bioguideId":"M001216","name":"Cory Mills","role":"Representative, FL-07","photo":"https://www.congress.gov/img/member/m001216_200.jpg","cash":115511,"asOf":"2026-03-31"},
+{"bioguideId":"G000601","name":"Craig Goldman","role":"Representative, TX-12","photo":"https://www.congress.gov/img/member/6774277d0b34857ecc9090a7_200.jpg","cash":1392735,"asOf":"2026-03-31"},
+{"bioguideId":"L000571","name":"Cynthia Lummis","role":"Senator, Wyoming","photo":"https://www.congress.gov/img/member/l000571_200.jpg","cash":1608755,"asOf":"2026-03-31"},
+{"bioguideId":"S001198","name":"Dan Sullivan","role":"Senator, Alaska","photo":"https://www.congress.gov/img/member/s001198_200.jpg","cash":7086053,"asOf":"2026-03-31"},
+{"bioguideId":"G000599","name":"Daniel Goldman","role":"Representative, NY-10","photo":"https://www.congress.gov/img/member/g000599_200.jpg","cash":1549186,"asOf":"2026-06-03"},
+{"bioguideId":"M001243","name":"David McCormick","role":"Senator, Pennsylvania","photo":"https://www.congress.gov/img/member/677d85e0fdb6cf36bbb649aa_200.jpg","cash":954771,"asOf":"2026-03-31"},
+{"bioguideId":"T000490","name":"David Taylor","role":"Representative, OH-02","photo":"https://www.congress.gov/img/member/677460190b34857ecc9091a3_200.jpg","cash":477234,"asOf":"2026-04-15"},
+{"bioguideId":"F000463","name":"Deb Fischer","role":"Senator, Nebraska","photo":"https://www.congress.gov/img/member/669ec7925d19788d1f2034a1_200.jpg","cash":307134,"asOf":"2026-03-31"},
+{"bioguideId":"R000617","name":"Delia Ramirez","role":"Representative, IL-03","photo":"https://www.congress.gov/img/member/684c2356333714e4aee2e1fd_200.jpg","cash":971005,"asOf":"2026-03-31"},
+{"bioguideId":"S001228","name":"Derek Schmidt","role":"Representative, KS-02","photo":"https://www.congress.gov/img/member/67745ec50b34857ecc909185_200.jpg","cash":687803,"asOf":"2026-03-31"},
+{"bioguideId":"V000135","name":"Derrick Van Orden","role":"Representative, WI-03","photo":"https://www.congress.gov/img/member/v000135_200.jpg","cash":3808824,"asOf":"2026-03-31"},
+{"bioguideId":"D000230","name":"Donald Davis","role":"Representative, NC-01","photo":"https://www.congress.gov/img/member/d000230_200.jpg","cash":2880071,"asOf":"2026-03-31"},
+{"bioguideId":"M000133","name":"Edward Markey","role":"Senator, Massachusetts","photo":"https://www.congress.gov/img/member/m000133_200.jpg","cash":2541377,"asOf":"2026-03-31"},
+{"bioguideId":"S001208","name":"Elissa Slotkin","role":"Senator, Michigan","photo":"https://www.congress.gov/img/member/s001208_200.jpg","cash":2364966,"asOf":"2026-03-31"},
+{"bioguideId":"W000817","name":"Elizabeth Warren","role":"Senator, Massachusetts","photo":"https://www.congress.gov/img/member/w000817_200.jpg","cash":3723063,"asOf":"2026-03-31"},
+{"bioguideId":"S001223","name":"Emilia Sykes","role":"Representative, OH-13","photo":"https://www.congress.gov/img/member/s001223_200.jpg","cash":1654063,"asOf":"2026-04-15"},
+{"bioguideId":"B001316","name":"Eric Burlison","role":"Representative, MO-07","photo":"https://www.congress.gov/img/member/b001316_200.jpg","cash":857937,"asOf":"2026-03-31"},
+{"bioguideId":"S001227","name":"Eric Schmitt","role":"Senator, Missouri","photo":"https://www.congress.gov/img/member/b66a0806e77f63e862391b15a0b1f753_200.jpg","cash":1424246,"asOf":"2026-03-31"},
+{"bioguideId":"S001225","name":"Eric Sorensen","role":"Representative, IL-17","photo":"https://www.congress.gov/img/member/s001225_200.jpg","cash":1178742,"asOf":"2026-03-31"},
+{"bioguideId":"H001093","name":"Erin Houchin","role":"Representative, IN-09","photo":"https://www.congress.gov/img/member/h001093_200.jpg","cash":989726,"asOf":"2026-04-15"},
+{"bioguideId":"V000138","name":"Eugene Vindman","role":"Representative, VA-07","photo":"https://www.congress.gov/img/member/6774617a0b34857ecc9091b5_200.jpg","cash":5267150,"asOf":"2026-03-31"},
+{"bioguideId":"A000380","name":"Gabe Amo","role":"Representative, RI-01","photo":"https://www.congress.gov/img/member/669ace45fa2fb0d731226768_200.jpg","cash":1552595,"asOf":"2026-03-31"},
+{"bioguideId":"E000300","name":"Gabe Evans","role":"Representative, CO-08","photo":"https://www.congress.gov/img/member/677425730b34857ecc909083_200.jpg","cash":3416318,"asOf":"2026-06-10"},
+{"bioguideId":"V000136","name":"Gabe Vasquez","role":"Representative, NM-02","photo":"https://www.congress.gov/img/member/v000136_200.jpg","cash":1956441,"asOf":"2026-05-13"},
+{"bioguideId":"P000595","name":"Gary Peters","role":"Senator, Michigan","photo":"https://www.congress.gov/img/member/p000595_200.jpg","cash":6543791,"asOf":"2026-03-31"},
+{"bioguideId":"L000606","name":"George Latimer","role":"Representative, NY-16","photo":"https://www.congress.gov/img/member/6774301b0b34857ecc909107_200.jpg","cash":94120,"asOf":"2026-06-03"},
+{"bioguideId":"C001123","name":"Gilbert Cisneros","role":"Representative, CA-31","photo":"https://www.congress.gov/img/member/6807d8d63e52ea7df920ef05_200.jpg","cash":179949,"asOf":"2026-05-13"},
+{"bioguideId":"I000058","name":"Glenn Ivey","role":"Representative, MD-04","photo":"https://www.congress.gov/img/member/i000058_200.jpg","cash":447416,"asOf":"2026-06-03"},
+{"bioguideId":"L000601","name":"Greg Landsman","role":"Representative, OH-01","photo":"https://www.congress.gov/img/member/l000601_200.jpg","cash":2939405,"asOf":"2026-04-15"},
+{"bioguideId":"H001096","name":"Harriet Hageman","role":"Representative, WY","photo":"https://www.congress.gov/img/member/h001096_200.jpg","cash":882963,"asOf":"2024-12-31"},
+{"bioguideId":"C001136","name":"Herbert Conaway","role":"Representative, NJ-03","photo":"https://www.congress.gov/img/member/6774243a0b34857ecc90906b_200.jpg","cash":384703,"asOf":"2026-05-13"},
+{"bioguideId":"S001221","name":"Hillary Scholten","role":"Representative, MI-03","photo":"https://www.congress.gov/img/member/s001221_200.jpg","cash":1204830,"asOf":"2026-03-31"},
+{"bioguideId":"R000122","name":"Jack Reed","role":"Senator, Rhode Island","photo":"https://www.congress.gov/img/member/r000122_200.jpg","cash":3429481,"asOf":"2026-03-31"},
+{"bioguideId":"R000608","name":"Jacky Rosen","role":"Senator, Nevada","photo":"https://www.congress.gov/img/member/r000608_200.jpg","cash":1015906,"asOf":"2026-03-31"},
+{"bioguideId":"G000607","name":"James Gallagher","role":"Representative, CA-01","photo":"https://www.congress.gov/img/member/6a29d4f81c6ce0de6fbae1f7_200.jpg","cash":314858,"asOf":"2026-06-22"},
+{"bioguideId":"J000312","name":"James Justice","role":"Senator, West Virginia","photo":"https://www.congress.gov/img/member/67c86b5e6159152e59828b1a_200.jpg","cash":232612,"asOf":"2026-03-31"},
+{"bioguideId":"L000575","name":"James Lankford","role":"Senator, Oklahoma","photo":"https://www.congress.gov/img/member/l000575_200.jpg","cash":2667917,"asOf":"2026-03-31"},
+{"bioguideId":"M001219","name":"James Moylan","role":"Representative, GU","photo":"https://www.congress.gov/img/member/m001219_200.jpg","cash":47378,"asOf":"2026-06-30"},
+{"bioguideId":"R000584","name":"James Risch","role":"Senator, Idaho","photo":"https://www.congress.gov/img/member/r000584_200.jpg","cash":3729780,"asOf":"2026-04-29"},
+{"bioguideId":"B001326","name":"Janelle Bynum","role":"Representative, OR-05","photo":"https://www.congress.gov/img/member/677423150b34857ecc909059_200.jpg","cash":2243653,"asOf":"2026-04-29"},
+{"bioguideId":"C001130","name":"Jasmine Crockett","role":"Representative, TX-30","photo":"https://www.congress.gov/img/member/c001130_200.jpg","cash":72538,"asOf":"2026-03-31"},
+{"bioguideId":"O000019","name":"Jay Obernolte","role":"Representative, CA-23","photo":"https://www.congress.gov/img/member/o000019_200.jpg","cash":1529188,"asOf":"2026-05-13"},
+{"bioguideId":"S001181","name":"Jeanne Shaheen","role":"Senator, New Hampshire","photo":"https://www.congress.gov/img/member/s001181_200.jpg","cash":920369,"asOf":"2026-03-31"},
+{"bioguideId":"C001137","name":"Jeff Crank","role":"Representative, CO-05","photo":"https://www.congress.gov/img/member/677424810b34857ecc909071_200.jpg","cash":1294119,"asOf":"2026-06-10"},
+{"bioguideId":"M001176","name":"Jeff Merkley","role":"Senator, Oregon","photo":"https://www.congress.gov/img/member/m001176_200.jpg","cash":6485649,"asOf":"2026-04-29"},
+{"bioguideId":"S001229","name":"Jefferson Shreve","role":"Representative, IN-06","photo":"https://www.congress.gov/img/member/67745f0e0b34857ecc90918b_200.jpg","cash":1755900,"asOf":"2026-04-15"},
+{"bioguideId":"K000399","name":"Jennifer Kiggans","role":"Representative, VA-02","photo":"https://www.congress.gov/img/member/66b0ce45b0288a917d98f619_200.jpg","cash":3030911,"asOf":"2026-03-31"},
+{"bioguideId":"M001227","name":"Jennifer McClellan","role":"Representative, VA-04","photo":"https://www.congress.gov/img/member/m001227_200.jpg","cash":127813,"asOf":"2026-03-31"},
+{"bioguideId":"N000002","name":"Jerrold Nadler","role":"Representative, NY-12","photo":"https://www.congress.gov/img/member/n000002_200.jpg","cash":800929,"asOf":"2010-12-31"},
+{"bioguideId":"M000934","name":"Jerry Moran","role":"Senator, Kansas","photo":"https://www.congress.gov/img/member/m000934_200.jpg","cash":5515292,"asOf":"2026-03-31"},
+{"bioguideId":"T000487","name":"Jill Tokuda","role":"Representative, HI-02","photo":"https://www.congress.gov/img/member/t000487_200.jpg","cash":591669,"asOf":"2026-03-31"},
+{"bioguideId":"B001299","name":"Jim Banks","role":"Senator, Indiana","photo":"https://www.congress.gov/img/member/677d83cbfdb6cf36bbb64998_200.jpg","cash":3015708,"asOf":"2026-03-31"},
+{"bioguideId":"P000622","name":"Jimmy Patronis","role":"Representative, FL-01","photo":"https://www.congress.gov/img/member/67efdb991b05a5a598f7fde9_200.jpg","cash":507116,"asOf":"2026-03-31"},
+{"bioguideId":"B001261","name":"John Barrasso","role":"Senator, Wyoming","photo":"https://www.congress.gov/img/member/b001261_200.jpg","cash":8408868,"asOf":"2026-06-30"},
+{"bioguideId":"B001236","name":"John Boozman","role":"Senator, Arkansas","photo":"https://www.congress.gov/img/member/b001236_200.jpg","cash":1270502,"asOf":"2026-03-31"},
+{"bioguideId":"C001056","name":"John Cornyn","role":"Senator, Texas","photo":"https://www.congress.gov/img/member/c001056_200.jpg","cash":4078081,"asOf":"2026-05-06"},
+{"bioguideId":"C001114","name":"John Curtis","role":"Senator, Utah","photo":"https://www.congress.gov/img/member/1b9d1007d6895a37da28a67cd8149803_200.jpg","cash":662515,"asOf":"2026-03-31"},
+{"bioguideId":"F000479","name":"John Fetterman","role":"Senator, Pennsylvania","photo":"https://www.congress.gov/img/member/f000479_200.jpg","cash":1996681,"asOf":"2026-03-31"},
+{"bioguideId":"H000273","name":"John Hickenlooper","role":"Senator, Colorado","photo":"https://www.congress.gov/img/member/h000273_200.jpg","cash":2964562,"asOf":"2026-06-10"},
+{"bioguideId":"H001061","name":"John Hoeven","role":"Senator, North Dakota","photo":"https://www.congress.gov/img/member/h001061_200.jpg","cash":651732,"asOf":"2026-03-31"},
+{"bioguideId":"J000307","name":"John James","role":"Representative, MI-10","photo":"https://www.congress.gov/img/member/j000307_200.jpg","cash":0,"asOf":"2025-12-23"},
+{"bioguideId":"K000393","name":"John Kennedy","role":"Senator, Louisiana","photo":"https://www.congress.gov/img/member/k000393_200.jpg","cash":18481379,"asOf":"2026-03-31"},
+{"bioguideId":"M001231","name":"John Mannion","role":"Representative, NY-22","photo":"https://www.congress.gov/img/member/677446860b34857ecc909119_200.jpg","cash":1643644,"asOf":"2026-06-03"},
+{"bioguideId":"M001239","name":"John McGuire","role":"Representative, VA-05","photo":"https://www.congress.gov/img/member/67744ba20b34857ecc909149_200.jpg","cash":496546,"asOf":"2026-05-27"},
+{"bioguideId":"T000250","name":"John Thune","role":"Senate Majority Leader, South Dakota","photo":"https://www.congress.gov/img/member/t000250_200.jpg","cash":17391647,"asOf":"2026-03-31"},
+{"bioguideId":"O000176","name":"Johnny Olszewski","role":"Representative, MD-02","photo":"https://www.congress.gov/img/member/6a3974507d3b72f27fb69f0c_200.jpg","cash":612730,"asOf":"2026-06-03"},
+{"bioguideId":"H001104","name":"Jon Husted","role":"Senator, Ohio","photo":"https://www.congress.gov/img/member/67f0316b1b05a5a598f7fdf3_200.jpg","cash":8161653,"asOf":"2026-06-30"},
+{"bioguideId":"O000174","name":"Jon Ossoff","role":"Senator, Georgia","photo":"https://www.congress.gov/img/member/o000174_200.jpg","cash":32504436,"asOf":"2026-04-29"},
+{"bioguideId":"J000309","name":"Jonathan Jackson","role":"Representative, IL-01","photo":"https://www.congress.gov/img/member/j000309_200.jpg","cash":89382,"asOf":"2026-03-31"},
+{"bioguideId":"E000295","name":"Joni Ernst","role":"Senator, Iowa","photo":"https://www.congress.gov/img/member/e000295_200.jpg","cash":1997165,"asOf":"2026-03-31"},
+{"bioguideId":"B001317","name":"Josh Brecheen","role":"Representative, OK-02","photo":"https://www.congress.gov/img/member/b001317_200.jpg","cash":47873,"asOf":"2026-05-27"},
+{"bioguideId":"H001090","name":"Josh Harder","role":"Representative, CA-09","photo":"https://www.congress.gov/img/member/h001090_200.jpg","cash":4427277,"asOf":"2026-05-13"},
+{"bioguideId":"H001089","name":"Josh Hawley","role":"Senator, Missouri","photo":"https://www.congress.gov/img/member/h001089_200.jpg","cash":899694,"asOf":"2026-03-31"},
+{"bioguideId":"R000622","name":"Josh Riley","role":"Representative, NY-19","photo":"https://www.congress.gov/img/member/67745e360b34857ecc909179_200.jpg","cash":2920374,"asOf":"2026-06-03"},
+{"bioguideId":"F000482","name":"Julie Fedorchak","role":"Representative, ND","photo":"https://www.congress.gov/img/member/677426c20b34857ecc90909b_200.jpg","cash":1114205,"asOf":"2026-05-20"},
+{"bioguideId":"B001319","name":"Katie Britt","role":"Senator, Alabama","photo":"https://www.congress.gov/img/member/b001319_200.jpg","cash":5223597,"asOf":"2026-03-31"},
+{"bioguideId":"S001224","name":"Keith Self","role":"Representative, TX-03","photo":"https://www.congress.gov/img/member/s001224_200.jpg","cash":212694,"asOf":"2026-06-30"},
+{"bioguideId":"M001234","name":"Kelly Morrison","role":"Representative, MN-03","photo":"https://www.congress.gov/img/member/677449a70b34857ecc90912b_200.jpg","cash":337751,"asOf":"2026-03-31"},
+{"bioguideId":"C001096","name":"Kevin Cramer","role":"Senator, North Dakota","photo":"https://www.congress.gov/img/member/c001096_200.jpg","cash":2331657,"asOf":"2026-03-31"},
+{"bioguideId":"M001225","name":"Kevin Mullin","role":"Representative, CA-15","photo":"https://www.congress.gov/img/member/m001225_200.jpg","cash":203567,"asOf":"2026-05-13"},
+{"bioguideId":"G000555","name":"Kirsten Gillibrand","role":"Senator, New York","photo":"https://www.congress.gov/img/member/g000555_200.jpg","cash":1967802,"asOf":"2026-03-31"},
+{"bioguideId":"M001237","name":"Kristen McDonald Rivet","role":"Representative, MI-08","photo":"https://www.congress.gov/img/member/69d7f4ee7304cef7a0c977a8_200.jpg","cash":3435067,"asOf":"2026-03-31"},
+{"bioguideId":"M001229","name":"LaMonica McIver","role":"Representative, NJ-10","photo":"https://www.congress.gov/img/member/681dfed94fc893ce843e24b8_200.jpg","cash":587810,"asOf":"2026-05-13"},
+{"bioguideId":"F000483","name":"Laura Friedman","role":"Representative, CA-30","photo":"https://www.congress.gov/img/member/6a0f0dcb69b12040cf77e337_200.jpg","cash":435166,"asOf":"2026-05-13"},
+{"bioguideId":"G000602","name":"Laura Gillen","role":"Representative, NY-04","photo":"https://www.congress.gov/img/member/677427de0b34857ecc9090ad_200.jpg","cash":3421462,"asOf":"2026-06-03"},
+{"bioguideId":"L000597","name":"Laurel Lee","role":"Representative, FL-15","photo":"https://www.congress.gov/img/member/l000597_200.jpg","cash":1723656,"asOf":"2026-03-31"},
+{"bioguideId":"B001303","name":"Lisa Blunt Rochester","role":"Senator, Delaware","photo":"https://www.congress.gov/img/member/b001303_200.jpg","cash":109896,"asOf":"2026-03-31"},
+{"bioguideId":"M001136","name":"Lisa McClain","role":"Representative, MI-09","photo":"https://www.congress.gov/img/member/677836d41658e791a384976d_200.jpg","cash":1297809,"asOf":"2026-03-31"},
+{"bioguideId":"M001153","name":"Lisa Murkowski","role":"Senator, Alaska","photo":"https://www.congress.gov/img/member/m001153_200.jpg","cash":1379057,"asOf":"2026-03-31"},
+{"bioguideId":"D000399","name":"Lloyd Doggett","role":"Representative, TX-37","photo":"https://www.congress.gov/img/member/d000399_200.jpg","cash":2610460,"asOf":"2012-12-31"},
+{"bioguideId":"G000604","name":"Maggie Goodlander","role":"Representative, NH-02","photo":"https://www.congress.gov/img/member/678ff62d66bf616cf1a7ce13_200.jpg","cash":2046131,"asOf":"2026-03-31"},
+{"bioguideId":"H001076","name":"Margaret Hassan","role":"Senator, New Hampshire","photo":"https://www.congress.gov/img/member/h001076_200.jpg","cash":1495997,"asOf":"2026-03-31"},
+{"bioguideId":"C000127","name":"Maria Cantwell","role":"Senator, Washington","photo":"https://www.congress.gov/img/member/c000127_200.jpg","cash":134951,"asOf":"2026-03-31"},
+{"bioguideId":"M001215","name":"Mariannette Miller-Meeks","role":"Representative, IA-01","photo":"https://www.congress.gov/img/member/m001215_200.jpg","cash":4255364,"asOf":"2026-05-13"},
+{"bioguideId":"G000600","name":"Marie Perez","role":"Representative, WA-03","photo":"https://www.congress.gov/img/member/g000600_200.jpg","cash":3455825,"asOf":"2026-03-31"},
+{"bioguideId":"A000379","name":"Mark Alford","role":"Representative, MO-04","photo":"https://www.congress.gov/img/member/a000379_200.jpg","cash":742113,"asOf":"2026-03-31"},
+{"bioguideId":"H001102","name":"Mark Harris","role":"Representative, NC-08","photo":"https://www.congress.gov/img/member/67742d1b0b34857ecc9090dd_200.jpg","cash":399539,"asOf":"2026-03-31"},
+{"bioguideId":"K000377","name":"Mark Kelly","role":"Senator, Arizona","photo":"https://www.congress.gov/img/member/k000377_200.jpg","cash":22308538,"asOf":"2026-03-31"},
+{"bioguideId":"M001233","name":"Mark Messmer","role":"Representative, IN-08","photo":"https://www.congress.gov/img/member/677448630b34857ecc909125_200.jpg","cash":571932,"asOf":"2026-04-15"},
+{"bioguideId":"W000805","name":"Mark Warner","role":"Senator, Virginia","photo":"https://www.congress.gov/img/member/w000805_200.jpg","cash":14605034,"asOf":"2026-03-31"},
+{"bioguideId":"S001188","name":"Marlin Stutzman","role":"Representative, IN-03","photo":"https://www.congress.gov/img/member/67745e7e0b34857ecc90917f_200.jpg","cash":101923,"asOf":"2026-06-30"},
+{"bioguideId":"B001243","name":"Marsha Blackburn","role":"Senator, Tennessee","photo":"https://www.congress.gov/img/member/b001243_200.jpg","cash":5061597,"asOf":"2026-03-31"},
+{"bioguideId":"H001046","name":"Martin Heinrich","role":"Senator, New Mexico","photo":"https://www.congress.gov/img/member/h001046_200.jpg","cash":477020,"asOf":"2026-03-31"},
+{"bioguideId":"S001205","name":"Mary Scanlon","role":"Representative, PA-05","photo":"https://www.congress.gov/img/member/116_rp_pa_5_scanlon_mary_200.jpg","cash":400102,"asOf":"2026-04-29"},
+{"bioguideId":"V000139","name":"Matt Van Epps","role":"Representative, TN-07","photo":"https://www.congress.gov/img/member/6931b7d5f478c0f1228e9abe_200.jpg","cash":135155,"asOf":"2026-03-31"},
+{"bioguideId":"M001222","name":"Max Miller","role":"Representative, OH-07","photo":"https://www.congress.gov/img/member/680908fb6c2e6631263de71f_200.jpg","cash":1176211,"asOf":"2026-04-15"},
+{"bioguideId":"D000635","name":"Maxine Dexter","role":"Representative, OR-03","photo":"https://www.congress.gov/img/member/677425260b34857ecc90907d_200.jpg","cash":180834,"asOf":"2026-04-29"},
+{"bioguideId":"F000476","name":"Maxwell Frost","role":"Representative, FL-10","photo":"https://www.congress.gov/img/member/69a71e9a55f11d8282dde7a0_200.jpg","cash":1434531,"asOf":"2026-03-31"},
+{"bioguideId":"H001042","name":"Mazie Hirono","role":"Senator, Hawaii","photo":"https://www.congress.gov/img/member/h001042_200.jpg","cash":1393689,"asOf":"2026-03-31"},
+{"bioguideId":"B001322","name":"Michael Baumgartner","role":"Representative, WA-05","photo":"https://www.congress.gov/img/member/6774212e0b34857ecc90903a_200.jpg","cash":972786,"asOf":"2026-03-31"},
+{"bioguideId":"B001267","name":"Michael Bennet","role":"Senator, Colorado","photo":"https://www.congress.gov/img/member/b001267_200.jpg","cash":220650,"asOf":"2026-03-31"},
+{"bioguideId":"L000599","name":"Michael Lawler","role":"Representative, NY-17","photo":"https://www.congress.gov/img/member/l000599_200.jpg","cash":4841306,"asOf":"2026-06-30"},
+{"bioguideId":"R000619","name":"Michael Rulli","role":"Representative, OH-06","photo":"https://www.congress.gov/img/member/69401dcc8cd6e06e9e3b36de_200.jpg","cash":339657,"asOf":"2026-04-15"},
+{"bioguideId":"C001129","name":"Mike Collins","role":"Representative, GA-10","photo":"https://www.congress.gov/img/member/c001129_200.jpg","cash":597195,"asOf":"2024-12-31"},
+{"bioguideId":"C000880","name":"Mike Crapo","role":"Senator, Idaho","photo":"https://www.congress.gov/img/member/c000880_200.jpg","cash":3028068,"asOf":"2026-03-31"},
+{"bioguideId":"E000235","name":"Mike Ezell","role":"Representative, MS-04","photo":"https://www.congress.gov/img/member/e000235_200.jpg","cash":131577,"asOf":"2026-03-31"},
+{"bioguideId":"H001099","name":"Mike Haridopolos","role":"Representative, FL-08","photo":"https://www.congress.gov/img/member/67742ab50b34857ecc9090cb_200.jpg","cash":844112,"asOf":"2026-03-31"},
+{"bioguideId":"L000577","name":"Mike Lee","role":"Senator, Utah","photo":"https://www.congress.gov/img/member/l000577_200.jpg","cash":846399,"asOf":"2026-03-31"},
+{"bioguideId":"R000605","name":"Mike Rounds","role":"Senator, South Dakota","photo":"https://www.congress.gov/img/member/r000605_200.jpg","cash":2657276,"asOf":"2026-05-13"},
+{"bioguideId":"M000355","name":"Mitch McConnell","role":"Senator, Kentucky","photo":"https://www.congress.gov/img/member/m000355_200.jpg","cash":7333272,"asOf":"2026-03-31"},
+{"bioguideId":"D000594","name":"Monica De La Cruz","role":"Representative, TX-15","photo":"https://www.congress.gov/img/member/66d9fd54f440bf1dc174fbf6_200.jpg","cash":2334446,"asOf":"2026-03-31"},
+{"bioguideId":"L000603","name":"Morgan Luttrell","role":"Representative, TX-08","photo":"https://www.congress.gov/img/member/l000603_200.jpg","cash":396905,"asOf":"2026-03-31"},
+{"bioguideId":"M001220","name":"Morgan McGarvey","role":"Representative, KY-03","photo":"https://www.congress.gov/img/member/m001220_200.jpg","cash":1725863,"asOf":"2026-04-29"},
+{"bioguideId":"M001224","name":"Nathaniel Moran","role":"Representative, TX-01","photo":"https://www.congress.gov/img/member/680008c5f22eaf56065817f4_200.jpg","cash":634251,"asOf":"2026-03-31"},
+{"bioguideId":"P000621","name":"Nellie Pou","role":"Representative, NJ-09","photo":"https://www.congress.gov/img/member/67745d3b0b34857ecc909167_200.jpg","cash":1509835,"asOf":"2026-05-13"},
+{"bioguideId":"L000600","name":"Nicholas Langworthy","role":"Representative, NY-23","photo":"https://www.congress.gov/img/member/680901e76c2e6631263de716_200.jpg","cash":2477498,"asOf":"2026-06-30"},
+{"bioguideId":"L000598","name":"Nick LaLota","role":"Representative, NY-01","photo":"https://www.congress.gov/img/member/l000598_200.jpg","cash":2983750,"asOf":"2026-06-03"},
+{"bioguideId":"B001315","name":"Nikki Budzinski","role":"Representative, IL-13","photo":"https://www.congress.gov/img/member/b001315_200.jpg","cash":2609951,"asOf":"2026-03-31"},
+{"bioguideId":"H001101","name":"Pat Harrigan","role":"Representative, NC-10","photo":"https://www.congress.gov/img/member/67742ca40b34857ecc9090d7_200.jpg","cash":440280,"asOf":"2026-03-31"},
+{"bioguideId":"R000579","name":"Patrick Ryan","role":"Representative, NY-18","photo":"https://www.congress.gov/img/member/r000579_200.jpg","cash":2948337,"asOf":"2026-06-03"},
+{"bioguideId":"M001111","name":"Patty Murray","role":"Senator, Washington","photo":"https://www.congress.gov/img/member/1b52ad6d215684d847d1c2bf28b9b262_200.jpg","cash":1567250,"asOf":"2026-03-31"},
+{"bioguideId":"R000618","name":"Pete Ricketts","role":"Senator, Nebraska","photo":"https://www.congress.gov/img/member/r000618_200.jpg","cash":1072535,"asOf":"2026-04-22"},
+{"bioguideId":"W000800","name":"Peter Welch","role":"Senator, Vermont","photo":"https://www.congress.gov/img/member/fd3cb364b8bf93c25834cff750637802_200.jpg","cash":1632412,"asOf":"2026-03-31"},
+{"bioguideId":"P000603","name":"Rand Paul","role":"Senator, Kentucky","photo":"https://www.congress.gov/img/member/p000603_200.jpg","cash":6744711,"asOf":"2026-06-30"},
+{"bioguideId":"F000484","name":"Randy Fine","role":"Representative, FL-06","photo":"https://www.congress.gov/img/member/67efda8c1b05a5a598f7fde0_200.jpg","cash":761561,"asOf":"2026-03-31"},
+{"bioguideId":"W000790","name":"Raphael Warnock","role":"Senator, Georgia","photo":"https://www.congress.gov/img/member/w000790_200.jpg","cash":4041496,"asOf":"2026-03-31"},
+{"bioguideId":"T000481","name":"Rashida Tlaib","role":"Representative, MI-12","photo":"https://www.congress.gov/img/member/t000481_200.jpg","cash":4673746,"asOf":"2026-03-31"},
+{"bioguideId":"B001277","name":"Richard Blumenthal","role":"Senator, Connecticut","photo":"https://www.congress.gov/img/member/b001277_200.jpg","cash":1311529,"asOf":"2026-03-31"},
+{"bioguideId":"D000563","name":"Richard Durbin","role":"Senator, Illinois","photo":"https://www.congress.gov/img/member/d000563_200.jpg","cash":976473,"asOf":"2026-03-31"},
+{"bioguideId":"H001067","name":"Richard Hudson","role":"Representative, NC-09","photo":"https://www.congress.gov/img/member/h001067_200.jpg","cash":1536362,"asOf":"2026-03-31"},
+{"bioguideId":"M001218","name":"Richard McCormick","role":"Representative, GA-07","photo":"https://www.congress.gov/img/member/m001218_200.jpg","cash":836450,"asOf":"2026-04-29"},
+{"bioguideId":"S001217","name":"Rick Scott","role":"Senator, Florida","photo":"https://www.congress.gov/img/member/s001217_200.jpg","cash":799891,"asOf":"2026-03-31"},
+{"bioguideId":"M001235","name":"Riley Moore","role":"Representative, WV-02","photo":"https://www.congress.gov/img/member/677449fd0b34857ecc909131_200.jpg","cash":685114,"asOf":"2026-04-22"},
+{"bioguideId":"B001327","name":"Robert Bresnahan","role":"Representative, PA-08","photo":"https://www.congress.gov/img/member/6774236f0b34857ecc90905f_200.jpg","cash":2273292,"asOf":"2026-04-29"},
+{"bioguideId":"G000598","name":"Robert Garcia","role":"Representative, CA-42","photo":"https://www.congress.gov/img/member/g000598_200.jpg","cash":1148481,"asOf":"2026-05-13"},
+{"bioguideId":"M001226","name":"Robert Menendez","role":"Representative, NJ-08","photo":"https://www.congress.gov/img/member/681231f6246d1b6bd8d9f6b4_200.jpg","cash":748335,"asOf":"2026-05-13"},
+{"bioguideId":"O000177","name":"Robert Onder","role":"Representative, MO-03","photo":"https://www.congress.gov/img/member/67744f970b34857ecc909161_200.jpg","cash":367424,"asOf":"2026-03-31"},
+{"bioguideId":"M001198","name":"Roger Marshall","role":"Senator, Kansas","photo":"https://www.congress.gov/img/member/m001198_200.jpg","cash":4781259,"asOf":"2026-03-31"},
+{"bioguideId":"W000437","name":"Roger Wicker","role":"Senator, Mississippi","photo":"https://www.congress.gov/img/member/f49ac425119375e9fe6a075762734079_200.jpg","cash":2762604,"asOf":"2026-03-31"},
+{"bioguideId":"J000293","name":"Ron Johnson","role":"Senator, Wisconsin","photo":"https://www.congress.gov/img/member/j000293_200.jpg","cash":1213435,"asOf":"2026-03-31"},
+{"bioguideId":"W000779","name":"Ron Wyden","role":"Senator, Oregon","photo":"https://www.congress.gov/img/member/w000779_200.jpg","cash":1415985,"asOf":"2026-03-31"},
+{"bioguideId":"G000574","name":"Ruben Gallego","role":"Senator, Arizona","photo":"https://www.congress.gov/img/member/c6870f487cf4bc9a568d8afbe61d754b_200.jpg","cash":1928407,"asOf":"2026-03-31"},
+{"bioguideId":"F000478","name":"Russell Fry","role":"Representative, SC-07","photo":"https://www.congress.gov/img/member/f000478_200.jpg","cash":957318,"asOf":"2026-05-20"},
+{"bioguideId":"M001230","name":"Ryan Mackenzie","role":"Representative, PA-07","photo":"https://www.congress.gov/img/member/677430a40b34857ecc909113_200.jpg","cash":2594247,"asOf":"2026-04-29"},
+{"bioguideId":"Z000018","name":"Ryan Zinke","role":"Representative, MT-01","photo":"https://www.congress.gov/img/member/117_rp_mt_1_zinke_ryan_200.jpg","cash":680531,"asOf":"2024-12-31"},
+{"bioguideId":"J000305","name":"Sara Jacobs","role":"Representative, CA-51","photo":"https://www.congress.gov/img/member/j000305_200.jpg","cash":270111,"asOf":"2026-05-13"},
+{"bioguideId":"E000301","name":"Sarah Elfreth","role":"Representative, MD-03","photo":"https://www.congress.gov/img/member/677425dc0b34857ecc909089_200.jpg","cash":314695,"asOf":"2026-06-03"},
+{"bioguideId":"M001238","name":"Sarah McBride","role":"Representative, DE","photo":"https://www.congress.gov/img/member/67744b460b34857ecc909143_200.jpg","cash":2461694,"asOf":"2026-03-31"},
+{"bioguideId":"F000472","name":"Scott Franklin","role":"Representative, FL-18","photo":"https://www.congress.gov/img/member/f000472_200.jpg","cash":819492,"asOf":"2026-03-31"},
+{"bioguideId":"M001223","name":"Seth Magaziner","role":"Representative, RI-02","photo":"https://www.congress.gov/img/member/m001223_200.jpg","cash":1492754,"asOf":"2026-03-31"},
+{"bioguideId":"W000802","name":"Sheldon Whitehouse","role":"Senator, Rhode Island","photo":"https://www.congress.gov/img/member/w000802_200.jpg","cash":1117498,"asOf":"2026-03-31"},
+{"bioguideId":"C001047","name":"Shelley Capito","role":"Senator, West Virginia","photo":"https://www.congress.gov/img/member/c001047_200.jpg","cash":4064753,"asOf":"2026-04-22"},
+{"bioguideId":"B001325","name":"Sheri Biggs","role":"Representative, SC-03","photo":"https://www.congress.gov/img/member/677422990b34857ecc909052_200.jpg","cash":174495,"asOf":"2026-05-20"},
+{"bioguideId":"F000481","name":"Shomari Figures","role":"Representative, AL-02","photo":"https://www.congress.gov/img/member/68013eaa4e51529406f18e42_200.jpg","cash":320931,"asOf":"2026-04-29"},
+{"bioguideId":"T000488","name":"Shri Thanedar","role":"Representative, MI-13","photo":"https://www.congress.gov/img/member/68122bf2246d1b6bd8d9f6a2_200.jpg","cash":5042861,"asOf":"2026-03-31"},
+{"bioguideId":"D000618","name":"Steve Daines","role":"Senator, Montana","photo":"https://www.congress.gov/img/member/d000618_200.jpg","cash":4275067,"asOf":"2026-03-31"},
+{"bioguideId":"S001230","name":"Suhas Subramanyam","role":"Representative, VA-10","photo":"https://www.congress.gov/img/member/6797be8bc75fbc6f720e476a_200.jpg","cash":606566,"asOf":"2026-03-31"},
+{"bioguideId":"L000602","name":"Summer Lee","role":"Representative, PA-12","photo":"https://www.congress.gov/img/member/l000602_200.jpg","cash":1691817,"asOf":"2026-04-29"},
+{"bioguideId":"C001035","name":"Susan Collins","role":"Senator, Maine","photo":"https://www.congress.gov/img/member/c001035_200.jpg","cash":9672914,"asOf":"2026-05-20"},
+{"bioguideId":"K000400","name":"Sydney Kamlager-Dove","role":"Representative, CA-37","photo":"https://www.congress.gov/img/member/k000400_200.jpg","cash":333603,"asOf":"2026-05-13"},
+{"bioguideId":"B001230","name":"Tammy Baldwin","role":"Senator, Wisconsin","photo":"https://www.congress.gov/img/member/b001230_200.jpg","cash":567364,"asOf":"2026-03-31"},
+{"bioguideId":"D000622","name":"Tammy Duckworth","role":"Senator, Illinois","photo":"https://www.congress.gov/img/member/d000622_200.jpg","cash":3801811,"asOf":"2026-03-31"},
+{"bioguideId":"B001305","name":"Ted Budd","role":"Senator, North Carolina","photo":"https://www.congress.gov/img/member/b001305_200.jpg","cash":429158,"asOf":"2026-03-31"},
+{"bioguideId":"C001098","name":"Ted Cruz","role":"Senator, Texas","photo":"https://www.congress.gov/img/member/c001098_200.jpg","cash":2584010,"asOf":"2026-03-31"},
+{"bioguideId":"K000398","name":"Thomas Kean","role":"Representative, NJ-07","photo":"https://www.congress.gov/img/member/k000398_200.jpg","cash":3390691,"asOf":"2026-05-13"},
+{"bioguideId":"S001201","name":"Thomas Suozzi","role":"Representative, NY-03","photo":"https://www.congress.gov/img/member/116_rp_ny_3_suozzi_thomas_200.jpg","cash":5496563,"asOf":"2026-06-03"},
+{"bioguideId":"T000476","name":"Thomas Tillis","role":"Senator, North Carolina","photo":"https://www.congress.gov/img/member/t000476_200.jpg","cash":3677892,"asOf":"2026-03-31"},
+{"bioguideId":"K000384","name":"Tim Kaine","role":"Senator, Virginia","photo":"https://www.congress.gov/img/member/k000384_200.jpg","cash":2263990,"asOf":"2026-03-31"},
+{"bioguideId":"M001236","name":"Tim Moore","role":"Representative, NC-14","photo":"https://www.congress.gov/img/member/67744a540b34857ecc909137_200.jpg","cash":1574663,"asOf":"2026-03-31"},
+{"bioguideId":"S001184","name":"Tim Scott","role":"Senator, South Carolina","photo":"https://www.congress.gov/img/member/s001184_200.jpg","cash":4968320,"asOf":"2026-03-31"},
+{"bioguideId":"S001232","name":"Tim Sheehy","role":"Senator, Montana","photo":"https://www.congress.gov/img/member/677d8231fdb6cf36bbb6498b_200.jpg","cash":951382,"asOf":"2026-03-31"},
+{"bioguideId":"K000402","name":"Timothy Kennedy","role":"Representative, NY-26","photo":"https://www.congress.gov/img/member/668e9306658443009a697c8c_200.jpg","cash":998106,"asOf":"2026-06-03"},
+{"bioguideId":"S001203","name":"Tina Smith","role":"Senator, Minnesota","photo":"https://www.congress.gov/img/member/s001203_200.jpg","cash":270257,"asOf":"2026-03-31"},
+{"bioguideId":"Y000064","name":"Todd Young","role":"Senator, Indiana","photo":"https://www.congress.gov/img/member/y000064_200.jpg","cash":7205566,"asOf":"2026-06-30"},
+{"bioguideId":"B001321","name":"Tom Barrett","role":"Representative, MI-07","photo":"https://www.congress.gov/img/member/6774207d0b34857ecc909034_200.jpg","cash":2819038,"asOf":"2026-03-31"},
+{"bioguideId":"C001095","name":"Tom Cotton","role":"Senator, Arkansas","photo":"https://www.congress.gov/img/member/c001095_200.jpg","cash":9787086,"asOf":"2026-03-31"},
+{"bioguideId":"T000278","name":"Tommy Tuberville","role":"Senator, Alabama","photo":"https://www.congress.gov/img/member/t000278_200.jpg","cash":90994,"asOf":"2026-03-31"},
+{"bioguideId":"W000829","name":"Tony Wied","role":"Representative, WI-08","photo":"https://www.congress.gov/img/member/6734b6724c72e343a6aff9e6_200.jpg","cash":427379,"asOf":"2026-03-31"},
+{"bioguideId":"D000634","name":"Troy Downing","role":"Representative, MT-02","photo":"https://www.congress.gov/img/member/677424da0b34857ecc909077_200.jpg","cash":393570,"asOf":"2026-05-13"},
+{"bioguideId":"H001094","name":"Val Hoyle","role":"Representative, OR-04","photo":"https://www.congress.gov/img/member/h001094_200.jpg","cash":492717,"asOf":"2026-04-29"},
+{"bioguideId":"F000477","name":"Valerie Foushee","role":"Representative, NC-04","photo":"https://www.congress.gov/img/member/68122e57246d1b6bd8d9f6ab_200.jpg","cash":30541,"asOf":"2026-03-31"},
+{"bioguideId":"G000581","name":"Vicente Gonzalez","role":"Representative, TX-34","photo":"https://www.congress.gov/img/member/115_rp_tx_15_gonzalez_vicente_200.jpg","cash":1895986,"asOf":"2026-03-31"},
+{"bioguideId":"F000480","name":"Vince Fong","role":"Representative, CA-20","photo":"https://www.congress.gov/img/member/669ff04f5d19788d1f2034aa_200.jpg","cash":314213,"asOf":"2026-05-13"},
+{"bioguideId":"H001095","name":"Wesley Hunt","role":"Representative, TX-38","photo":"https://www.congress.gov/img/member/h001095_200.jpg","cash":1726,"asOf":"2026-03-31"},
+{"bioguideId":"K000397","name":"Young Kim","role":"Representative, CA-40","photo":"https://www.congress.gov/img/member/k000397_200.jpg","cash":3093061,"asOf":"2026-05-13"},
+{"bioguideId":"N000193","name":"Zachary Nunn","role":"Representative, IA-03","photo":"https://www.congress.gov/img/member/n000193_200.jpg","cash":3160505,"asOf":"2026-05-13"}
+];
+
+function fmtCash(n){
+  return '$'+n.toLocaleString('en-US');
+}
+
+function shuffle(arr){
+  var a=arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=a[i];a[i]=a[j];a[j]=t;
+  }
+  return a;
+}
+
+var BEST_KEY='warchest-best';
+var deck, pos, streak, best, locked;
+
+function loadBest(){
+  var v=parseInt(localStorage.getItem(BEST_KEY),10);
+  return isNaN(v)?0:v;
+}
+function saveBest(v){localStorage.setItem(BEST_KEY,String(v));}
+
+var elA={img:document.getElementById('card-a-img'),name:document.getElementById('card-a-name'),role:document.getElementById('card-a-role'),cash:document.getElementById('card-a-cash')};
+var elB={card:document.getElementById('card-b'),img:document.getElementById('card-b-img'),name:document.getElementById('card-b-name'),role:document.getElementById('card-b-role'),cash:document.getElementById('card-b-cash')};
+var streakNumEl=document.getElementById('streak-num');
+var resultEl=document.getElementById('result-banner');
+var guessRowEl=document.getElementById('guess-row');
+var gameOverEl=document.getElementById('game-over');
+var btnHigher=document.getElementById('btn-higher');
+var btnLower=document.getElementById('btn-lower');
+
+function renderA(m){
+  elA.img.src=m.photo;elA.img.alt=m.name;
+  elA.name.textContent=m.name;
+  elA.role.textContent=m.role;
+  elA.cash.textContent=fmtCash(m.cash);
+}
+function renderB(m){
+  elB.img.src=m.photo;elB.img.alt=m.name;
+  elB.name.textContent=m.name;
+  elB.role.textContent=m.role;
+  elB.cash.textContent='?????';
+  elB.cash.classList.add('hidden');
+  elB.card.classList.remove('current');
+}
+
+function startGame(){
+  deck=shuffle(MEMBERS);
+  pos=1;
+  streak=0;
+  locked=false;
+  best=loadBest();
+  streakNumEl.textContent=streak;
+  resultEl.textContent='';
+  resultEl.className='result-banner';
+  gameOverEl.classList.remove('show');
+  guessRowEl.style.display='flex';
+  renderA(deck[0]);
+  renderB(deck[1]);
+  btnHigher.disabled=false;
+  btnLower.disabled=false;
+}
+
+function guess(dir){
+  if(locked) return;
+  locked=true;
+  btnHigher.disabled=true;
+  btnLower.disabled=true;
+  var a=deck[pos-1],b=deck[pos];
+  var actuallyHigher=b.cash>a.cash;
+  var correct=(dir==='higher')===actuallyHigher;
+  elB.cash.textContent=fmtCash(b.cash);
+  elB.cash.classList.remove('hidden');
+  if(correct){
+    streak++;
+    streakNumEl.textContent=streak;
+    resultEl.textContent='Correct — '+b.name+' had '+(actuallyHigher?'more':'less');
+    resultEl.className='result-banner correct';
+    if(streak>best){best=streak;saveBest(best);}
+    setTimeout(function(){
+      pos++;
+      if(pos>=deck.length){
+        deck=shuffle(MEMBERS);
+        pos=1;
+        renderA(deck[0]);
+      } else {
+        renderA(deck[pos-1]);
+      }
+      renderB(deck[pos]);
+      resultEl.textContent='';
+      resultEl.className='result-banner';
+      locked=false;
+      btnHigher.disabled=false;
+      btnLower.disabled=false;
+    },1100);
+  } else {
+    resultEl.textContent='Wrong — '+b.name+' had '+(actuallyHigher?'more':'less');
+    resultEl.className='result-banner wrong';
+    setTimeout(function(){
+      guessRowEl.style.display='none';
+      document.getElementById('final-streak').textContent=streak;
+      document.getElementById('best-streak').textContent=best;
+      gameOverEl.classList.add('show');
+    },1100);
+  }
+}
+
+btnHigher.addEventListener('click',function(){guess('higher');});
+btnLower.addEventListener('click',function(){guess('lower');});
+document.getElementById('replay-btn').addEventListener('click',startGame);
+
+startGame();
+</script>
+</body>
+</html>

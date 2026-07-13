@@ -101,6 +101,27 @@ nav{
 nav ul{list-style:none;display:flex;gap:18px;flex-wrap:wrap}
 nav a{color:var(--ink);text-decoration:none;transition:color .15s}
 nav a:hover{color:var(--red)}
+.nav-dropdown{position:relative}
+.nav-dropdown .dropdown-menu{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  margin-top:0;
+  background:var(--paper);
+  border:1px solid var(--rule);
+  list-style:none;
+  min-width:130px;
+  padding:8px 0 4px;
+  z-index:20;
+  box-shadow:0 4px 10px rgba(0,0,0,.12);
+  gap:0;
+}
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu{display:block}
+.dropdown-menu li{width:100%}
+.dropdown-menu a{display:block;padding:8px 14px;font-size:12.5px;white-space:nowrap}
+.dropdown-menu a:hover{background:var(--paper-2)}
 .social{display:flex;gap:7px;align-items:center;padding:0 4px}
 .social a{
   width:21px;height:21px;border:1px solid var(--rule);
