@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Politicle — Mark Alfred Dot News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.masthead-sm{
+  font-family:"Chomsky",serif;
+  font-size:clamp(18px,2.4vw,28px);
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1;
+  text-transform:none;
+  position:static;
+  transform:none;
+  white-space:nowrap;
+}
+.masthead-sm a{color:var(--ink);text-decoration:none}
+.utility{align-items:center;padding:8px 0}
+nav a{color:var(--muted)}
+nav a:hover{color:var(--red)}
+.social a{border-color:var(--rule-soft)}
+
+/* ── game page ── */
+.game-head{
+  text-align:center;
+  border-bottom:3px double var(--rule);
+  padding:26px 0 20px;
+}
+.game-title{
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:700;
+  font-size:clamp(32px,5vw,48px);
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  text-transform:uppercase;
+}
+.game-sub{
+  font-family:"Libre Caslon Text",serif;
+  font-style:italic;
+  font-size:14px;
+  color:var(--ink-soft);
+  margin-top:6px;
+}
+
+.game-wrap{
+  max-width:420px;
+  margin:0 auto;
+  padding:28px 0 40px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:22px;
+}
+
+.toast{
+  font-family:"Archivo",sans-serif;
+  font-size:12.5px;
+  font-weight:700;
+  letter-spacing:.03em;
+  text-transform:uppercase;
+  color:var(--paper);
+  background:var(--ink);
+  padding:8px 16px;
+  border-radius:2px;
+  min-height:16px;
+  opacity:0;
+  transition:opacity .15s;
+  text-align:center;
+}
+.toast.show{opacity:1}
+
+.board{
+  display:grid;
+  grid-template-rows:repeat(6,1fr);
+  gap:6px;
+  width:100%;
+  max-width:330px;
+}
+.board-row{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.tile{
+  aspect-ratio:1/1;
+  border:2px solid var(--rule-soft);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:"Archivo",sans-serif;
+  font-weight:800;
+  font-size:clamp(20px,5vw,28px);
+  color:var(--ink);
+  text-transform:uppercase;
+  background:var(--paper);
+}
+.tile.filled{border-color:var(--ink-soft)}
+.tile.correct{background:#4a6b4d;border-color:#4a6b4d;color:#fff}
+.tile.present{background:#b8923f;border-color:#b8923f;color:#fff}
+.tile.absent{background:#8a8478;border-color:#8a8478;color:#fff}
+
+.keyboard{display:flex;flex-direction:column;gap:7px;width:100%;max-width:480px}
+.kb-row{display:flex;gap:5px;justify-content:center}
+.key{
+  font-family:"Archivo",sans-serif;
+  font-weight:700;
+  font-size:12px;
+  text-transform:uppercase;
+  border:none;
+  border-radius:3px;
+  background:var(--rule-soft);
+  color:var(--ink);
+  padding:0;
+  height:44px;
+  min-width:30px;
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:background .15s,color .15s;
+}
+.key:hover{background:#b8b2a3}
+.key.wide{flex:1.6;font-size:10px}
+.key.correct{background:#4a6b4d;color:#fff}
+.key.present{background:#b8923f;color:#fff}
+.key.absent{background:#8a8478;color:#fff}
+
+.reveal{
+  text-align:center;
+  border-top:1px solid var(--rule-soft);
+  padding-top:18px;
+  display:none;
+}
+.reveal.show{display:block}
+.reveal .who{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+  color:var(--ink);
+}
+.reveal .role{
+  font-family:"Libre Caslon Text",serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--ink-soft);
+  margin-top:3px;
+}
+.reveal .blurb{
+  font-family:"Libre Caslon Text",serif;
+  font-size:13.5px;
+  line-height:1.5;
+  color:var(--ink-soft);
+  max-width:340px;
+  margin:10px auto 0;
+}
+.reveal-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.share-btn{
+  margin-top:14px;
+  font-family:"Archivo",sans-serif;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  background:var(--red);
+  color:#fff;
+  border:none;
+  padding:10px 20px;
+  cursor:pointer;
+  transition:background .15s,color .15s;
+}
+.share-btn:hover{background:var(--red-dark)}
+.share-btn.outline{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.share-btn.outline:hover{background:var(--ink);color:var(--paper)}
+
+@media(max-width:480px){
+  .key{height:40px;min-width:24px;font-size:11px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="utility">
+    <div class="masthead-sm"><a href="index.html">Mark Alfred Dot News</a></div>
+    <div class="day" id="js-day"></div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="news.html">News</a></li>
+      <li><a href="photojournalism.html">Photojournalism</a></li>
+      <li><a href="exclusives.html">Exclusives</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="social">
+      <a href="#" title="X" aria-label="X">𝕏</a>
+      <a href="https://www.notus.org/mark-alfred" title="NOTUS" aria-label="NOTUS">N</a>
+      <a href="https://www.linkedin.com/in/mark-alfred/" title="LinkedIn" aria-label="LinkedIn">in</a>
+    </div>
+    <ul>
+      <li><a href="#">The Star</a></li>
+      <li><a href="#">Politics</a></li>
+      <li><a href="#">Trump</a></li>
+      <li><a href="#">Local</a></li>
+      <li><a href="games.html" style="color:var(--red)">Games</a></li>
+      <li><a href="#">Send a News Tip</a></li>
+    </ul>
+  </nav>
+
+  <div class="game-head">
+    <div class="game-title">Politicle</div>
+    <div class="game-sub">Guess the politician. Five letters, six tries, one a day.</div>
+  </div>
+
+  <div class="game-wrap">
+    <div class="toast" id="toast"></div>
+    <div class="board" id="board"></div>
+    <div class="reveal" id="reveal">
+      <div class="who" id="reveal-who"></div>
+      <div class="role" id="reveal-role"></div>
+      <p class="blurb" id="reveal-blurb"></p>
+      <div class="reveal-actions">
+        <button class="share-btn" id="share-btn">Copy Result</button>
+        <button class="share-btn outline" id="again-btn">Play Again</button>
+      </div>
+    </div>
+    <div class="keyboard" id="keyboard"></div>
+  </div>
+
+  <footer>
+    <div class="wordmark">Mark Alfred Dot News</div>
+    <div class="credits">Designed and Developed by <b>Mark Alfred</b></div>
+  </footer>
+
+</div>
+<script>
+(function(){
+  var now=new Date();
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var d=document.getElementById('js-day');
+  if(d) d.textContent=days[now.getDay()].toUpperCase();
+})();
+
+var FACTS={
+  TRUMP:{role:"President",blurb:"Began a second, nonconsecutive term in January 2025 and has pushed an aggressive deregulatory agenda, including DOGE's downsizing of federal agencies."},
+  VANCE:{role:"Vice President",blurb:"A former Ohio senator and one-time Trump critic turned running mate, elevated to the ticket in 2024."},
+  RUBIO:{role:"Secretary of State",blurb:"The former Florida senator and 2016 presidential candidate now leads U.S. diplomacy in Trump's second term."},
+  BIDEN:{role:"46th President",blurb:"Served one term from 2021 to 2025, signing the American Rescue Plan and the Inflation Reduction Act before losing his 2024 reelection bid."},
+  OBAMA:{role:"44th President",blurb:"The first Black president, served two terms from 2009 to 2017 and remains a leading voice in Democratic politics."},
+  PENCE:{role:"Former Vice President",blurb:"Served under Trump's first term from 2017 to 2021, then broke with him after Jan. 6, 2021."},
+  HALEY:{role:"Former U.N. Ambassador",blurb:"The ex-South Carolina governor challenged Trump in the 2024 GOP primary before dropping out and later endorsing him."},
+  GAETZ:{role:"Former Congressman, Florida",blurb:"Resigned from Congress in 2024 amid an ethics probe; Trump's nomination of him for attorney general collapsed within days."},
+  WYDEN:{role:"Senator, Oregon",blurb:"A longtime Democrat and the top Finance Committee voice on tech, tax and trade policy."},
+  THUNE:{role:"Senate Majority Leader, South Dakota",blurb:"Took over Senate GOP leadership from Mitch McConnell in 2025 after two decades in the chamber."},
+  ERNST:{role:"Senator, Iowa",blurb:"The first woman to represent Iowa in the Senate and a combat veteran of the Iowa Army National Guard."},
+  COONS:{role:"Senator, Delaware",blurb:"A close Biden ally who now holds the Senate seat Biden occupied for 36 years before becoming vice president."},
+  KELLY:{role:"Senator, Arizona",blurb:"A former NASA astronaut and Navy combat pilot, married to former Rep. Gabby Giffords."},
+  KAINE:{role:"Senator, Virginia",blurb:"Hillary Clinton's 2016 running mate and a former Virginia governor and Richmond mayor."},
+  HOGAN:{role:"Former Governor, Maryland",blurb:"A moderate Republican who left office in 2023 term-limited, then lost a 2024 bid for Maryland's open Senate seat."},
+  SCOTT:{role:"Senator, South Carolina",blurb:"The Senate's only Black Republican ran for the 2024 GOP presidential nomination before dropping out and endorsing Trump."},
+  YOUNG:{role:"Senator, Indiana",blurb:"A Marine Corps and Navy veteran who has focused on foreign relations and government oversight."}
+};
+var FULLNAMES={
+  TRUMP:"Donald Trump",VANCE:"JD Vance",RUBIO:"Marco Rubio",BIDEN:"Joe Biden",
+  OBAMA:"Barack Obama",PENCE:"Mike Pence",HALEY:"Nikki Haley",GAETZ:"Matt Gaetz",
+  WYDEN:"Ron Wyden",THUNE:"John Thune",ERNST:"Joni Ernst",COONS:"Chris Coons",
+  KELLY:"Mark Kelly",KAINE:"Tim Kaine",HOGAN:"Larry Hogan",SCOTT:"Tim Scott",
+  YOUNG:"Todd Young"
+};
+var WORDS=Object.keys(FACTS);
+
+var now=new Date();
+var EPOCH=Date.UTC(2026,0,1);
+var todayUTC=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate());
+var dayIndex=Math.floor((todayUTC-EPOCH)/86400000);
+var dateKey=now.toISOString().slice(0,10);
+var dailyAnswer=WORDS[((dayIndex%WORDS.length)+WORDS.length)%WORDS.length];
+
+var ROWS=6,COLS=5;
+var PUZZLE_PTR_KEY='politicle-puzzle';
+var ANSWER,STORAGE_KEY,state;
+
+var boardEl=document.getElementById('board');
+var keyboardEl=document.getElementById('keyboard');
+var toastEl=document.getElementById('toast');
+var revealEl=document.getElementById('reveal');
+
+var KB_ROWS=[
+  ['Q','W','E','R','T','Y','U','I','O','P'],
+  ['A','S','D','F','G','H','J','K','L'],
+  ['ENTER','Z','X','C','V','B','N','M','BACK']
+];
+
+function loadState(){
+  var raw=localStorage.getItem(STORAGE_KEY);
+  if(raw){
+    try{return JSON.parse(raw);}catch(e){}
+  }
+  return{guesses:[],current:'',done:false,won:false};
+}
+function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+
+function pickRandomWord(exclude){
+  var pool=WORDS.filter(function(w){return w!==exclude;});
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+
+function startPuzzle(ptr){
+  ANSWER=ptr.answer;
+  STORAGE_KEY='politicle-state-'+ptr.id;
+  state=loadState();
+}
+
+function loadPuzzlePointer(){
+  var raw=localStorage.getItem(PUZZLE_PTR_KEY);
+  if(raw){
+    try{
+      var ptr=JSON.parse(raw);
+      if(ptr&&ptr.id&&FACTS[ptr.answer]) return ptr;
+    }catch(e){}
+  }
+  return{id:dateKey,answer:dailyAnswer};
+}
+function savePuzzlePointer(ptr){localStorage.setItem(PUZZLE_PTR_KEY,JSON.stringify(ptr));}
+
+function startNewGame(){
+  var ptr={id:dateKey+'-'+Date.now(),answer:pickRandomWord(ANSWER)};
+  savePuzzlePointer(ptr);
+  startPuzzle(ptr);
+  revealEl.classList.remove('show');
+  renderBoard();
+  renderKeyboard();
+}
+
+var puzzlePtr=loadPuzzlePointer();
+savePuzzlePointer(puzzlePtr);
+startPuzzle(puzzlePtr);
+
+function letterStatus(guess,i){
+  var ch=guess[i];
+  if(ANSWER[i]===ch) return 'correct';
+  if(ANSWER.indexOf(ch)===-1) return 'absent';
+  var answerCount=ANSWER.split('').filter(function(c){return c===ch;}).length;
+  var correctElsewhere=0,presentBefore=0;
+  for(var j=0;j<COLS;j++){
+    if(guess[j]===ch&&ANSWER[j]===ch) correctElsewhere++;
+  }
+  for(var j=0;j<i;j++){
+    if(guess[j]===ch&&ANSWER[j]!==ch) presentBefore++;
+  }
+  if(correctElsewhere+presentBefore<answerCount) return 'present';
+  return 'absent';
+}
+
+function renderBoard(){
+  boardEl.innerHTML='';
+  for(var r=0;r<ROWS;r++){
+    var rowEl=document.createElement('div');
+    rowEl.className='board-row';
+    var guess=state.guesses[r];
+    var isCurrent=(r===state.guesses.length&&!state.done);
+    var text=guess?guess:(isCurrent?state.current:'');
+    for(var c=0;c<COLS;c++){
+      var tile=document.createElement('div');
+      tile.className='tile';
+      var ch=text[c]||'';
+      tile.textContent=ch;
+      if(ch) tile.classList.add('filled');
+      if(guess){
+        tile.classList.add(letterStatus(guess,c));
+      }
+      rowEl.appendChild(tile);
+    }
+    boardEl.appendChild(rowEl);
+  }
+}
+
+function keyStatusRank(s){return{absent:1,present:2,correct:3}[s]||0;}
+
+function renderKeyboard(){
+  keyboardEl.innerHTML='';
+  var best={};
+  state.guesses.forEach(function(guess){
+    for(var i=0;i<COLS;i++){
+      var s=letterStatus(guess,i);
+      var ch=guess[i];
+      if(keyStatusRank(s)>keyStatusRank(best[ch])) best[ch]=s;
+    }
+  });
+  KB_ROWS.forEach(function(row){
+    var rowEl=document.createElement('div');
+    rowEl.className='kb-row';
+    row.forEach(function(k){
+      var btn=document.createElement('button');
+      btn.className='key';
+      btn.textContent=(k==='BACK'?'⌫':k);
+      if(k==='ENTER'||k==='BACK') btn.classList.add('wide');
+      if(best[k]) btn.classList.add(best[k]);
+      btn.addEventListener('click',function(){handleKey(k);});
+      rowEl.appendChild(btn);
+    });
+    keyboardEl.appendChild(rowEl);
+  });
+}
+
+function showToast(msg){
+  toastEl.textContent=msg;
+  toastEl.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t=setTimeout(function(){toastEl.classList.remove('show');},1800);
+}
+
+function handleKey(k){
+  if(state.done) return;
+  if(k==='BACK'){
+    state.current=state.current.slice(0,-1);
+  }else if(k==='ENTER'){
+    submitGuess();
+    return;
+  }else if(/^[A-Z]$/.test(k)&&state.current.length<COLS){
+    state.current+=k;
+  }
+  saveState();
+  renderBoard();
+}
+
+function submitGuess(){
+  if(state.current.length<COLS){
+    showToast('Not enough letters');
+    return;
+  }
+  var guess=state.current;
+  state.guesses.push(guess);
+  state.current='';
+  if(guess===ANSWER){
+    state.done=true;
+    state.won=true;
+  }else if(state.guesses.length>=ROWS){
+    state.done=true;
+    state.won=false;
+  }
+  saveState();
+  renderBoard();
+  renderKeyboard();
+  if(state.done) showReveal();
+}
+
+function shareText(){
+  var lines=state.guesses.map(function(guess){
+    return guess.split('').map(function(ch,i){
+      var s=letterStatus(guess,i);
+      return s==='correct'?'🟥':s==='present'?'🟨':'⬜';
+    }).join('');
+  });
+  return 'Politicle '+dateKey+' '+(state.won?state.guesses.length:'X')+'/'+ROWS+'\n'+lines.join('\n');
+}
+
+function showReveal(){
+  document.getElementById('reveal-who').textContent=
+    (state.won?'You got it: ':'The answer was: ')+FULLNAMES[ANSWER];
+  document.getElementById('reveal-role').textContent=FACTS[ANSWER].role;
+  document.getElementById('reveal-blurb').textContent=FACTS[ANSWER].blurb;
+  revealEl.classList.add('show');
+}
+
+document.getElementById('share-btn').addEventListener('click',function(){
+  var text=shareText();
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){showToast('Copied to clipboard');});
+  }else{
+    showToast('Copy not supported');
+  }
+});
+
+document.getElementById('again-btn').addEventListener('click',startNewGame);
+
+document.addEventListener('keydown',function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey) return;
+  var key=e.key.toUpperCase();
+  if(key==='ENTER'){handleKey('ENTER');}
+  else if(key==='BACKSPACE'){handleKey('BACK');}
+  else if(/^[A-Z]$/.test(key)){handleKey(key);}
+});
+
+renderBoard();
+renderKeyboard();
+if(state.done) showReveal();
+</script>
+</body>
+</html>
