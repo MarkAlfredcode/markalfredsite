@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photojournalism — Mark Alfred Dot News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.section-tag{
+  display:block;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(36px,5.6vw,70px);
+  font-weight:700;
+  line-height:.9;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  -webkit-text-stroke:.5px var(--ink);
+  text-stroke:.5px var(--ink);
+  paint-order:stroke fill;
+  padding:48px 0 6px;
+  text-transform:uppercase;
+}
+.byline{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:14px;
+  letter-spacing:.02em;
+  color:var(--ink-soft);
+  text-align:center;
+  margin-top:22px;
+}
+.byline .label{display:block;text-transform:uppercase;letter-spacing:.1em;font-size:12px}
+.byline .name{display:block;font-weight:700;color:var(--ink);font-size:16px;margin-top:3px}
+
+.pj-hero{
+  display:grid;
+  grid-template-columns:1.6fr 1fr;
+  column-gap:20px;
+  align-items:start;
+  border-bottom:3px double var(--rule);
+  padding-bottom:22px;
+}
+.pj-hero .section-tag{grid-column:1;grid-row:1}
+.pj-hero-photo{
+  grid-column:1;
+  grid-row:2;
+  width:100%;
+  aspect-ratio:1334/826;
+  position:relative;
+  z-index:2;
+  margin-top:-28px;
+}
+.pj-hero-photo img{width:100%;height:100%;display:block;object-fit:cover}
+.pj-hero-right{grid-column:2;grid-row:2;text-align:center}
+.pj-arrow{display:block;width:70px;height:5px;margin:122px auto 0;transform:rotate(90deg)}
+.masthead-sm{
+  font-family:"Chomsky",serif;
+  font-size:clamp(18px,2.4vw,28px);
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1;
+  text-transform:none;
+  position:static;
+  transform:none;
+  white-space:nowrap;
+}
+.masthead-sm a{color:var(--ink);text-decoration:none}
+.utility{align-items:center;padding:8px 0}
+nav a{color:var(--muted)}
+nav a:hover{color:var(--red)}
+.social a{border-color:var(--rule-soft)}
+
+.essay{padding-top:6px}
+.essay-item{padding:44px 0;border-bottom:1px solid var(--rule-soft)}
+.essay-item:last-child{border-bottom:none}
+.essay-item img{width:100%;display:block;object-fit:cover}
+.essay-cap{
+  font-family:"Libre Caslon Display",serif;
+  font-size:clamp(19px,2.4vw,28px);
+  line-height:1.22;
+  color:var(--ink);
+}
+
+/* landscape: photo, caption flush/near-flush below, centered, narrower than photo */
+.essay-below{max-width:73%;margin:0 auto}
+.essay-below .essay-cap{text-align:center;max-width:70%;margin:0 auto}
+
+/* portrait: photo pinned left at ~42% width, caption floats beside it, offset down ~70px, never alternates */
+.essay-beside{display:flex;gap:70px}
+.essay-beside .img{width:42%;flex:none}
+.essay-beside .essay-cap{margin-top:70px;max-width:260px;text-align:left}
+
+@media(max-width:860px){
+  .pj-hero{grid-template-columns:1fr}
+  .pj-hero .section-tag{grid-column:1;grid-row:1;text-align:center;padding-top:16px}
+  .pj-hero-photo{grid-column:1;grid-row:2;border-bottom:1px solid var(--rule);padding-bottom:16px}
+  .pj-hero-right{grid-column:1;grid-row:3;padding-top:14px}
+  .pj-arrow{display:none}
+  .essay-below{max-width:100%}
+  .essay-below .essay-cap{max-width:100%}
+  .essay-beside{flex-direction:column;gap:16px;text-align:center}
+  .essay-beside .img{width:100%}
+  .essay-beside .essay-cap{margin-top:0;max-width:none;text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="utility">
+    <div class="masthead-sm"><a href="index.html">Mark Alfred Dot News</a></div>
+    <div class="day" id="js-day"></div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="news.html">News</a></li>
+      <li><a href="photojournalism.html" style="color:var(--red)">Photojournalism</a></li>
+      <li><a href="exclusives.html">Exclusives</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="social">
+      <a href="#" title="X" aria-label="X">𝕏</a>
+      <a href="https://www.notus.org/mark-alfred" title="NOTUS" aria-label="NOTUS">N</a>
+      <a href="https://www.linkedin.com/in/mark-alfred/" title="LinkedIn" aria-label="LinkedIn">in</a>
+    </div>
+    <ul>
+      <li><a href="#">The Star</a></li>
+      <li><a href="#">Politics</a></li>
+      <li><a href="#">Trump</a></li>
+      <li><a href="#">Local</a></li>
+      <li><a href="games.html">Games</a></li>
+      <li><a href="#">Send a News Tip</a></li>
+    </ul>
+  </nav>
+
+  <div class="pj-hero">
+    <span class="section-tag">Photojournalism</span>
+    <div class="pj-hero-photo">
+      <img src="https://www.figma.com/api/mcp/asset/603c136c-3518-49b4-b387-9096405be68a" alt="Migrants are detained near the U.S. border">
+    </div>
+    <div class="pj-hero-right">
+      <p class="essay-cap">Migrants are detained near the U.S. border</p>
+      <p class="byline"><span class="label">Photographs By</span><span class="name">Mark Alfred</span></p>
+      <img class="pj-arrow" src="https://www.figma.com/api/mcp/asset/92567872-e8aa-4854-8c0b-8f0f3fc53d77" alt="">
+    </div>
+  </div>
+
+  <div class="essay">
+
+    <div class="essay-item essay-beside">
+      <div class="img"><img src="https://www.figma.com/api/mcp/asset/25735de9-3234-4ed9-8e8b-caf86b234834" alt="President Biden and Vice President Harris" style="aspect-ratio:764/1146"></div>
+      <p class="essay-cap">President Biden and Vice President Harris</p>
+    </div>
+
+    <div class="essay-item essay-below" style="max-width:62%">
+      <img src="https://www.figma.com/api/mcp/asset/ae966d1a-f4e9-4ae1-8e13-f51a375e2af0" alt="Florida Gov. DeSantis" style="aspect-ratio:1179/786">
+      <p class="essay-cap" style="margin-top:0;max-width:80%">Florida Gov. DeSantis</p>
+    </div>
+
+    <div class="essay-item essay-beside">
+      <div class="img"><img src="https://www.figma.com/api/mcp/asset/b904c0f0-a87a-4fdd-8024-b5e2691d5ea7" alt="San Diego Mayor Gloria" style="aspect-ratio:775/1146"></div>
+      <p class="essay-cap">San Diego Mayor Gloria</p>
+    </div>
+
+    <div class="essay-item essay-below" style="max-width:63%">
+      <img src="https://www.figma.com/api/mcp/asset/173544a2-825b-44ee-b53d-2c87a5a73ff4" alt="The dismantling of USAID" style="aspect-ratio:1197/796">
+      <p class="essay-cap" style="margin-top:25px;max-width:80%">The dismantling of USAID</p>
+    </div>
+
+    <div class="essay-item essay-beside">
+      <div class="img"><img src="https://www.figma.com/api/mcp/asset/a7bbc816-d660-4526-a6a9-07cf5e6a6348" alt="Former South Carolina Gov. Haley" style="aspect-ratio:775/1146"></div>
+      <p class="essay-cap">Former South Carolina Gov. Haley</p>
+    </div>
+
+    <div class="essay-item essay-below" style="max-width:63%">
+      <img src="https://www.figma.com/api/mcp/asset/8e5f7936-4051-44a2-83b1-c9c6eef37b24" alt="Minnesota Gov. Walz and Vice President Harris" style="aspect-ratio:1201/976">
+      <p class="essay-cap" style="margin-top:34px;max-width:48%">Minnesota Gov. Walz and Vice President Harris</p>
+    </div>
+
+    <div class="essay-item essay-beside">
+      <div class="img"><img src="https://www.figma.com/api/mcp/asset/76b9b27b-6dd4-4c79-a150-ca13b324ee1d" alt="Vivek Ramaswamy" style="aspect-ratio:775/1146"></div>
+      <p class="essay-cap">Vivek Ramaswamy</p>
+    </div>
+
+    <div class="essay-item essay-below" style="max-width:73%">
+      <img src="https://www.figma.com/api/mcp/asset/c813a7e2-78c0-4b79-b6c9-b77ed3f21645" alt="President Trump" style="aspect-ratio:1388/925">
+      <p class="essay-cap" style="margin-top:60px;max-width:48%">President Trump</p>
+    </div>
+
+    <div class="essay-item essay-beside">
+      <div class="img"><img src="https://www.figma.com/api/mcp/asset/7b10b8c3-82fd-4ade-869f-58342d775dca" alt="President Biden" style="aspect-ratio:774/1146"></div>
+      <p class="essay-cap">President Biden</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="wordmark">Mark Alfred Dot News</div>
+    <div class="credits">Designed and Developed by <b>Mark Alfred</b></div>
+  </footer>
+
+</div>
+<script>
+(function(){
+  var now=new Date();
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var d=document.getElementById('js-day');
+  if(d) d.textContent=days[now.getDay()].toUpperCase();
+})();
+</script>
+</body>
+</html>
