@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News — Mark Alfred Dot News</title>
+<meta name="description" content="The latest political reporting from Mark Alfred, a White House reporter for NOTUS covering the Trump administration and the midterm elections.">
+<link rel="canonical" href="https://markalfred.news/news.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mark Alfred Dot News">
+<meta property="og:title" content="News — Mark Alfred Dot News">
+<meta property="og:description" content="The latest political reporting from Mark Alfred, a White House reporter for NOTUS covering the Trump administration and the midterm elections.">
+<meta property="og:url" content="https://markalfred.news/news.html">
+<meta property="og:image" content="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/eab8efa1-3478-4b6a-8e29-91b6cc18cba7.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="News — Mark Alfred Dot News">
+<meta name="twitter:description" content="The latest political reporting from Mark Alfred, a White House reporter for NOTUS covering the Trump administration and the midterm elections.">
+<meta name="twitter:image" content="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/eab8efa1-3478-4b6a-8e29-91b6cc18cba7.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── subpage layout ── */
+.page-hero{
+  display:grid;
+  grid-template-columns:1.6fr 1fr;
+  align-items:stretch;
+  border-bottom:3px double var(--rule);
+  padding-bottom:22px;
+}
+.hero-left{
+  display:flex;
+  flex-direction:column;
+  border-right:1px solid var(--rule);
+  padding-right:20px;
+}
+.section-tag{
+  display:block;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(44px,6vw,70px);
+  font-weight:700;
+  line-height:.9;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  -webkit-text-stroke:.5px var(--ink);
+  text-stroke:.5px var(--ink);
+  paint-order:stroke fill;
+  padding:14px 0 10px;
+  text-transform:uppercase;
+  position:relative;
+  z-index:0;
+}
+.hero-photo{
+  width:100%;
+  aspect-ratio:3/2;
+  position:relative;
+  z-index:2;
+  margin-top:-28px;
+}
+.v-credit{
+  position:absolute;
+  left:5px;
+  bottom:10px;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+  font-family:"Archivo",sans-serif;
+  font-size:8.5px;
+  color:rgba(22,19,12,.45);
+  letter-spacing:.05em;
+  white-space:nowrap;
+  z-index:2;
+}
+.hero-right{
+  padding-left:20px;
+  display:flex;
+  flex-direction:column;
+}
+.hero-hed{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:14px 4px;
+  border-bottom:1px solid var(--rule-soft);
+}
+.hero-hed:last-child{border-bottom:none}
+.hero-hed.lead{align-items:flex-start;justify-content:flex-start;text-align:left;}
+.hero-hed.lead .hero-deck{text-align:left;}
+.hero-hed.lead .readmore{align-self:center;margin-top:12px;}
+.hero-hed .hl{display:block}
+.hero-hed.lead .hl{font-size:clamp(17px,1.9vw,22px)}
+.hero-hed .hl{font-size:clamp(15px,1.7vw,20px)}
+
+/* ── story rows ── */
+.page-story{
+  display:grid;
+  grid-template-columns:1fr 1.6fr;
+  gap:28px;
+  padding:22px 0;
+  border-bottom:1px solid var(--rule);
+  align-items:start;
+}
+.page-story:last-child{border-bottom:none}
+.s-txt .kicker{margin-bottom:6px}
+.s-txt .s-hl{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(18px,2vw,23px);
+  font-weight:400;
+  line-height:1.1;
+  letter-spacing:-0.01em;
+  color:var(--ink);
+  text-decoration:none;
+  display:block;
+  margin-bottom:9px;
+  -webkit-text-stroke:.6px currentColor;
+  text-stroke:.6px currentColor;
+  paint-order:stroke fill;
+  transition:color .15s;
+}
+.s-txt .s-hl:hover{color:var(--red)}
+.s-txt .body-txt{margin-top:0}
+.s-img .credit{margin-top:3px}
+nav a{color:var(--muted)}
+nav a:hover{color:var(--red)}
+.social a{border-color:var(--rule-soft)}
+
+@media(max-width:860px){
+  .page-hero{grid-template-columns:1fr}
+  .hero-left{border-right:none;padding-right:0;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+  .hero-right{padding-left:0;padding-top:14px}
+  .page-story{grid-template-columns:1fr;gap:14px}
+  .s-img{order:-1}
+}
+.masthead-sm{
+  font-family:"Chomsky",serif;
+  font-size:clamp(18px,2.4vw,28px);
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1;
+  text-align:center;
+  text-transform:none;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  white-space:nowrap;
+}
+.masthead-sm a{color:var(--ink);text-decoration:none}
+.hero-deck{
+  font-size:13px;
+  line-height:1.42;
+  color:var(--ink-soft);
+  margin-top:8px;
+  text-align:center;
+  hyphens:auto;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="utility">
+    <div class="date">For the first and only time it is<br><span id="js-date"></span></div>
+    <div class="masthead-sm"><a href="index.html">Mark Alfred Dot News</a></div>
+    <div class="day" id="js-day"></div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="news.html" style="color:var(--red)">News</a></li>
+      <li><a href="photojournalism.html">Photojournalism</a></li>
+      <li><a href="exclusives.html">Exclusives</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="social">
+      <a href="#" title="X" aria-label="X">𝕏</a>
+      <a href="https://www.notus.org/mark-alfred" title="NOTUS" aria-label="NOTUS">N</a>
+      <a href="https://www.linkedin.com/in/mark-alfred/" title="LinkedIn" aria-label="LinkedIn">in</a>
+    </div>
+    <ul>
+      <li><a href="printing-press.html">Warehouse</a></li>
+      <li><a href="arcade.html">Games</a></li>
+      <li><a href="#">Send a News Tip</a></li>
+    </ul>
+  </nav>
+
+  <!-- hero: section tag + image LEFT | 3 headlines RIGHT -->
+  <div class="page-hero">
+    <div class="hero-left">
+      <span class="section-tag">Politics</span>
+      <div class="photo hero-photo">
+        <span class="tag">Photograph</span>
+        <span class="v-credit">Photo by Mark Alfred / NOTUS</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-hed lead">
+        <a class="hl" href="#">Republicans Target 'RedNote' After Law Banning TikTok</a>
+        <p class="hero-deck">As the ban took effect, lawmakers turned their attention to the Chinese app that surged in popularity among American users in the days before the law went into effect.</p>
+              <a class="readmore" href="#">Read More</a>
+      </div>
+      <div class="hero-hed">
+        <a class="hl" href="#">'Mostly Trolling': GOP Thought of Trump's Moves from the Start</a>
+              <a class="readmore" href="#">Read More</a>
+      </div>
+      <div class="hero-hed">
+        <a class="hl" href="#">White House Rips GOP Speaker's 'Villainous' Massacre Comment</a>
+              <a class="readmore" href="#">Read More</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- story rows: text LEFT | image RIGHT -->
+  <div class="page-stories">
+
+    <div class="page-story">
+      <div class="s-txt">
+        <span class="kicker">Senate</span>
+        <a class="s-hl" href="#">All GOP Senators Sound Open to Kash Patel. Many Are Enthusiastic About Him.</a>
+        <p class="body-txt">After more than a year investigating President Joe Biden and Hunter Biden for "influence peddling," the mood among Republicans on Capitol Hill has fundamentally shifted heading into the new Congress.</p>
+        <a class="readmore" href="#">Read More</a>
+      </div>
+      <div class="s-img">
+        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+        <div class="credit">Photo by Mark Alfred / NOTUS</div>
+      </div>
+    </div>
+
+    <div class="page-story">
+      <div class="s-txt">
+        <span class="kicker">Economy</span>
+        <a class="s-hl" href="#">California's Disaster Insurance Problems Are a Political Nightmare for Lawmakers</a>
+        <p class="body-txt">Corner spent more than a year investigating President Joe Biden and Hunter Biden for "influence peddling." A cascade of regulatory failures has left millions exposed and legislators scrambling for solutions ahead of wildfire season.</p>
+        <a class="readmore" href="#">Read More</a>
+      </div>
+      <div class="s-img">
+        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+        <div class="credit">Photo by Mark Alfred / NOTUS</div>
+      </div>
+    </div>
+
+    <div class="page-story">
+      <div class="s-txt">
+        <span class="kicker">DOGE</span>
+        <a class="s-hl" href="#">Lawmakers Are Flocking to Join DOGE but No One Knows What They'll Do There</a>
+        <p class="body-txt">Enthusiasm among Republicans for the cost-cutting effort is high. What exactly they'll accomplish — and how Congress fits into the equation — remains entirely unclear to members themselves.</p>
+        <a class="readmore" href="#">Read More</a>
+      </div>
+      <div class="s-img">
+        <div class="photo ar-wide"><span class="tag">Photograph</span></div>
+        <div class="credit">Photo by Mark Alfred / NOTUS</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="wordmark">Mark Alfred Dot News</div>
+    <div class="credits">Designed and Developed by <b>Mark Alfred</b></div>
+  </footer>
+
+</div>
+<script>
+(function(){
+  var now=new Date();
+  var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var e=document.getElementById('js-date');
+  var d=document.getElementById('js-day');
+  if(e) e.textContent=months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
+  if(d) d.textContent=days[now.getDay()].toUpperCase();
+})();
+</script>
+</body>
+</html>
