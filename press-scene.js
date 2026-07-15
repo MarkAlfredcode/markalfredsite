@@ -100,6 +100,7 @@ var FONT={
   O:['111','101','101','101','111'],P:['111','101','111','100','100'],S:['111','100','111','001','111'],
   T:['111','010','010','010','010'],U:['101','101','101','101','111'],V:['101','101','101','101','010'],
   W:['101','101','111','111','101'],X:['101','101','010','101','101'],Y:['101','101','010','010','010'],
+  Z:['111','001','010','100','111'],
   '0':['111','101','101','101','111'],'1':['010','110','010','010','111'],'2':['111','001','111','100','111'],
   '3':['111','001','111','001','111'],'4':['101','101','111','001','001'],
   ':':['000','010','000','010','000'],' ':['000','000','000','000','000']
@@ -282,6 +283,73 @@ function drawViewContent(x,env,glow){
       }
     }
   });
+  // metro train sliding along the horizon (screen-fixed, like the sun)
+  var mtq=env.t%26;
+  if(mtq<7){
+    var mtp=mtq/7, mdir=(Math.floor(env.t/26)%2)?-1:1;
+    var mx0=mdir>0? -80+mtp*(W+160) : W+80-mtp*(W+160);
+    if(!glow){
+      var mcar=css(mix(hx('#3d4a55'),hx('#141c26'),env.night));
+      for(var mc=0;mc<5;mc++){
+        var mcx=mx0+mc*13*mdir;
+        R(mcx,hz-6,11,5,mcar);
+        for(var mw=0;mw<3;mw++) R(mcx+2+mw*3,hz-5,2,2,env.night>0.3?'#ffd98a':'#dce8ee');
+      }
+    } else if(env.night>0.35){
+      ctx.globalAlpha=0.35*env.night;
+      for(var mc2=0;mc2<5;mc2++){
+        var mcx2=mx0+mc2*13*mdir;
+        for(var mw2=0;mw2<3;mw2++) R(mcx2+2+mw2*3,hz-5,2,2,'#ffd98a');
+      }
+      ctx.globalAlpha=1;
+    }
+  }
+  // blimp cruising past (screen-fixed, very slow)
+  if(!env.rainy){
+    var bq=(env.t-20)%97;
+    if(bq>=0&&bq<45){
+      var bp=bq/45, bdir=(Math.floor((env.t-20)/97)%2)?-1:1;
+      var bx=bdir>0? -60+bp*(W+120) : W+60-bp*(W+120);
+      var by=vy+58+Math.sin(bp*Math.PI*3)*3; // below the hang-line papers, above the skyline
+      if(!glow){
+        ctx.save();ctx.translate(bx,by);ctx.scale(bdir,1);
+        ctx.fillStyle='#d8dde4';ctx.beginPath();ctx.ellipse(0,0,17,6,0,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='#9aa4b0';ctx.beginPath();ctx.ellipse(0,2,16,4,0,0,Math.PI);ctx.fill();
+        ctx.strokeStyle='#4a5560';ctx.lineWidth=1.2;
+        ctx.beginPath();ctx.ellipse(0,0,17,6,0,0,Math.PI*2);ctx.stroke();
+        R(-2,-8,10,2,'#8d97a3');
+        poly([[-15,0],[-23,-6],[-23,5]],'#6b7581');
+        R(-4,5,8,4,'#3f4650'); R(-2,6,4,2,'#ffd98a');
+        ctx.restore();
+        drawText(bx-8,by-3,'NEWS','#2c3947'); // unmirrored livery
+      } else if(env.night>0.3&&Math.sin(env.t*5)>0){
+        ctx.globalAlpha=0.8; R(bx+bdir*16-1,by-1,2,2,'#ff4a3a'); ctx.globalAlpha=1;
+      }
+    }
+  }
+  // fireworks over the city (clear nights)
+  if(glow&&!env.rainy&&env.night>0.35){
+    var fq=(env.t-3)%21;
+    if(fq<1.6){
+      var fseed=Math.floor((env.t-3)/21);
+      var fx=W*0.1+pick(fseed,13,80)/100*W*0.8;
+      var fy3=vy+10+pick(fseed,15,30);
+      var fc=['#ff6a58','#ffd257','#7fd9a0','#8ec6ff','#e8a0ff'][pick(fseed,21,5)];
+      if(fq<0.45){
+        var rp=fq/0.45, ry2=hz-rp*(hz-fy3);
+        ctx.globalAlpha=0.7; line(fx,ry2,fx,ry2+6,'#ffe9b0',1); ctx.globalAlpha=1;
+      } else {
+        var pr=(fq-0.45)/1.15;
+        ctx.globalAlpha=(1-pr);
+        for(var fr2=0;fr2<14;fr2++){
+          var fa=fr2/14*Math.PI*2, frr=pr*27;
+          R(fx+Math.cos(fa)*frr,fy3+Math.sin(fa)*frr*0.8+pr*pr*8,1.8,1.8,fc);
+          if(pr>0.3) R(fx+Math.cos(fa)*frr*0.55,fy3+Math.sin(fa)*frr*0.44+pr*pr*8,1.3,1.3,'#fff3c9');
+        }
+        ctx.globalAlpha=1;
+      }
+    }
+  }
   // birds (day only)
   if(!glow&&!env.rainy&&env.night<0.3){
     eachTile(480,120,env.bgV+env.t*10,function(tx,ti){
@@ -980,8 +1048,29 @@ function janitor(env,i){
   poly([[374,fy],[382,fy],[378,fy-12]],'#e8a020');
   R(375,fy-4,6,2,'#f4e6c4'); R(372,fy,12,2,'#c9861b');
 }
+function sleepingDog(env){
+  var fy=248, x=352;
+  ctx.save();ctx.translate(x,fy);ctx.scale(1,0.3);ctx.globalAlpha=0.3;C(0,0,13,'#000');ctx.restore();ctx.globalAlpha=1;
+  var br=Math.sin(env.t*1.6)*0.7; // slow breathing
+  R(x-11,fy-7-br,20,7+br,'#b98a5a'); R(x-11,fy-7-br,20,2,'#caa06e');
+  R(x-14,fy-9,8,6,'#b98a5a');
+  R(x-15,fy-11,4,4,'#a67a4c');
+  R(x-13,fy-6,2,1,'#3a2f22');
+  R(x-16,fy-4,3,2,'#3a2f22');
+  line(x+9,fy-3,x+14,fy-7,'#a67a4c',2);
+  for(var z=0;z<3;z++){
+    var q=((env.t*0.5)+z*0.33)%1;
+    ctx.globalAlpha=(1-q)*0.6;
+    ctx.save();ctx.translate(x-10+q*8+z*2,fy-14-q*16-z*3);
+    var sc=0.8+z*0.25+q*0.3; ctx.scale(sc,sc);
+    drawText(0,0,'Z','#5a5f66');
+    ctx.restore();
+  }
+  ctx.globalAlpha=1;
+  R(x+16,fy-3,10,3,'#8f4a3a'); R(x+18,fy-3,6,1,'#7fb3d9'); // water bowl
+}
 // v: 0 reels+barrels / 1 pallet+worker / 2 crates+worker / 3 handtruck+reel /
-//    4 vending+cooler / 5 break area / 6 janitor
+//    4 vending+cooler / 5 break area / 6 janitor / 7 sleeping dog
 function drawFloorProps(v,env,i){
   var fy=248;
   if(v===0){ spareReel(358,fy); inkBarrel(334,fy+2,'#2f5a68','#4b8ba0'); inkBarrel(382,fy+2,COL.redDark,COL.red); }
@@ -990,7 +1079,8 @@ function drawFloorProps(v,env,i){
   else if(v===3){ handTruck(344,fy); spareReel(384,fy); }
   else if(v===4){ vendingCorner(env); }
   else if(v===5){ breakArea(env); }
-  else { janitor(env,i); }
+  else if(v===6){ janitor(env,i); }
+  else { sleepingDog(env); }
   if(pick(i,19,7)===0) drawCat(365,fy);
 }
 
@@ -1057,6 +1147,113 @@ function drawAirplane(env){
   ctx.restore();
 }
 
+// ── the delivery truck: MARK ALFRED DOT NEWS on the side ────────────────────
+function drawTruck(env,glow){
+  var PER=73, TRAV=13, off=40;
+  var tt=env.t-off; if(tt<0) return;
+  var n=Math.floor(tt/PER), q=(tt-n*PER)/TRAV;
+  if(q>1) return;
+  var dir=(n%2)?1:-1;
+  var x=dir>0? -110+q*(W+220) : W+110-q*(W+220);
+  var y=538+Math.sin(env.t*11)*0.6;
+  if(glow){
+    if(env.night>0.05){
+      ctx.save();ctx.translate(x,y);ctx.scale(dir,1);
+      ctx.globalAlpha=0.16*env.night; poly([[50,-10],[112,-22],[112,2]],'#ffe9b0');
+      ctx.globalAlpha=0.55*env.night; C(49,-10,2.5,'#fff3cf'); C(-40,-8,2,'#ff5a4a');
+      ctx.globalAlpha=1; ctx.restore();
+    }
+    return;
+  }
+  ctx.save();ctx.translate(x,y);ctx.scale(dir,1);
+  ctx.save();ctx.scale(1,0.3);ctx.globalAlpha=0.35;C(4,4,46,'#000');ctx.restore();ctx.globalAlpha=1;
+  // cargo box
+  R(-40,-38,66,32,'#efece2'); R(-40,-38,66,3,'#f8f6f0'); R(-40,-10,66,4,'#b9b2a0');
+  R(-40,-31,66,3,COL.red);
+  // cab
+  R(26,-28,24,22,'#b3271b'); R(26,-28,24,3,'#d0473a');
+  R(30,-25,14,9,'#bcd9e6'); R(30,-25,14,2,'#dcecf4');
+  R(48,-20,3,6,'#8f1d13'); R(26,-8,24,4,'#8f1d13');
+  R(33,-22,5,6,'#33302a'); R(33,-25,4,3,'#caa27a'); // driver
+  // wheels + lights
+  roller(-24,0,7,10,env.p); roller(34,0,7,10,env.p);
+  R(48,-12,3,3,'#ffe9b0'); R(-41,-10,2,4,'#8f1d13');
+  // exhaust
+  for(var e=0;e<3;e++){
+    var eq=((env.t*1.2)+e*0.33)%1;
+    ctx.globalAlpha=(1-eq)*0.22;
+    C(-44-eq*12,-6-eq*10,2+eq*3,'#9aa0a6');
+  }
+  ctx.globalAlpha=1;
+  ctx.restore();
+  // livery, unmirrored regardless of direction
+  var lc=x+dir*(-7);
+  ctx.save();ctx.translate(lc-26,y-26);ctx.scale(1.2,1.2);drawText(0,0,'MARK ALFRED',COL.ink);ctx.restore();
+  drawText(lc-16,y-18,'DOT NEWS',COL.redDark);
+}
+
+// ── paperboy on a bike, tossing the morning edition ─────────────────────────
+function drawPaperboy(env){
+  var PER=39, TRAV=9, off=15;
+  var tt=env.t-off; if(tt<0) return;
+  var n=Math.floor(tt/PER), q=(tt-n*PER)/TRAV;
+  if(q>1) return;
+  var dir=(n%2)?-1:1;
+  function riderX(qq){return dir>0? -60+qq*(W+120) : W+60-qq*(W+120);}
+  var x=riderX(q), y=524+Math.sin(env.t*6)*0.5;
+  // tossed papers arc off behind the rider
+  [0.22,0.5,0.78].forEach(function(q0,k){
+    if(q>q0&&q<q0+0.13){
+      var tp=(q-q0)/0.13;
+      var px=riderX(q0)-dir*tp*34;
+      var py=y-26-Math.sin(Math.PI*Math.min(1,tp))*34+tp*tp*26;
+      ctx.save();ctx.translate(px,py);ctx.rotate(tp*7*dir);
+      R(-3,-2,7,5,COL.paper); R(-3,-2,7,1.4,COL.red);
+      ctx.restore();
+    }
+  });
+  ctx.save();ctx.translate(x,y);ctx.scale(dir,1);
+  ctx.save();ctx.scale(1,0.3);ctx.globalAlpha=0.3;C(0,4,18,'#000');ctx.restore();ctx.globalAlpha=1;
+  roller(-9,0,6,14,env.p); roller(10,0,6,14,env.p);
+  // frame + seat + handlebars
+  line(-9,0,-2,-9,'#8f1d13',2); line(-2,-9,10,0,'#8f1d13',2);
+  line(-2,-9,2,-1,'#8f1d13',2); line(8,-12,10,0,'#8f1d13',2);
+  R(-5,-11,6,2,'#20242a'); line(6,-12,11,-13,'#20242a',1.5);
+  // pedaling legs
+  var pa=env.t*9;
+  var p1x=2+Math.cos(pa)*4, p1y=-1+Math.sin(pa)*4;
+  var p2x=2-Math.cos(pa)*4, p2y=-1-Math.sin(pa)*4;
+  line(-2,-10,p1x,p1y,'#25303a',2); line(-2,-10,p2x,p2y,'#2c3844',2);
+  R(p1x-1,p1y-1,3,2,'#161616'); R(p2x-1,p2y-1,3,2,'#161616');
+  // torso, arm, head, cap
+  R(-5,-22,7,12,'#356b52'); R(-5,-22,7,2,'#4a8266');
+  line(0,-19,9,-13,'#356b52',2);
+  R(-4,-28,6,6,'#caa27a');
+  R(-5,-30,8,3,'#7a4a3a'); R(2,-29,3,1.5,'#7a4a3a');
+  // basket of papers up front
+  R(12,-16,10,8,'#7a5a34'); R(12,-16,10,1.5,'#8f6d42');
+  R(13,-19,8,3,COL.paper); R(13,-19,8,1,COL.red);
+  ctx.restore();
+}
+
+// ── an escaped balloon drifting up to the rafters ───────────────────────────
+function drawBalloon(env){
+  var PER=53, TRAV=22, off=8;
+  var tt=env.t-off; if(tt<0) return;
+  var n=Math.floor(tt/PER), q=(tt-n*PER)/TRAV;
+  if(q>1) return;
+  var x=W*(0.2+pick(n,7,60)/100)+Math.sin(q*Math.PI*4+n)*14-q*30;
+  var y=480-q*430;
+  ctx.globalAlpha=q>0.9?(1-q)*10:1;
+  C(x,y,5,'#c93a2c'); C(x-1.5,y-1.5,1.5,'#e8776a');
+  poly([[x-1,y+5],[x+1,y+5],[x,y+7]],'#8f1d13');
+  ctx.strokeStyle='#8a8478';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(x,y+7);
+  ctx.quadraticCurveTo(x+3,y+12,x-1,y+18);
+  ctx.stroke();
+  ctx.globalAlpha=1;
+}
+
 /* ═══════════════════════════ GLOW PASS ═══════════════════════════════════ */
 
 function glowPass(env){
@@ -1111,12 +1308,13 @@ function glowPass(env){
     ctx.globalAlpha=0.45*env.night; C(178,128,3,'#a9e2b2');
     ctx.globalAlpha=1;
     if(pick(i,31,8)===0) drawWelder(env,i,true);
-    if(pick(i,5,7)===4){ctx.globalAlpha=0.35*env.night;R(344,212,13,22,'#ffe6b3');ctx.globalAlpha=1;}
+    if(pick(i,5,8)===4){ctx.globalAlpha=0.35*env.night;R(344,212,13,22,'#ffe6b3');ctx.globalAlpha=1;}
     ctx.restore();
   });
   ctx.restore();
-  // forklift lights
+  // vehicle lights
   drawForklift(env,true);
+  drawTruck(env,true);
   // floor pools warm up
   eachTile(100,56,env.bgF,function(x){
     ctx.save();ctx.translate(x,506);ctx.scale(1,0.24);
@@ -1171,7 +1369,7 @@ function renderFrame(t){
   });
   eachTile(PITCH,0,scrollX,function(x,i){
     ctx.save();ctx.translate(x,0);
-    drawFloorProps(pick(i,5,7),env,i);
+    drawFloorProps(pick(i,5,8),env,i);
     ctx.restore();
   });
   eachTile(PITCH,0,scrollX,function(x,i){
@@ -1190,7 +1388,10 @@ function renderFrame(t){
   });
   ctx.restore();
 
+  drawPaperboy(env);
   drawForklift(env,false);
+  drawTruck(env,false);
+  drawBalloon(env);
   drawAirplane(env);
 
   // golden hour
