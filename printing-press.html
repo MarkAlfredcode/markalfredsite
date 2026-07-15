@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Press (pixel art) — Mark Alfred Dot News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.masthead-sm{
+  font-family:"Chomsky",serif;
+  font-size:clamp(18px,2.4vw,28px);
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1;
+  text-transform:none;
+  position:static;
+  transform:none;
+  white-space:nowrap;
+}
+.masthead-sm a{color:var(--ink);text-decoration:none}
+.utility{align-items:center;padding:8px 0}
+nav a{color:var(--muted)}
+nav a:hover{color:var(--red)}
+.social a{border-color:var(--rule-soft)}
+
+.press-head{text-align:center;padding:26px 0 18px}
+.press-title{
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:700;
+  font-size:clamp(28px,4.4vw,44px);
+  letter-spacing:-0.02em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.press-sub{
+  font-family:"Libre Caslon Text",serif;
+  font-style:italic;
+  font-size:14px;
+  color:var(--ink-soft);
+  margin-top:6px;
+}
+
+.press-row{
+  display:flex;
+  gap:28px;
+  align-items:flex-start;
+  justify-content:center;
+  max-width:1280px;
+  margin:0 auto;
+  flex-wrap:wrap;
+}
+.press-frame{
+  width:100%;
+  max-width:660px;
+  flex:1 1 520px;
+  margin:0;
+  border:2px solid var(--rule);
+  background:#000;
+  padding:8px;
+}
+.press-canvas-wrap{
+  width:100%;
+  aspect-ratio:1/1;
+  overflow:hidden;
+}
+#press{
+  width:100%;
+  height:100%;
+  display:block;
+  image-rendering:pixelated;
+  image-rendering:-moz-crisp-edges;
+  image-rendering:crisp-edges;
+}
+.press-caption{
+  font-family:"Archivo",sans-serif;
+  font-size:10.5px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-align:center;
+  padding-top:8px;
+}
+
+/* ── I'm Feeling Lucky panel ── */
+.lucky-panel{
+  flex:1 1 360px;
+  max-width:420px;
+  border:2px solid var(--rule);
+  padding:28px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:14px;
+  align-self:stretch;
+}
+.lucky-eyebrow{
+  font-family:"Archivo",sans-serif;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.lucky-reel{
+  width:100%;
+  min-height:96px;
+  border:1px solid var(--rule-soft);
+  background:var(--paper-2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  overflow:hidden;
+}
+.lucky-reel-text{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:15px;
+  line-height:1.3;
+  color:var(--ink);
+  text-decoration:none;
+}
+.lucky-reel-text.spinning{color:var(--muted)}
+.lucky-reel-text.landed{color:var(--ink)}
+a.lucky-reel-text:hover{color:var(--red)}
+.lucky-btn{
+  font-family:"Archivo",sans-serif;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  background:var(--red);
+  color:#fff;
+  border:none;
+  padding:12px 20px;
+  cursor:pointer;
+  width:100%;
+  transition:background .15s;
+}
+.lucky-btn:hover{background:var(--red-dark)}
+.lucky-btn:disabled{opacity:.5;cursor:default}
+.lucky-hint{
+  font-family:"Libre Caslon Text",serif;
+  font-style:italic;
+  font-size:11.5px;
+  color:var(--ink-soft);
+}
+
+@media(max-width:600px){
+  .press-row{flex-direction:column;align-items:stretch}
+  .lucky-panel{max-width:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="utility">
+    <div class="masthead-sm"><a href="index.html">Mark Alfred Dot News</a></div>
+    <div class="day" id="js-day"></div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="news.html">News</a></li>
+      <li><a href="photojournalism.html">Photojournalism</a></li>
+      <li><a href="exclusives.html">Exclusives</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="social">
+      <a href="#" title="X" aria-label="X">𝕏</a>
+      <a href="https://www.notus.org/mark-alfred" title="NOTUS" aria-label="NOTUS">N</a>
+      <a href="https://www.linkedin.com/in/mark-alfred/" title="LinkedIn" aria-label="LinkedIn">in</a>
+    </div>
+    <ul>
+      <li><a href="#">The Star</a></li>
+      <li><a href="#">Politics</a></li>
+      <li><a href="#">Trump</a></li>
+      <li><a href="#">Local</a></li>
+      <li class="nav-dropdown"><a href="games.html">Games</a><ul class="dropdown-menu"><li><a href="games.html">Politicle</a></li><li><a href="war-chest.html">War Chest</a></li><li><a href="bill-or-no-bill.html">Bill or No Bill</a></li><li><a href="roll-call-predictor.html">Roll Call Predictor</a></li><li><a href="sponsor-sleuth.html">Sponsor Sleuth</a></li><li><a href="press-run.html">Press Run</a></li></ul></li>
+      <li><a href="#">Send a News Tip</a></li>
+    </ul>
+  </nav>
+
+  <div class="press-head">
+    <div class="press-title">Pressing Stories</div>
+  </div>
+
+  <div class="press-row">
+    <div>
+      <div class="press-frame">
+        <div class="press-canvas-wrap">
+          <canvas id="press" width="320" height="320"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="lucky-panel">
+      <div class="lucky-eyebrow">I'm Feeling Lucky</div>
+      <div class="lucky-reel">
+        <span class="lucky-reel-text" id="lucky-text">Pull the lever to print a random dispatch</span>
+      </div>
+      <button class="lucky-btn" id="lucky-btn">Print a Random Story</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wordmark">Mark Alfred Dot News</div>
+    <div class="credits">Designed and Developed by <b>Mark Alfred</b></div>
+  </footer>
+
+</div>
+<script>
+(function(){
+  var now=new Date();
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var d=document.getElementById('js-day');
+  if(d) d.textContent=days[now.getDay()].toUpperCase();
+})();
+
+var canvas=document.getElementById('press');
+var ctx=canvas.getContext('2d');
+ctx.imageSmoothingEnabled=false;
+
+var W=320,H=320;
+var LOOP=8000; // ms — every motion completes integer cycles per LOOP, so the loop is pixel-perfect
+
+// ── palette: teal press iron, cool warehouse light, warm newsprint ──
+var COL={
+  paper:'#f5f2ea', paper2:'#efece2', ink:'#16130c', inkSoft:'#33302a',
+  ruleSoft:'#cbc5b6', red:'#b3271b', redDark:'#8f1d13',
+  wall:'#c9ccc9', wallHi:'#dcdfdb', wallLo:'#b2b6b3',
+  truss:'#5a6168', trussDark:'#3e444a', roofDark:'#2f343a',
+  floorFar:'#83878b', floorNear:'#4d5054', floorLine:'#3d4043',
+  teal:'#2e6273', tealHi:'#4b8ba0', tealLo:'#1d4450', tealDeep:'#142f38',
+  steelDark:'#23262b', steelMid:'#4a4e55', steelLight:'#7c8189', steelHi:'#aeb3ba',
+  brass:'#a8813a', brassHi:'#e0b962', brassLo:'#6b4f22',
+  tube:'#eef4e6',
+  webPaper:'#e9e4d6', webShade:'#c9c3b2',
+  green:'#59b26a'
+};
+
+function R(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));}
+function C(cx,cy,r,c){ctx.fillStyle=c;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();}
+function poly(pts,c){ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(var i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.closePath();ctx.fill();}
+function line(x1,y1,x2,y2,c,w){ctx.strokeStyle=c;ctx.lineWidth=w||1;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
+
+function shadedDisc(cx,cy,r,base,light,dark){
+  ctx.save();ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
+  C(cx,cy,r,base);
+  C(cx+r*0.38,cy+r*0.38,r*0.8,dark);
+  C(cx-r*0.32,cy-r*0.32,r*0.62,light);
+  C(cx-r*0.5,cy-r*0.5,r*0.16,'#ffffff');
+  ctx.restore();
+  ctx.strokeStyle=COL.steelDark;ctx.lineWidth=1;
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();
+}
+function isoBox(x,y,w,h,depth,front,top,side){
+  poly([[x,y],[x+w,y],[x+w+depth*0.6,y-depth],[x+depth*0.6,y-depth]],top);
+  poly([[x+w,y],[x+w,y+h],[x+w+depth*0.6,y+h-depth],[x+w+depth*0.6,y-depth]],side);
+  R(x,y,w,h,front);
+}
+function roller(cx,cy,r,turns,p,base,lightC,darkC){
+  shadedDisc(cx,cy,r,base||COL.steelMid,lightC||COL.steelHi,darkC||COL.steelDark);
+  var ang=p*Math.PI*2*turns;
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);
+  ctx.strokeStyle='rgba(15,17,20,0.5)';ctx.lineWidth=1.2;
+  for(var i=0;i<6;i++){var a=i/6*Math.PI*2;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(Math.cos(a)*r*0.85,Math.sin(a)*r*0.85);ctx.stroke();}
+  ctx.restore();
+  shadedDisc(cx,cy,Math.max(2,r*0.22),COL.brass,COL.brassHi,COL.brassLo);
+}
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+var FONT={M:['101','111','111','101','101'],A:['010','101','111','101','101'],R:['110','101','110','101','101'],K:['101','101','110','101','101'],L:['100','100','100','100','111'],F:['111','100','110','100','100'],E:['111','100','110','100','111'],D:['110','101','101','101','110'],' ':['000','000','000','000','000']};
+function drawText(x,y,str,c){var cx=x;for(var i=0;i<str.length;i++){var g=FONT[str[i]];if(g){for(var r2=0;r2<5;r2++)for(var c2=0;c2<3;c2++)if(g[r2][c2]==='1')R(cx+c2,y+r2,1,1,c);}cx+=4;}return cx;}
+
+// ── mini site front page (red kicker, masthead, columns, photo block) ──
+function frontPage(x,y,w,h,seed,thickness){
+  if(thickness){
+    poly([[x+w,y],[x+w+thickness,y+thickness],[x+w+thickness,y+h+thickness],[x+w,y+h]],COL.ruleSoft);
+    poly([[x,y+h],[x+thickness,y+h+thickness],[x+w+thickness,y+h+thickness],[x+w,y+h]],'#b9b2a0');
+  }
+  R(x,y,w,h,COL.paper);
+  R(x,y,w,Math.max(2,h/6),COL.red);
+  R(x+1,y+h/6+1,w-2,Math.max(1,h*0.07),COL.ink);
+  var rnd=mulberry32(seed);
+  if(w<16){
+    for(var j=0;j<4;j++) R(x+1,y+h*0.45+j*2,w-2-rnd()*2,1,COL.inkSoft);
+    ctx.strokeStyle=COL.inkSoft;ctx.lineWidth=0.5;ctx.strokeRect(x+0.5,y+0.5,w-1,h-1);
+    return;
+  }
+  var bodyTop=y+h*0.36, colW=(w-4)/3;
+  R(x+2,bodyTop,colW-1,h*0.26,COL.ruleSoft);
+  var lines=Math.max(2,Math.floor(h*0.11));
+  for(var li=0;li<lines;li++) R(x+2,bodyTop+h*0.30+li*2,Math.max(0.4,colW-2-rnd()*3),1,COL.inkSoft);
+  for(var c=1;c<3;c++){var l2=Math.max(3,Math.floor(h*0.17));for(var k=0;k<l2;k++)R(x+2+colW*c+1,bodyTop+k*2,Math.max(0.4,colW-2-rnd()*3),1,COL.inkSoft);}
+  ctx.strokeStyle=COL.inkSoft;ctx.lineWidth=0.5;ctx.strokeRect(x+0.5,y+0.5,w-1,h-1);
+}
+
+// ── path helpers for conveyor motion ──
+function pathPoint(path,s){
+  for(var i=0;i<path.length-1;i++){
+    var dx=path[i+1][0]-path[i][0], dy=path[i+1][1]-path[i][1];
+    var len=Math.sqrt(dx*dx+dy*dy);
+    if(s<=len) return {x:path[i][0]+dx*s/len, y:path[i][1]+dy*s/len, ang:Math.atan2(dy,dx)};
+    s-=len;
+  }
+  var n=path.length-1, dx2=path[n][0]-path[n-1][0], dy2=path[n][1]-path[n-1][1];
+  return {x:path[n][0], y:path[n][1], ang:Math.atan2(dy2,dx2)};
+}
+function pathLen(path){var L=0;for(var i=0;i<path.length-1;i++){var dx=path[i+1][0]-path[i][0],dy=path[i+1][1]-path[i][1];L+=Math.sqrt(dx*dx+dy*dy);}return L;}
+
+// ── warehouse shell: corrugated wall, trusses, pipes, fluorescents, floor ──
+function drawWarehouse(p){
+  R(0,0,W,252,COL.wall);
+  for(var x=0;x<W;x+=8){ R(x,30,1,222,COL.wallHi); R(x+4,30,1,222,COL.wallLo); }
+  R(0,118,W,5,COL.steelLight); R(0,121,W,2,COL.steelDark);
+  R(0,0,W,30,COL.roofDark);
+  for(var rx=0;rx<W;rx+=6) R(rx,0,3,30,'#343940');
+  line(0,32,W,32,COL.trussDark,2);
+  for(var tx=0;tx<=W;tx+=32){ line(tx,32,tx+16,10,COL.truss,1.5); line(tx+32,32,tx+16,10,COL.truss,1.5); line(tx+16,10,tx+16,32,COL.trussDark,1); }
+  line(0,10,W,10,COL.truss,2);
+  R(0,16,W,3,COL.steelMid); R(0,22,W,2,COL.steelDark);
+  for(var px=12;px<W;px+=40) R(px,14,2,10,COL.steelDark);
+
+  var tubes=[[52,46],[152,42],[252,47]];
+  tubes.forEach(function(tb,i){
+    line(tb[0]+6,32,tb[0]+6,tb[1]-3,COL.steelDark,1);
+    line(tb[0]+38,32,tb[0]+38,tb[1]-3,COL.steelDark,1);
+    R(tb[0],tb[1]-3,44,3,COL.steelDark);
+    var flick=(i===1)?0.75+0.25*Math.abs(Math.sin(Math.PI*p*26)):1;
+    ctx.globalAlpha=flick; R(tb[0]+1,tb[1],42,3,COL.tube);
+    ctx.globalAlpha=0.10*flick;
+    poly([[tb[0]+1,tb[1]+3],[tb[0]+43,tb[1]+3],[tb[0]+56,110],[tb[0]-12,110]],COL.tube);
+    ctx.globalAlpha=1;
+  });
+
+  var fg=ctx.createLinearGradient(0,246,0,H);
+  fg.addColorStop(0,COL.floorFar); fg.addColorStop(1,COL.floorNear);
+  ctx.fillStyle=fg; ctx.fillRect(0,246,W,H-246);
+  R(0,246,W,2,COL.steelDark);
+  var py=252,gap=5;
+  while(py<H){ ctx.globalAlpha=0.35; R(0,py,W,1,COL.floorLine); ctx.globalAlpha=1; gap+=2.4; py+=gap; }
+
+  for(var i2=0;i2<12;i2++){
+    var ph=(p*2+i2*0.37)%1;
+    var mx=20+(i2*97)%(W-40)+5*Math.sin(Math.PI*2*(p*3+i2*0.21));
+    var my=236-ph*160;
+    ctx.globalAlpha=Math.max(0,0.4*(1-ph));
+    R(mx,my,1,1,'#e8e4d8');
+  }
+  ctx.globalAlpha=1;
+}
+
+function drawCatwalk(){
+  line(0,132,W,132,COL.steelLight,2);
+  line(0,140,W,140,COL.steelLight,1.5);
+  for(var x=4;x<W;x+=16) line(x,132,x,148,COL.steelMid,1.5);
+  line(0,148,W,148,COL.steelDark,2);
+}
+
+// ── second press line whirring in the background ──
+function drawBackPress(p){
+  R(206,96,7,150,COL.steelMid); R(206,96,2,150,COL.steelHi);
+  for(var i=0;i<5;i++) R(206,226+i*4,7,2,i%2?'#d9b23a':'#23262b');
+  isoBox(216,150,86,72,10,'#25505e','#38707f','#173741');
+  R(222,158,74,4,'#38707f');
+  R(230,176,58,26,COL.tealDeep);
+  roller(244,189,10,8,p,'#3d4750','#6b7680','#20262c');
+  roller(272,189,10,-8,p,'#3d4750','#6b7680','#20262c');
+  R(230,187,58,4,COL.webShade);
+  for(var v=0;v<3;v++) R(226+v*24,208,16,3,'#12262d');
+  var bl=0.5+0.5*Math.sin(Math.PI*2*p*4);
+  ctx.globalAlpha=0.4+0.6*bl; C(294,158,2.4,COL.green); ctx.globalAlpha=1;
+}
+
+// ── overhead hanging conveyor: papers on clips snaking across the ceiling ──
+var HANG_PATH=[[-10,74],[90,90],[210,68],[330,86]];
+var HANG_LEN=pathLen(HANG_PATH);
+var HANG_SPACING=26, HANG_ADV=8; // 8 slots per loop; seed period 8 divides it — seamless
+function drawHangLine(p){
+  ctx.strokeStyle=COL.steelDark;ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(HANG_PATH[0][0],HANG_PATH[0][1]);
+  for(var i=1;i<HANG_PATH.length;i++)ctx.lineTo(HANG_PATH[i][0],HANG_PATH[i][1]);
+  ctx.stroke();
+  ctx.strokeStyle=COL.steelLight;ctx.lineWidth=1;
+  ctx.setLineDash([3,5]); ctx.lineDashOffset=-(p*HANG_SPACING*HANG_ADV);
+  ctx.beginPath();ctx.moveTo(HANG_PATH[0][0],HANG_PATH[0][1]-1);
+  for(var i2=1;i2<HANG_PATH.length;i2++)ctx.lineTo(HANG_PATH[i2][0],HANG_PATH[i2][1]-1);
+  ctx.stroke(); ctx.setLineDash([]);
+  var offset=p*HANG_SPACING*HANG_ADV;
+  var count=Math.ceil(HANG_LEN/HANG_SPACING)+1;
+  for(var a=0;a<count;a++){
+    var s=(a*HANG_SPACING+offset)%HANG_LEN;
+    var pt=pathPoint(HANG_PATH,s);
+    var seed=(a%8)*991+7;
+    var sway=Math.sin(Math.PI*2*(p*3)+(a%8))*2.5;
+    line(pt.x,pt.y,pt.x+sway*0.4,pt.y+7,COL.steelDark,1);
+    R(pt.x+sway*0.4-1.5,pt.y+6,3,3,COL.steelMid);
+    ctx.save(); ctx.translate(pt.x+sway*0.4,pt.y+9); ctx.rotate(sway*0.03);
+    frontPage(-6,0,12,16,seed,0);
+    ctx.restore();
+  }
+}
+
+// ── main press geometry ──
+var ROLL={x:56,y:226,r:26};
+var IDL1={x:96,y:132,r:5}, IDL2={x:146,y:124,r:5};
+var DRUM_L={x:136,y:172,r:14}, DRUM_R={x:168,y:172,r:14};
+var NIPX=152, FOLD={x:152,y:214};
+var WEB_PTS=[[ROLL.x+8,ROLL.y-ROLL.r+2],[IDL1.x,IDL1.y-6],[IDL2.x,IDL2.y-6],[NIPX,DRUM_L.y],[FOLD.x,FOLD.y-4]];
+
+function strokePath(pts){ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(var i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.stroke();}
+
+function drawPaperRollUnit(p){
+  ctx.save();ctx.translate(ROLL.x,ROLL.y+ROLL.r*0.6);ctx.scale(1,0.3);ctx.globalAlpha=0.45;C(0,0,ROLL.r*1.1,'#000');ctx.restore();ctx.globalAlpha=1;
+  R(ROLL.x-3,ROLL.y+ROLL.r-4,5,28,COL.steelDark);
+  R(ROLL.x-14,ROLL.y+ROLL.r+22,30,4,COL.steelDark);
+  shadedDisc(ROLL.x,ROLL.y,ROLL.r,COL.paper2,'#fffdf8',COL.ruleSoft);
+  for(var rr=ROLL.r-3;rr>4;rr-=3){ctx.strokeStyle='rgba(120,112,92,0.3)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(ROLL.x,ROLL.y,rr,0,Math.PI*2);ctx.stroke();}
+  roller(ROLL.x,ROLL.y,6,-4,p);
+}
+
+function pressBody(p){
+  ctx.save();ctx.translate(150,250);ctx.scale(1,0.26);ctx.globalAlpha=0.4;C(0,0,66,'#000');ctx.restore();ctx.globalAlpha=1;
+  isoBox(104,140,96,106,16,COL.teal,COL.tealHi,COL.tealLo);
+  isoBox(112,112,74,28,12,COL.teal,COL.tealHi,COL.tealLo);
+  for(var s=0;s<3;s++) R(112+s*30,196,1,44,'rgba(10,30,36,0.35)');
+  for(var rv=0;rv<5;rv++){R(110+rv*20,143,2,2,COL.brass);R(110+rv*20,240,2,2,COL.brass);}
+  for(var v=0;v<3;v++) R(126+v*22,198,14,3,COL.tealDeep);
+  // gauges on the tower face
+  shadedDisc(122,126,6,'#e8e6dc','#ffffff','#b8b4a6');
+  var ga=Math.PI*0.75+0.5*Math.sin(Math.PI*2*p*5);
+  line(122,126,122+Math.cos(ga)*4.5,126+Math.sin(ga)*4.5,COL.redDark,1);
+  shadedDisc(138,126,6,'#e8e6dc','#ffffff','#b8b4a6');
+  line(138,126,138+Math.cos(Math.PI*1.2)*4.5,126+Math.sin(Math.PI*1.2)*4.5,COL.inkSoft,1);
+  // status lights
+  var bl=0.5+0.5*Math.sin(Math.PI*2*p*6);
+  ctx.globalAlpha=0.5+0.5*bl; shadedDisc(178,120,2.6,COL.red,'#ff9b8e',COL.redDark); ctx.globalAlpha=1;
+  shadedDisc(178,128,2.6,COL.green,'#a9e2b2','#2e6b3c');
+  // name plate
+  R(114,228,52,9,COL.tealDeep);
+  drawText(117,230,'MARK ALFRED','#e8e4d8');
+  // cutaway opening (web + drums live inside)
+  R(122,158,60,32,COL.tealDeep);
+  ctx.strokeStyle=COL.tealLo;ctx.lineWidth=1;ctx.strokeRect(122.5,158.5,59,31);
+}
+
+function drawWeb(p){
+  ctx.lineCap='round';
+  ctx.strokeStyle=COL.webShade; ctx.lineWidth=7; strokePath(WEB_PTS);
+  ctx.strokeStyle=COL.webPaper; ctx.lineWidth=5; strokePath(WEB_PTS);
+  ctx.strokeStyle='rgba(120,110,88,0.5)'; ctx.lineWidth=5;
+  ctx.setLineDash([2,14]); ctx.lineDashOffset=-(p*160); // 10 dash-periods per loop
+  strokePath(WEB_PTS); ctx.setLineDash([]);
+  // freshly printed below the nip: red ink appears
+  ctx.strokeStyle=COL.red; ctx.lineWidth=5;
+  ctx.setLineDash([2,14]); ctx.lineDashOffset=-(p*160);
+  strokePath([[NIPX,DRUM_L.y+10],[FOLD.x,FOLD.y-4]]);
+  ctx.setLineDash([]);
+}
+
+var steamPhases=[0,0.17,0.34,0.5,0.67,0.84];
+function pressMech(p){
+  roller(DRUM_L.x,DRUM_L.y,DRUM_L.r,6,p,'#3d4750','#707a85','#1c2126');
+  roller(DRUM_R.x,DRUM_R.y,DRUM_R.r,-6,p,'#3d4750','#707a85','#1c2126');
+  line(IDL1.x,IDL1.y,112,124,COL.steelMid,2);
+  roller(IDL1.x,IDL1.y,IDL1.r,12,p);
+  roller(IDL2.x,IDL2.y,IDL2.r,-12,p);
+  poly([[138,206],[166,206],[152,222]],COL.steelMid);
+  poly([[138,206],[152,222],[150,222],[138,208]],COL.steelHi);
+  R(168,102,6,12,COL.steelMid); R(168,102,2,12,COL.steelHi);
+  steamPhases.forEach(function(sp,i){
+    var age=((p-sp)%1+1)%1, lifeFrac=0.16;
+    if(age<lifeFrac){var a2=age/lifeFrac;
+      ctx.globalAlpha=(1-a2)*0.32;
+      C(171-a2*8+(i%2?2:-2),100-a2*26,2+a2*5,'#e4e0d4');
+      ctx.globalAlpha=1;}
+  });
+}
+
+// ── take-away belt + shingled stream of finished front pages ──
+function drawBelt(p){
+  R(160,258,4,34,COL.steelDark); R(310,258,4,34,COL.steelDark);
+  isoBox(150,250,176,12,6,'#2b2e33','#4a4e55','#1b1e22');
+  ctx.setLineDash([5,5]); ctx.lineDashOffset=-(p*160); // 16 dash-periods per loop
+  line(150,251,326,251,COL.steelLight,1.5);
+  ctx.setLineDash([]);
+  roller(154,256,5,10,p); roller(320,256,5,10,p);
+}
+
+var STREAM_PATH=[[152,216],[196,248],[330,248]];
+var STREAM_LEN=pathLen(STREAM_PATH);
+var ST_SPACING=9, ST_ADV=16; // 16 slots per loop; seed period 8 divides it — seamless
+function drawStream(p){
+  var offset=p*ST_SPACING*ST_ADV;
+  var count=Math.ceil(STREAM_LEN/ST_SPACING)+1;
+  var items=[];
+  for(var a=0;a<count;a++){
+    items.push({s:(a*ST_SPACING+offset)%STREAM_LEN, seed:(a%8)*577+3});
+  }
+  items.sort(function(m,n){return n.s-m.s;}); // downstream first, fresh copies land on top
+  items.forEach(function(it){
+    var pt=pathPoint(STREAM_PATH,it.s);
+    ctx.save();ctx.translate(pt.x,pt.y);ctx.rotate(pt.ang*0.55);
+    frontPage(-10,-24,20,26,it.seed,1);
+    ctx.restore();
+  });
+}
+
+// ── strapped bundles waiting by the dock ──
+function drawBundles(){
+  ctx.save();ctx.translate(282,302);ctx.scale(1,0.32);ctx.globalAlpha=0.4;C(0,0,42,'#000');ctx.restore();ctx.globalAlpha=1;
+  function bundle(bx,by,w2,layers){
+    for(var i=0;i<layers;i++){
+      var yy=by-i*3;
+      R(bx,yy-3,w2,3,i%2?COL.paper2:'#e6e2d4');
+      R(bx,yy-3,w2,1,'rgba(120,112,92,0.35)');
+    }
+    R(bx,by-layers*3-4,w2,4,COL.paper);
+    R(bx,by-layers*3-4,w2,1.5,COL.red);
+    R(bx+w2*0.45,by-layers*3-4,2,layers*3+4,'#8f8a3a');
+    ctx.strokeStyle=COL.inkSoft;ctx.lineWidth=0.5;ctx.strokeRect(bx+0.5,by-layers*3-3.5,w2-1,layers*3+3);
+  }
+  bundle(256,300,34,7);
+  bundle(294,304,34,9);
+  bundle(274,312,36,6);
+}
+
+function renderFrame(t){
+  var p=(t%LOOP)/LOOP;
+  ctx.clearRect(0,0,W,H);
+  drawWarehouse(p);
+  drawCatwalk();
+  drawBackPress(p);
+  drawHangLine(p);
+  drawPaperRollUnit(p);
+  pressBody(p);
+  drawWeb(p);
+  pressMech(p);
+  drawBelt(p);
+  drawStream(p);
+  drawBundles();
+}
+
+var HEADLINES=[
+{t:'The People Running the Government Are Letting It All Hang Out on Venmo',u:'https://www.notus.org/congress/people-running-government-public-venmo-white-house'},
+{t:'Trump Wanted ‘More Action Against Universities.’ His Staff Scrambled to Punish Penn.',u:'https://www.notus.org/trump-white-house/white-house-penn-funding-cut-san-jose-state-secret-internal-emails'},
+{t:'Nearly a Billion Dollars in DOGE ‘Savings’ Disappeared Overnight',u:'https://www.notus.org/policy/doge-claimed-savings-removed'},
+{t:'Ex-Rep. Devin Nunes and the Mystery of His $14.5 Million War Chest',u:'https://www.notus.org/money/devin-nunes-federal-election-commission-questions-campaign-account'},
+{t:'Federal Judge Rules the EPA Unlawfully Ended Justice Block Grants',u:'https://www.notus.org/agencies/federal-judge-epa-trump-administration-unlawful-justice-block-grants'},
+{t:'Political Committees Are Still Forfeiting Crypto Kingpins’ Tainted Contributions',u:'https://www.notus.org/money/sam-bankman-fried-ftx-political-contributions-democrats-republicans'},
+{t:'How a Democrat Touts Her ‘Grassroots Campaign’ That’s Mostly Corporate Support',u:'https://www.notus.org/2026-election/linda-sanchez-grassroots-money-campaign'},
+{t:'They Can Buy a Superyacht. Can They Afford a Seat in Congress?',u:'https://www.notus.org/2026-election/self-funding-candidates-campaign-spending'},
+{t:'High-Ranking Treasury Official Personally Invested in Oil, Nuclear Funds Days Before Iran War Began',u:'https://www.notus.org/money/treasury-jonathan-burke-personal-investments-oil-nuclear-cyber-war-iran'},
+{t:'FAA Chief Dumps Millions in Airline Stock Months After His Ethics Agreement Deadline',u:'https://www.notus.org/money/bryan-bedford-faa-republic-stock-sale-aviation'},
+{t:'Trump Will Fund New Archway With $15 Million From the National Endowment for the Humanities',u:'https://www.notus.org/donald-trump/trump-arch-taxpayer-funds'},
+{t:'Trump Says He Doesn’t Know Whether the Iran War Is Winding Down or Heating Up',u:'https://www.notus.org/donald-trump/trump-iran-threat-deadline'},
+{t:'Trump Makes Profanity-Laden Threat to Target Civilian Infrastructure in Iran',u:'https://www.notus.org/defense/trump-truth-social-power-plant-bridges-civilian-infrastructure-iran'},
+{t:'Trump Asks for Record-Breaking $1.5 Trillion Military Budget',u:'https://www.notus.org/donald-trump/white-house-military-budget-request'},
+{t:'The Trump Administration Is Championing the Lunar Program Trump Once Sought to Eliminate',u:'https://www.notus.org/trump-white-house/artemis-moon-program-trump-cut'},
+{t:'The FEC’s Investigation Backlog is Growing — With No End in Sight',u:'https://www.notus.org/money/federal-election-commission-fec-shutdown-case-backlog'},
+{t:'Trump Tries to Rebrand His War With Iran as a ‘Little Excursion’',u:'https://www.notus.org/defense/trump-war-iran-israel-timeline-little-excursion'},
+{t:'Marjorie Taylor Greene Announces Resignation, Blames Trump',u:'https://www.notus.org/house/marjorie-taylor-greene-announces-resignation-blames-trump'},
+{t:'Trump and Mamdani Had a Surprisingly Friendly White House Meeting',u:'https://www.notus.org/new-york/trump-mamdani-white-house-meeting'},
+{t:'Trump Suggests Sedition Charges and ‘DEATH’ for Democrats Who Told Troops to Refuse Illegal Orders',u:'https://www.notus.org/trump-white-house/donald-trump-truth-social-posts-democratic-lawmakers-video-illegal-order'},
+{t:'Democrats Condemn Trump’s Warm Welcome for the Saudi Crown Prince',u:'https://www.notus.org/foreign-policy/democrats-trump-mbs-visit-jamal-khashoggi'},
+{t:'Trump Threatens ABC’s License for Asking About Khashoggi Killing and Epstein Files',u:'https://www.notus.org/trump-white-house/trump-abc-saudi-arabia-khashoggi-response'},
+{t:'The White House Is Reducing Some Tariffs on Food and Agriculture, U.S. Trade Rep Says',u:'https://www.notus.org/trump-white-house/tariffs-food-agriculture-trade-representative'},
+{t:'Trump in High Spirits as He Shrugs Off Election Night Drubbing',u:'https://www.notus.org/donald-trump/trump-miami-business-forum-election-zohran-mamdani-new-york'},
+{t:'White House Says Administration Will Partially Fund SNAP After Trump Suggests Otherwise',u:'https://www.notus.org/trump-white-house/trump-administration-snap-usda-courts-funds-shutdown'},
+{t:'Trump Leaves China Meeting With Key Assurances, But No Formal Trade Agreement',u:'https://www.notus.org/foreign-policy/trump-asia-trip-trade-agreements-discussions'},
+{t:'Russell Vought Is Targeting Billions in Funding for Programs in Democrat-Led Cities',u:'https://www.notus.org/trump-white-house/russell-vought-army-corps-engineers-projects'},
+{t:'Trump Sets Sights on San Francisco For Federal Intervention',u:'https://www.notus.org/trump-white-house/trump-crime-crackdown-san-francisco'},
+{t:'Trump Vows Crackdown on ‘Radical Left’ During Event to Honor Charlie Kirk',u:'https://www.notus.org/trump-white-house/trump-crackdown-radical-left-charlie-kirk-presidential-medal-of-freedom'},
+{t:'Trump Says He’s ‘Only Cutting Democrat Programs’ During Shutdown',u:'https://www.notus.org/trump-white-house/donald-trump-democrat-programs-government-shutdown'},
+{t:'Congress Brushes Aside Push for Stand-Alone Military Pay',u:'https://www.notus.org/congress/shutdown-congress-brushes-aside-push-for-stand-alone-military-pay'},
+{t:'‘They Have to Be Very Careful’: Trump Ramps Up Threat to Jail Democratic Leaders',u:'https://www.notus.org/trump-white-house/trump-antifa-arrest-pritzker-johnson'},
+{t:'Republican Leaders Say Federal Workers Should Get Back Pay After Shutdown',u:'https://www.notus.org/congress/government-shutdown-backpay-john-thune-mike-johnson'},
+{t:'Trump Says He’s Discussing a Health Care Deal With Democrats. That’s News to Them.',u:'https://www.notus.org/trump-white-house/trump-health-care-deal-democrats-chuck-schumer-hakeem-jeffries'},
+{t:'JD Vance Brushes Off Trump’s Crass Sombrero Posts as a ‘Little Bit of Fun’',u:'https://www.notus.org/trump-white-house/jd-vance-trump-hakeem-jeffries-sombrero-truth-social-post'},
+{t:'Federal Employee Layoffs Are Imminent, Administration Officials Say',u:'https://www.notus.org/trump-white-house/reductions-in-force-government-shutdown-imminent'},
+{t:'U.S. and Israel Give Hamas an Ultimatum: Agree to Their Deal, or Israel Will ‘Finish the Job’',u:'https://www.notus.org/trump-white-house/trump-netanyahu-israel-gaza-peace-plan-close'},
+{t:'Inside DOGE’s EPA Team and Its Multimillion-Dollar Mistakes',u:'https://www.notus.org/policy/doge-environmental-protection-agency-mistakes'},
+{t:'Billions in Taxpayer Dollars Have Become Virtually Untraceable',u:'https://www.notus.org/trump-white-house/billions-taxpayer-dollars-virtually-untraceable-appropriations-trump-omb-russ-vought'},
+{t:'How A 25-Year-Old DOGE Staffer Set Policy at USDA',u:'https://www.notus.org/trump-white-house/doge-gavin-kliger-us-department-of-agriculture-climate-policy'},
+{t:'DOGE Is Touting Its ‘Greatest Hits.’ A Closer Look Reveals Crushing Cuts.',u:'https://www.notus.org/trump-white-house/doge-greatest-hits-thomasville-georgia'},
+{t:'DOGE Has Cut Tens of Thousands of Awards. Musk’s Companies Haven’t Lost a Dime in Federal Funds.',u:'https://www.notus.org/trump-white-house/doge-musk-companies-federal-funds-space-x'},
+{t:'DOGE’s Victory Lap Overstates Its Own Work and Contradicts Its Own Estimates',u:'https://www.notus.org/trump-white-house/doge-wins-elon-musk-exit'},
+{t:'DOGE Vastly Overstated Its Real Estate Cuts — Then Spent Two Months Backtracking',u:'https://www.notus.org/policy/doge-claimed-savings-real-estate-changing-numbers'},
+{t:'The White House Says 10% Tariffs Will Stay Even After Trade Deals',u:'https://www.notus.org/whitehouse/karoline-leavitt-10-percent-tariffs'},
+{t:'Trump to Pull Ed Martin’s Nomination for U.S. Attorney',u:'https://www.notus.org/whitehouse/trump-ed-martin-dc-us-attorney'},
+{t:'Trump Announces a Trade Deal With the UK. The Final Details Are Still in Flux.',u:'https://www.notus.org/whitehouse/donald-trump-trade-deal-uk'},
+{t:'The White House’s Economic Message: Trust Us',u:'https://www.notus.org/whitehouse/trump-economy-message-trust-us'},
+{t:'The White House’s Budget Wishlist Calls for $163 Billion in Cuts That Codify DOGE',u:'https://www.notus.org/whitehouse/trump-budget-wishlist-doge'},
+{t:'Trump, Talking About His Faith Office, Says ‘Let’s Forget About’ Separation of Church and State',u:'https://www.notus.org/whitehouse/trump-faith-office-religious-liberty-commission-order'},
+{t:'Some Lawmakers Are Eyeing a Federal Fix for California’s Slow Vote Counting',u:'https://www.notus.org/california/federal-fix-california-vote-counting'},
+{t:'White House Says Trump Will ‘Comply’ With El Salvador’s President on Abrego Garcia',u:'https://www.notus.org/whitehouse/white-house-el-salvadors-president-abrego-garcia'},
+{t:'DOGE Has Disrupted Washington — But Not Its Bottom Line',u:'https://www.notus.org/whitehouse/doge-elon-musk-100-days'},
+{t:'D.C. and Commanders Set to Announce Deal Bringing the Team Back to RFK Site',u:'https://www.notus.org/congress/d-c-and-commanders-set-to-announce-deal-bringing-the-team-back-to-rfk-site'},
+{t:'Trump Is Trying to Reshape College Accreditation',u:'https://www.notus.org/education/trump-college-accreditation'},
+{t:'DOGE Is On a Tear at HHS. Even Insiders Are Struggling to Keep Up.',u:'https://www.notus.org/health-science/doge-health-cuts-rfk'},
+{t:'Supreme Court Tells Trump Administration it Must ‘Facilitate’ Return of Man Mistakenly Deported',u:'https://www.notus.org/immigration/supreme-court-trump-deportation-el-salvador'},
+{t:'‘We Can Fight This’: California Lawmakers Don’t Want the State to Cooperate With Trump’s Education Ultimatum',u:'https://www.notus.org/california/education-dei-california-officials'},
+{t:'DOGE Orders HHS to Cut 35% of Contract Spending',u:'https://www.notus.org/health-science/doge-hss-contract-cuts'},
+{t:'First-Term Congressman Sam Liccardo Raises Eye-Popping $1.5 Million',u:'https://www.notus.org/democrats/sam-liccardo-fundraising'},
+{t:'DOGE’s Multibillion-Dollar Contract Cuts Are Hitting Blue Districts Hardest',u:'https://www.notus.org/policy/doge-cuts-blue-districts'},
+{t:'DOGE is Slashing HHS Personnel and Health Projects. States Are Already Feeling the Strain.',u:'https://www.notus.org/health-science/hhs-doge-funding-cuts-states'},
+{t:'HHS Said It’s Pulling Billions in Leftover COVID-19 Funds. The Cuts Go Far Beyond the Pandemic.',u:'https://www.notus.org/health-science/hhs-covid-19-fund-cuts'},
+{t:'HHS Pulled Funds for HIV Research at 22 Universities',u:'https://www.notus.org/health-science/hhs-hiv-research-funding'},
+{t:'DOGE Reversed Course on Half of Its Social Security Lease Terminations',u:'https://www.notus.org/policy/social-security-administration-doge-leases'},
+{t:'The Trump Administration Cut Cancer and Alzheimer’s Research Funding at Columbia University',u:'https://www.notus.org/health-science/columbia-university-grant-cuts'},
+{t:'‘A Wrecking Ball’: Wine Country Democrats Warn Trump’s Trade Wars Are Going to Make Booze Pricier',u:'https://www.notus.org/whitehouse/wine-country-democrats-trade-wars-tariffs'},
+{t:'DOGE Is Changing California — And Democrats Worry It’s Just the Start',u:'https://www.notus.org/california/doge-cuts-california'},
+{t:'‘Everybody Is Waiting for Kamala’: Katie Porter’s Former House Colleagues Aren’t Racing to Back Her',u:'https://www.notus.org/california/katie-porter-governor-kamala-harris'},
+{t:'‘They’d Have Better Coffee’: Some Republicans Say Canada Should Consider U.S. Statehood',u:'https://www.notus.org/foreign-policy/canada-51st-state-trade'},
+{t:'Congress Doesn’t Want Trump to Scrap NASA’s Moon Rocket for Musk’s Starship',u:'https://www.notus.org/health-science/nasa-lunar-mission-elon-musk'},
+{t:'California Democrats Aren’t On Board With Newsom’s Take on Transgender Athletes',u:'https://www.notus.org/california/gavin-newsom-trans-athletes'},
+{t:'California Democrats Left Trump’s Speech Disgusted as He Doubled Down on Federal Cuts',u:'https://www.notus.org/california/democrats-left-trump-speech-disgusted-federal-cuts'},
+{t:'Republicans Are Overwhelmingly Thrilled With Trump’s Fight With Zelenskyy as Minerals Deal Falls Apart',u:'https://www.notus.org/donald-trump/republicans-trump-zelenskyy-fight-minerals-deal'},
+{t:'A California Lawmaker Wants to Make It Illegal for Trump to Hawk Crypto',u:'https://www.notus.org/house/sam-liccardo-meme-coin-bill'},
+{t:'Elon Musk Overshadowed Confirmed Secretaries at Donald Trump’s First Cabinet Meeting',u:'https://www.notus.org/donald-trump/trump-cabinet-meeting'},
+{t:'Elon Musk’s DOGE ‘Savings’ Aren’t Really Savings',u:'https://www.notus.org/policy/doge-savings-congress'},
+{t:'‘We Are Thrilled’: Proponents of Puerto Rican Statehood Welcome Trump’s Call to Add Canada',u:'https://www.notus.org/policy/puerto-rico-statehood-donald-trump'},
+{t:'DOGE Posts — Then Redacts — What Appears to Be Sensitive HUD Contract Data',u:'https://www.notus.org/whitehouse/doge-posts-then-redacts-sensitive-hud-contract-data'},
+{t:'‘Elon Musk, Elon Musk, Elon Musk’: Democrats Go After a Common Enemy During DOGE’s First Hearing',u:'https://www.notus.org/congress/elon-musk-democrats-doge-first-hearing'},
+{t:'Trump’s Power Play Is Almost Certainly Headed to the Supreme Court',u:'https://www.notus.org/courts/trump-power-play-constitutional-crisis-supreme-court'},
+{t:'‘Shock, Fear, Chaos’: Inside Federal Agencies Amid the DOGE Takeover',u:'https://www.notus.org/whitehouse/federal-workforce-chaos-usaid-dot-faa'},
+{t:'The Trump Administration Has Already Directed Tens of Millions to a Company Under DOJ Investigation',u:'https://www.notus.org/donald-trump/trump-administration-directed-millions-company-doj-investigation'},
+{t:'Republicans in Congress Aren’t Exactly Taking Trump Seriously or Literally on ‘Owning’ Gaza',u:'https://www.notus.org/congress/trump-gaza-republicans'},
+{t:'How Elon Musk Co-Opted an Obama Legacy Project — And Weaponized It',u:'https://www.notus.org/whitehouse/elon-musk-usds-doge'},
+{t:'Republicans Sidestep — Or Even Agree With — Trump Blaming DCA Plane Crash on DEI Policies',u:'https://www.notus.org/congress/trump-dei-dca-plane-crash-republicans'},
+{t:'Dems Say Trump’s Federal Worker Buyout Offer Is Too Good to Be True. Republicans Say It’s Just Too Good.',u:'https://www.notus.org/congress/dems-say-trump-buyout-too-good-republicans'},
+{t:'Federal Funding Freeze Leaves Democrats Warning About Disaster Aid',u:'https://www.notus.org/whitehouse/funding-freeze-disaster-aid-california-north-carolina'},
+{t:'‘There’s a Distinction’: Republicans Want to ‘Move Forward’ From Trump’s Pardons — And Investigate Biden’s',u:'https://www.notus.org/congress/republicans-move-forward-trump-pardons-investigate-biden'},
+{t:'Republicans Have a Novel Defense for Trump’s Jan. 6 Pardons: It’s Biden’s Fault',u:'https://www.notus.org/congress/republicans-defense-trump-jan-6-pardons-bidens'},
+{t:'DeSantis vs. Newsom: Governors Sprint to Take Center Stage at the Trump Show',u:'https://www.notus.org/donald-trump/desantis-newsom-trump-governors'},
+{t:'Democrats Wave Away the Inroads Republicans Made in Blue States',u:'https://www.notus.org/democrats/blue-state-republican-gains'},
+{t:'‘RedNote’ Becomes a ‘Red Scare’: Republicans Already Want to Ban This TikTok Alternative',u:'https://www.notus.org/congress/rednote-red-scare-republicans-want-to-ban-tiktok-alternative'},
+{t:'Jack Smith’s Final Trump Report Angers Democrats and Republicans — For Very Different Reasons',u:'https://www.notus.org/congress/jack-smiths-final-trump-report-angers-democrats-and-republicans-for-very-different-reasons'},
+{t:'Lawmakers Scoff at Surgeon General’s Call to Label Alcohol a Cancer Risk',u:'https://www.notus.org/congress/lawmakers-alcohol-warning-surgeon-general'},
+{t:'‘Mostly Trolling’: GOP Lawmakers Laugh Off Trump’s Calls to ‘Absorb’ Canada',u:'https://www.notus.org/congress/gop-lawmakers-trump-canada'},
+{t:'Jan. 6 Is Just Another Day Now — Except for the Lawmakers Who Refuse to Forget',u:'https://www.notus.org/congress/jan-6-is-just-another-day-now-except-for-lawmakers-who-refuse-to-forget'},
+{t:'Lawmakers Are Flocking to Join the DOGE Caucus but No One Knows What They’ll Do There',u:'https://www.notus.org/trump-transition/doge-caucus-republicans'},
+{t:'Oversight Chair James Comer Won’t Commit to Pushing Presidential Ethics Bill After Trump’s Win',u:'https://www.notus.org/congress/oversight-chair-james-comer-wont-commit-to-pushing-presidential-ethics-bill-after-trumps-win'},
+{t:'California Republicans Want to Claw Back Funding for Their Own State on High-Speed Rail',u:'https://www.notus.org/congress/california-republicans-claw-back-funding-high-speed-rail'},
+{t:'The Bulk of Biden’s Infrastructure Spending Will Likely Stay Put Under Trump',u:'https://www.notus.org/congress/the-bulk-of-bidens-infrastructure-spending-will-likely-stay-put-under-trump'},
+{t:'Frontline Democrats Urge Support for Jared Huffman in Natural Resources Race',u:'https://www.notus.org/congress/frontline-democrats-urge-support-jared-huffman-natural-resources-race'},
+{t:'All Senate Republicans Sound Open to Kash Patel. Many Are Enthusiastic About Him.',u:'https://www.notus.org/congress/all-senate-republicans-open-to-kash-patel-many-enthusiastic'},
+{t:'Republicans Hope Elon Musk’s Trumpworld Influence Can Boost America’s Space Ambitions',u:'https://www.notus.org/congress/republicans-elon-musk-trumpworld-influence-america-space-ambitions'},
+{t:'Senate Democrats Want the Full FBI File on the Matt Gaetz Investigation',u:'https://www.notus.org/trump-transition/senate-democrats-want-the-full-fbi-file-on-the-matt-gaetz-investigation'},
+{t:'The House Republicans Who Would Rather Just Bury the Gaetz Report',u:'https://www.notus.org/congress/house-republicans-rather-just-bury-gaetz-ethics-report'},
+{t:'‘I’m Thrilled’: Some Congressional Republicans Are All In on Robert F. Kennedy Jr.’s Nomination',u:'https://www.notus.org/congress/some-congressional-republicans-all-in-on-robert-f-kennedy-jr-nomination'},
+{t:'House Democrats Look for a Winning Message After Loss to Trump',u:'https://www.notus.org/congress/house-democrats-winning-message-trump-loss'},
+{t:'The #Resistance Says It’s Plotting Its Outrage More Carefully This Time',u:'https://www.notus.org/2024-election/the-resistance-says-its-plotting-its-outrage-more-carefully-this-tim'},
+{t:'Dave McCormick Is Projected to Defeat Sen. Bob Casey in Pennsylvania',u:'https://www.notus.org/senate/dave-mccormick-defeats-bob-casey-in-pennsylvania'},
+{t:'Trump’s Final Rally — Maybe Ever — Ends With Some Reflections, Some Swears and Some Doubts',u:'https://www.notus.org/trump-2024/trump-final-rally-ends-reflections-swears-doubts'},
+{t:'Raúl Grijalva Is Running to Lead Natural Resources Again. Democrats Say He’s Not Up to the Job.',u:'https://www.notus.org/congress/raul-grijalva-natural-resources-democrats-jared-huffman'},
+{t:'Ro Khanna Goes After Wall Street Landlords to Address Rising Home Prices',u:'https://www.notus.org/democrats/ro-khanna-wall-street-landlords-rising-home-prices'},
+{t:'Kamala Harris Casts Donald Trump as a Threat to Black Americans',u:'https://www.notus.org/harris-2024/kamala-harris-casts-donald-trump-as-a-threat-to-black-americans'}
+];
+
+var luckyBtn=document.getElementById('lucky-btn');
+var luckyText=document.getElementById('lucky-text');
+var luckyCount=document.getElementById('lucky-count');
+if(luckyCount) luckyCount.textContent=HEADLINES.length;
+var luckySpinning=false;
+
+function luckySpin(){
+  if(luckySpinning) return;
+  luckySpinning=true;
+  luckyBtn.disabled=true;
+  luckyText.className='lucky-reel-text spinning';
+  var elapsed=0;
+  var totalMs=2200;
+  var interval=45;
+  function tick(){
+    var pick=HEADLINES[Math.floor(Math.random()*HEADLINES.length)];
+    luckyText.textContent=pick.t;
+    elapsed+=interval;
+    if(elapsed<totalMs){
+      interval=interval*1.11;
+      setTimeout(tick,interval);
+    } else {
+      var final=HEADLINES[Math.floor(Math.random()*HEADLINES.length)];
+      var a=document.createElement('a');
+      a.href=final.u;
+      a.target='_blank';
+      a.rel='noopener';
+      a.id='lucky-text';
+      a.className='lucky-reel-text landed';
+      a.textContent=final.t;
+      luckyText.replaceWith(a);
+      luckyText=a;
+      luckySpinning=false;
+      luckyBtn.disabled=false;
+    }
+  }
+  tick();
+}
+luckyBtn.addEventListener('click',luckySpin);
+
+var start=performance.now();
+function loop(now){ renderFrame(now-start); requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
