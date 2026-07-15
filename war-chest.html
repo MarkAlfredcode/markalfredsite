@@ -201,6 +201,102 @@
 }
 .replay-btn:hover{background:var(--red-dark)}
 
+.lb-submit{
+  margin-top:18px;
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.lb-submit input{
+  font-family:"Archivo",sans-serif;
+  font-size:13px;
+  border:1.5px solid var(--ink);
+  background:var(--paper);
+  color:var(--ink);
+  padding:9px 12px;
+  width:180px;
+  max-width:60vw;
+}
+.lb-submit input:focus{outline:none;border-color:var(--red)}
+.lb-submit-btn{
+  font-family:"Archivo",sans-serif;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  background:var(--ink);
+  color:var(--paper);
+  border:none;
+  padding:0 18px;
+  cursor:pointer;
+  transition:background .15s;
+}
+.lb-submit-btn:hover{background:var(--red)}
+.lb-submit-btn:disabled{opacity:.4;cursor:default}
+.lb-status{
+  font-family:"Archivo",sans-serif;
+  font-size:11px;
+  letter-spacing:.04em;
+  color:var(--ink-soft);
+  margin-top:8px;
+  min-height:14px;
+}
+.lb-status.ok{color:#4a6b4d}
+
+.leaderboard{
+  width:100%;
+  max-width:420px;
+  margin:0 auto;
+  border-top:3px double var(--rule);
+  padding-top:18px;
+}
+.lb-title{
+  font-family:"Archivo",sans-serif;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-align:center;
+  margin-bottom:12px;
+}
+.lb-list{list-style:none}
+.lb-row{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  padding:7px 2px;
+  border-bottom:1px solid var(--rule-soft);
+  font-family:"Archivo",sans-serif;
+  font-size:13px;
+}
+.lb-row:last-child{border-bottom:none}
+.lb-rank{
+  font-weight:800;
+  color:var(--muted);
+  width:20px;
+  flex:0 0 auto;
+}
+.lb-row:nth-child(1) .lb-rank{color:#b8923f}
+.lb-name{
+  flex:1;
+  color:var(--ink);
+  font-weight:600;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.lb-streak{font-weight:800;color:#4a6b4d}
+.lb-empty{
+  text-align:center;
+  font-family:"Libre Caslon Text",serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--ink-soft);
+  padding:8px 0;
+}
+
 @media(max-width:520px){
   .cards{flex-direction:column}
   .card + .card{border-left:none;border-top:2px solid var(--rule)}
@@ -252,7 +348,17 @@
     <div class="game-over" id="game-over">
       <div class="final">Final streak: <b id="final-streak">0</b></div>
       <div class="best">Best this session: <span id="best-streak">0</span></div>
+      <form class="lb-submit" id="lb-submit-form">
+        <input type="text" id="lb-name-input" placeholder="Your name" maxlength="20" autocomplete="off">
+        <button type="submit" class="lb-submit-btn" id="lb-submit-btn">Submit Score</button>
+      </form>
+      <div class="lb-status" id="lb-status"></div>
       <button class="replay-btn" id="replay-btn">Play Again</button>
+    </div>
+
+    <div class="leaderboard">
+      <div class="lb-title">Leaderboard — Top Streaks</div>
+      <ol class="lb-list" id="lb-list"></ol>
     </div>
   </div>
 
@@ -617,6 +723,7 @@ function guess(dir){
       document.getElementById('final-streak').textContent=streak;
       document.getElementById('best-streak').textContent=best;
       gameOverEl.classList.add('show');
+      showSubmitForm(streak);
     },1100);
   }
 }
@@ -625,6 +732,89 @@ btnHigher.addEventListener('click',function(){guess('higher');});
 btnLower.addEventListener('click',function(){guess('lower');});
 document.getElementById('replay-btn').addEventListener('click',startGame);
 
+// ── leaderboard ──
+var LB_NAME_KEY='warchest-lb-name';
+var lbListEl=document.getElementById('lb-list');
+var lbFormEl=document.getElementById('lb-submit-form');
+var lbNameInput=document.getElementById('lb-name-input');
+var lbSubmitBtn=document.getElementById('lb-submit-btn');
+var lbStatusEl=document.getElementById('lb-status');
+
+function renderLeaderboard(scores){
+  lbListEl.innerHTML='';
+  if(!scores||!scores.length){
+    var li=document.createElement('li');
+    li.className='lb-empty';
+    li.textContent='No streaks yet — be the first on the board.';
+    lbListEl.appendChild(li);
+    return;
+  }
+  scores.forEach(function(s,i){
+    var li=document.createElement('li');
+    li.className='lb-row';
+    var rank=document.createElement('span');
+    rank.className='lb-rank';
+    rank.textContent=(i+1)+'.';
+    var name=document.createElement('span');
+    name.className='lb-name';
+    name.textContent=s.name;
+    var streakEl=document.createElement('span');
+    streakEl.className='lb-streak';
+    streakEl.textContent=s.streak;
+    li.appendChild(rank);li.appendChild(name);li.appendChild(streakEl);
+    lbListEl.appendChild(li);
+  });
+}
+
+function loadLeaderboard(){
+  fetch('/api/leaderboard').then(function(r){return r.json();}).then(function(data){
+    renderLeaderboard(data.scores||[]);
+  }).catch(function(){
+    renderLeaderboard([]);
+  });
+}
+
+function showSubmitForm(finalStreak){
+  if(finalStreak>0){
+    lbFormEl.style.display='flex';
+    lbNameInput.value=localStorage.getItem(LB_NAME_KEY)||'';
+    lbSubmitBtn.disabled=false;
+    lbStatusEl.textContent='';
+    lbStatusEl.className='lb-status';
+  } else {
+    lbFormEl.style.display='none';
+    lbStatusEl.textContent='';
+  }
+}
+
+lbFormEl.addEventListener('submit',function(e){
+  e.preventDefault();
+  var name=lbNameInput.value.trim().slice(0,20)||'Anonymous';
+  localStorage.setItem(LB_NAME_KEY,name);
+  lbSubmitBtn.disabled=true;
+  lbStatusEl.textContent='Submitting…';
+  lbStatusEl.className='lb-status';
+  fetch('/api/leaderboard',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:name,streak:streak})
+  }).then(function(r){return r.json();}).then(function(data){
+    if(data.error){
+      lbStatusEl.textContent='Could not submit — try again';
+      lbSubmitBtn.disabled=false;
+      return;
+    }
+    renderLeaderboard(data.scores||[]);
+    lbStatusEl.textContent='Submitted to the leaderboard';
+    lbStatusEl.className='lb-status ok';
+    lbFormEl.style.display='none';
+  }).catch(function(){
+    lbStatusEl.textContent='Could not submit — try again';
+    lbSubmitBtn.disabled=false;
+  });
+});
+
+loadLeaderboard();
 startGame();
 </script>
 </body>

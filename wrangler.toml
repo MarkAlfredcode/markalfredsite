@@ -1,3 +1,7 @@
 name = "markalfred"
 pages_build_output_dir = "."
 compatibility_date = "2026-05-24"
+
+[[kv_namespaces]]
+binding = "WARCHEST_LEADERBOARD"
+id = "c2708e125f134dc0adf96098ecce9dc6"
