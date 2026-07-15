@@ -21,26 +21,13 @@
   white-space:nowrap;
 }
 .masthead-sm a{color:var(--ink);text-decoration:none}
-.utility{align-items:center;padding:8px 0}
-nav a{color:var(--muted)}
-nav a:hover{color:var(--red)}
-.social a{border-color:var(--rule-soft)}
+.utility{align-items:center;padding:8px 0 10px;border-bottom:3px double var(--rule)}
 
 /* ── game page ── */
 .game-head{
   text-align:center;
-  padding:26px 0 20px;
+  padding:16px 0 0;
 }
-.other-game{
-  font-family:"Archivo",sans-serif;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:.05em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-top:10px;
-}
-.other-game a{color:var(--red);text-decoration:none;border-bottom:1px solid var(--red)}
 .game-title{
   font-family:Georgia,"Times New Roman",serif;
   font-weight:700;
@@ -60,11 +47,11 @@ nav a:hover{color:var(--red)}
 .game-wrap{
   max-width:640px;
   margin:0 auto;
-  padding:32px 0 40px;
+  padding:8px 0 40px;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:20px;
+  gap:16px;
 }
 
 .streak{
@@ -75,7 +62,7 @@ nav a:hover{color:var(--red)}
   text-transform:uppercase;
   color:var(--ink-soft);
 }
-.streak b{color:var(--red);font-size:16px}
+.streak b{color:#4a6b4d;font-size:16px}
 
 .cards{
   display:flex;
@@ -156,9 +143,14 @@ nav a:hover{color:var(--red)}
   padding:16px 10px;
   cursor:pointer;
   transition:background .15s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
 }
 .guess-btn:hover{background:var(--red)}
 .guess-btn:disabled{opacity:.4;cursor:default;background:var(--ink)}
+.guess-arrow{font-size:16px;line-height:1}
 
 .result-banner{
   font-family:"Archivo",sans-serif;
@@ -224,29 +216,9 @@ nav a:hover{color:var(--red)}
     <div class="day" id="js-day"></div>
   </div>
 
-  <nav>
-    <ul>
-      <li><a href="news.html">News</a></li>
-      <li><a href="photojournalism.html">Photojournalism</a></li>
-      <li><a href="exclusives.html">Exclusives</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-    <div class="social">
-      <a href="#" title="X" aria-label="X">𝕏</a>
-      <a href="https://www.notus.org/mark-alfred" title="NOTUS" aria-label="NOTUS">N</a>
-      <a href="https://www.linkedin.com/in/mark-alfred/" title="LinkedIn" aria-label="LinkedIn">in</a>
-    </div>
-    <ul>
-      <li><a href="printing-press.html">Warehouse</a></li>
-      <li><a href="arcade.html">Games</a></li>
-      <li><a href="#">Send a News Tip</a></li>
-    </ul>
-  </nav>
-
   <div class="game-head">
     <div class="game-title">War Chest</div>
     <div class="game-sub">Higher or lower? Guess whose campaign cash-on-hand is bigger.</div>
-    <div class="other-game">More games in the Games menu above ↑</div>
   </div>
 
   <div class="game-wrap">
@@ -273,8 +245,8 @@ nav a:hover{color:var(--red)}
     <div class="result-banner" id="result-banner"></div>
 
     <div class="guess-row" id="guess-row">
-      <button class="guess-btn" id="btn-higher">Higher</button>
-      <button class="guess-btn" id="btn-lower">Lower</button>
+      <button class="guess-btn" id="btn-higher"><span class="guess-arrow">&#8593;</span> Higher</button>
+      <button class="guess-btn" id="btn-lower"><span class="guess-arrow">&#8595;</span> Lower</button>
     </div>
 
     <div class="game-over" id="game-over">
