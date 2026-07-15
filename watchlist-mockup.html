@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Watchlist (mockup) — Mark Alfred Dot News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.masthead-sm{
+  font-family:"Chomsky",serif;
+  font-size:clamp(18px,2.4vw,28px);
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1;
+  text-transform:none;
+  position:static;
+  transform:none;
+  white-space:nowrap;
+}
+.masthead-sm a{color:var(--ink);text-decoration:none}
+.utility{align-items:center;padding:8px 0}
+nav a{color:var(--muted)}
+nav a:hover{color:var(--red)}
+.social a{border-color:var(--rule-soft)}
+
+.mock-banner{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:"Archivo",sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  text-align:center;
+  padding:7px;
+  margin-top:8px;
+}
+
+/* ── watchlist widget ── */
+.watchlist{
+  border:1px solid var(--rule);
+  margin-top:26px;
+}
+.watchlist-head{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  border-bottom:3px double var(--rule);
+  padding:16px 20px 12px;
+}
+.watchlist-title{
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:700;
+  font-size:22px;
+  letter-spacing:-0.01em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.watchlist-sub{
+  font-family:"Libre Caslon Text",serif;
+  font-style:italic;
+  font-size:12.5px;
+  color:var(--ink-soft);
+}
+
+.watch-item{
+  display:grid;
+  grid-template-columns:70px 90px 1fr;
+  gap:16px;
+  align-items:start;
+  padding:16px 20px;
+  border-bottom:1px solid var(--rule-soft);
+}
+.watch-item:last-child{border-bottom:none}
+.watch-date{
+  font-family:"Archivo",sans-serif;
+  text-align:center;
+  line-height:1.15;
+}
+.watch-date .dow{
+  display:block;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.watch-date .dom{
+  display:block;
+  font-size:22px;
+  font-weight:800;
+  color:var(--ink);
+}
+.watch-date .mon{
+  display:block;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.watch-tag{
+  font-family:"Archivo",sans-serif;
+  font-size:9.5px;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:3px 8px;
+  border-radius:2px;
+  display:inline-block;
+  height:fit-content;
+  color:#fff;
+  white-space:nowrap;
+}
+.watch-tag.vote{background:var(--red)}
+.watch-tag.hearing{background:#3a5a7d}
+.watch-tag.deadline{background:#8a6d1f}
+.watch-title{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:16px;
+  font-weight:700;
+  line-height:1.25;
+  color:var(--ink);
+  margin-bottom:4px;
+}
+.watch-context{
+  font-family:"Libre Caslon Text",serif;
+  font-size:13px;
+  line-height:1.45;
+  color:var(--ink-soft);
+}
+
+@media(max-width:600px){
+  .watch-item{grid-template-columns:56px 1fr;grid-template-areas:"date tag" "date title" "date context";gap:4px 12px}
+  .watch-date{grid-area:date}
+  .watch-tag{grid-area:tag;margin-bottom:2px}
+  .watch-title{grid-area:title}
+  .watch-context{grid-area:context}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="utility">
+    <div class="masthead-sm"><a href="index.html">Mark Alfred Dot News</a></div>
+    <div class="day" id="js-day"></div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="news.html">News</a></li>
+      <li><a href="photojournalism.html">Photojournalism</a></li>
+      <li><a href="exclusives.html">Exclusives</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="social">
+      <a href="#" title="X" aria-label="X">𝕏</a>
+      <a href="https://www.notus.org/mark-alfred" title="NOTUS" aria-label="NOTUS">N</a>
+      <a href="https://www.linkedin.com/in/mark-alfred/" title="LinkedIn" aria-label="LinkedIn">in</a>
+    </div>
+    <ul>
+      <li><a href="printing-press.html">Warehouse</a></li>
+      <li><a href="arcade.html">Games</a></li>
+      <li><a href="money-trail.html">Money Trail</a></li>
+      <li><a href="#">Send a News Tip</a></li>
+    </ul>
+  </nav>
+
+  <div class="mock-banner">Design mockup — illustrative dates/entries, not wired to live data yet</div>
+
+  <div class="watchlist">
+    <div class="watchlist-head">
+      <span class="watchlist-title">The Watchlist</span>
+      <span class="watchlist-sub">What to watch on the Hill this week</span>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-date"><span class="dow">Mon</span><span class="dom">20</span><span class="mon">Jul</span></div>
+      <span class="watch-tag vote">Vote</span>
+      <div>
+        <div class="watch-title">House floor vote: FY2027 Homeland Security appropriations</div>
+        <div class="watch-context">Full committee reported the bill 3-1 along party lines last week — expect a similarly close floor margin.</div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-date"><span class="dow">Tue</span><span class="dom">21</span><span class="mon">Jul</span></div>
+      <span class="watch-tag hearing">Hearing</span>
+      <div>
+        <div class="watch-title">Senate Judiciary: oversight of DOJ civil rights division</div>
+        <div class="watch-context">First appearance from the new assistant attorney general since confirmation — expect questions on the Venmo privacy findings.</div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-date"><span class="dow">Wed</span><span class="dom">22</span><span class="mon">Jul</span></div>
+      <span class="watch-tag deadline">Deadline</span>
+      <div>
+        <div class="watch-title">FEC Q2 filing deadline for House and Senate committees</div>
+        <div class="watch-context">Cash-on-hand totals refresh across the board — a good moment to check War Chest against the new numbers.</div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-date"><span class="dow">Wed</span><span class="dom">22</span><span class="mon">Jul</span></div>
+      <span class="watch-tag hearing">Hearing</span>
+      <div>
+        <div class="watch-title">House Oversight: DOGE agency downsizing, six-month review</div>
+        <div class="watch-context">Committee staff say Thune's office has quietly pushed for a narrower scope after the real estate savings walk-back.</div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-date"><span class="dow">Thu</span><span class="dom">23</span><span class="mon">Jul</span></div>
+      <span class="watch-tag vote">Vote</span>
+      <div>
+        <div class="watch-title">Senate cloture vote: ambassador to Canada nomination</div>
+        <div class="watch-context">Needs 60 votes to advance — watch for defections given the nominee's own public Venmo history.</div>
+      </div>
+    </div>
+
+    <div class="watch-item">
+      <div class="watch-date"><span class="dow">Fri</span><span class="dom">24</span><span class="mon">Jul</span></div>
+      <span class="watch-tag deadline">Deadline</span>
+      <div>
+        <div class="watch-title">Continuing resolution expires at midnight</div>
+        <div class="watch-context">No successor funding bill has cleared the Rules Committee — another shutdown standoff looks likely.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wordmark">Mark Alfred Dot News</div>
+    <div class="credits">Designed and Developed by <b>Mark Alfred</b></div>
+  </footer>
+
+</div>
+<script>
+(function(){
+  var now=new Date();
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var d=document.getElementById('js-day');
+  if(d) d.textContent=days[now.getDay()].toUpperCase();
+})();
+</script>
+</body>
+</html>
