@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Internal White House Emails Reveal a Frenzied Campaign Against Penn — Mark Alfred Dot News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* Recreation of the "College" Figma frame (node 301:5, file bCwD9XOLqyZLiJG4gMONgM):
+   a scroll-driven image collage — 4 static full-bleed photos, pinned in place, that
+   quick-dissolve from one to the next as the caption text for each scrolls past.
+   Below the collage the page continues as the standard single-column article template. */
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f2ea; }
+
+.cg-masthead{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  text-align: center;
+  padding: 28px 0;
+  font-family: 'Chomsky', serif;
+  font-size: 24px;
+  letter-spacing: -0.56px;
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(0,0,0,.55);
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+.cg-masthead a{ color: inherit; text-decoration: none; pointer-events: auto; }
+body.cg-past-collage .cg-masthead{ opacity: 0; pointer-events: none; }
+
+/* ---- pinned image / scrolling caption collage ---- */
+.cg-scroller{ position: relative; height: 400vh; background:#000; }
+.cg-sticky{
+  position: sticky; top: 0;
+  height: 100vh; width: 100%;
+  overflow: hidden;
+}
+.cg-img{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .7s ease;
+  will-change: opacity;
+}
+.cg-img.active{ opacity: 1; }
+
+.cg-captions{ position: absolute; inset: 0; z-index: 2; }
+.cg-cap{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+}
+.cg-cap[data-i="0"]{ align-items: flex-start; padding-top: 62vh; }
+.cg-cap-inner{ max-width: 620px; margin: 0 auto; width: 100%; }
+
+.cg-hl{
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 25px;
+  line-height: 1.4;
+  color: #000;
+  background: #f5f2ea;
+  padding: 3px 10px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.cg-cap p{ margin: 0; }
+.cg-cap a.cg-hl{ text-decoration: underline; }
+
+.cg-quote-line .cg-hl{
+  font-weight: 700; font-style: italic; font-size: 34px; line-height: 1.3;
+  color: #f5f2ea; background: #16130c;
+}
+.cg-sub{ margin-top: 10px !important; }
+.cg-sub .cg-hl{ font-size: 20px; font-weight: 400; font-style: normal; color: #383838; }
+
+/* ---- article column below the collage (matches the site's Figma-exact article template) ---- */
+.penn-col{ max-width: 668px; margin: 0 auto; padding: 0 20px; }
+.penn-rule{ border-top: 2px solid #171410; margin: 46px 0 0; }
+.cg-photo-credit{
+  font-family: 'Archivo', sans-serif;
+  font-size: 9.5px;
+  letter-spacing: 0.19px;
+  color: #7a7468;
+  text-align: right;
+  margin: 10px 0 28px;
+}
+.cg-dek{
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 32px;
+  line-height: 35px;
+  letter-spacing: 0.32px;
+  color: var(--red);
+  margin: 0 0 28px;
+}
+.penn-byline{
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: #000;
+  margin: 0 0 24px;
+}
+.penn-byline .reg{ font-weight: 400; }
+.penn-body{
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: #000;
+  padding-bottom: 60px;
+}
+.penn-body p{ margin: 0 0 24px; }
+.penn-body p.penn-kicker{ font-style: italic; }
+.penn-body a{ color: #000; text-decoration: underline; text-decoration-skip-ink: none; text-underline-position: from-font; }
+.penn-body p.credit-line{ font-style: italic; }
+
+.penn-footer{
+  border-top: 3px solid #171410;
+  padding: 24px 0 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.penn-footer .penn-wordmark{
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 31.4px;
+  letter-spacing: -1.6px;
+  color: #16130c;
+}
+.penn-footer .penn-footer-credit{
+  font-family: 'Archivo', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.22px;
+  color: #33302a;
+  text-align: right;
+}
+.penn-footer .penn-footer-credit b{ font-weight: 700; color: #16130c; }
+
+@media (prefers-reduced-motion: reduce){
+  .cg-img{ transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="cg-masthead"><a href="index.html">Mark Alfred Dot News</a></header>
+
+<div class="cg-scroller" id="cgScroller">
+  <div class="cg-sticky">
+    <img class="cg-img active" data-i="0" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/b9854449-5457-4ce0-bcc9-4aefd02d4c19.jpg">
+    <img class="cg-img" data-i="1" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/b1242c25-68b4-486a-a88b-1bf3ba3d256a.jpg">
+    <img class="cg-img" data-i="2" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/56d117f8-e047-4db6-a4dd-a94fdb4fe92c.jpg">
+    <img class="cg-img" data-i="3" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/2f0fec61-63ea-4a56-8fa7-6b5e86311b39.jpg">
+  </div>
+
+  <div class="cg-captions">
+    <section class="cg-cap" data-i="0">
+      <div class="cg-cap-inner">
+        <p><span class="cg-hl">It was February and President Donald Trump&rsquo;s retribution campaign was in full swing.</span></p>
+      </div>
+    </section>
+
+    <section class="cg-cap" data-i="1">
+      <div class="cg-cap-inner">
+        <p><span class="cg-hl">Trump <a class="cg-hl" href="https://www.notus.org/health-science/columbia-university-grant-cuts" target="_blank" rel="noopener">cut hundreds of millions</a> to Columbia University over antisemitism allegations and put 59 other colleges on notice.</span></p>
+      </div>
+    </section>
+
+    <section class="cg-cap" data-i="2">
+      <div class="cg-cap-inner">
+        <p><span class="cg-hl">and he wasn&rsquo;t stopping there.</span></p>
+      </div>
+    </section>
+
+    <section class="cg-cap cg-quote" data-i="3">
+      <div class="cg-cap-inner">
+        <p class="cg-quote-line"><span class="cg-hl">&ldquo;POTUS wants to see more action against universities,&rdquo;</span></p>
+        <p class="cg-sub"><span class="cg-hl">Senior Policy Strategist May Mailman wrote in an email to senior administration officials.</span></p>
+        <p class="cg-sub"><span class="cg-hl">The officials raced to make it happen.</span></p>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="penn-col">
+  <div class="penn-rule"></div>
+  <div class="cg-photo-credit">Photograph by Mark Alfred</div>
+
+  <p class="cg-dek">Internal White House emails reveal a frenzied campaign to strip federal funds from Penn — and target another university the administration never publicized.</p>
+
+  <div class="penn-byline"><span class="reg">By</span> Mark Alfred</div>
+
+  <div class="penn-body">
+    <p class="penn-kicker">This article first appeared on NOTUS.org on July 7, 2025</p>
+
+    <p>&ldquo;Can we get something going on Twitter in a short bit?&rdquo; Senior Policy Strategist May Mailman asked several members of the White House communications team in an email late in the day on March 18. &ldquo;Stephen request,&rdquo; added Mailman, who works closely with Deputy Chief of Staff Stephen Miller.</p>
+
+    <p>She CC&rsquo;d Federal Acquisition Service Commissioner Josh Gruenbaum on the email chain, which included Communications Director Steven Cheung and Deputy Communications Directors Alex Pfeiffer and Kaelan Dorr, under the subject line: &ldquo;Funding yanked from San Jose State + UPenn.&rdquo;</p>
+
+    <p>The administration had launched investigations into both campuses over trans athletes&rsquo; past participation in sports. (One of those investigations concluded in April, finding the University of Pennsylvania in violation of Title IX.)</p>
+
+    <p>NOTUS reviewed the full email chain, which surfaced in court documents in a case targeting DOGE&rsquo;s funding freezes. The internal communications detail a push fueled by a desire to get media attention, as senior officials rushed to coordinate with various federal agencies, the DOGE teams within them and Fox News to deliver on the president&rsquo;s wish.</p>
+
+    <p>The emails also show that the administration targeted San Jose State in a previously unreported effort to punish the campus — even before the Title IX investigation into it had concluded.</p>
+
+    <p>&ldquo;We specifically focused on San Jose State and U of Penn at the advice of some of the agencies involved in live investigations and the guidance that it was best to have ongoing investigations and incidents as rationale for the stop work, which is only at these two universities currently,&rdquo; Gruenbaum wrote in the email chain.</p>
+
+    <p>Administration officials were attuned to the possibility of bad optics — particularly when funding cuts touched national security and public health.</p>
+
+    <p>&ldquo;If you all deem we should turn this back on, we can do that immediately given criticality- it&rsquo;s just a simple email given we didn&rsquo;t terminate,&rdquo; Gruenbaum wrote at one point. But ultimately, those concerns did not outweigh the White House&rsquo;s desire to punish the schools, which it did within hours of Mailman&rsquo;s first note.</p>
+
+    <p>The White House and San Jose State University did not respond to a detailed list of questions about the email chain and the funding cutoffs. A University of Pennsylvania spokesperson directed NOTUS to the campus&rsquo; past <a href="https://titleixoffice.upenn.edu/about/title-ix-compliance-in-athletics" target="_blank" rel="noopener">public</a> <a href="https://penntoday.upenn.edu/announcements/penns-title-ix-resolution-us-department-education-office-civil-rights" target="_blank" rel="noopener">statements</a>.</p>
+
+    <p>In the following weeks and months, the White House would strip hundreds of millions of dollars from Brown, Cornell, Northwestern and Princeton.</p>
+
+    <p>The impacts of the administration&rsquo;s pressure campaigns are ongoing. Harvard, which has seen billions of federal dollars withheld, is &ldquo;probably going to settle,&rdquo; Trump said on Saturday. Last week, Penn joined Columbia University in caving to the Trump administration&rsquo;s demands, banning transgender athletes from participating on women&rsquo;s sports teams as well as a series of other concessions, including a &ldquo;personalized letter of apology to each impacted female swimmer.&rdquo; In return, the administration unfroze the almost $175 million in funds it had pulled, a White House official confirmed to NOTUS.</p>
+
+    <p>Secretary of Education Linda McMahon <a href="https://www.ed.gov/about/news/press-release/us-department-of-education-announces-university-of-pennsylvania-has-entered-resolution-agreement-resolve-its-title-ix-violations" target="_blank" rel="noopener">called</a> the resolution &ldquo;the Trump effect in action.&rdquo;</p>
+
+    <p>***</p>
+
+    <p>Two of these funding freezes began on March 18, with two bullet-pointed draft social media posts sent to the White House communications team.</p>
+
+    <p>&ldquo;Today, we have paused ALL grant awards to San Jose State which continued to play a male athlete on the female volleyball team, including access to intimate, overnight spaces,&rdquo; read the first draft post Mailman passed along, according to the internal email chain reviewed by NOTUS.</p>
+
+    <p>San Jose State had become the epicenter of the trans athlete debate after an online magazine outed Blaire Fleming, a member of the women&rsquo;s volleyball team, prompting teams to forfeit matches against the university and lawsuits that targeted her eligibility to play.</p>
+
+    <p>Trump had taken an interest in the controversy during his 2024 campaign. At an all-women Fox News town hall, he brought up a viral video in which Fleming, an outside hitter, spiked a ball into an opposing player. &ldquo;I never saw a ball hit so hard,&rdquo; he marveled, vowing to &ldquo;just ban&rdquo; trans athletes from campus sports altogether. Anti-trans rhetoric had become a <a href="https://www.notus.org/the-influencers/terry-schilling-transgender-rights-american-principles-project" target="_blank" rel="noopener">focus of his campaign</a>.</p>
+
+    <p>(Keira Herron, the San Diego State player on the receiving end of the ball, later <a href="https://www.nytimes.com/2025/04/20/magazine/trans-athletes-women-college-sports.html" target="_blank" rel="noopener">told</a> The New York Times Magazine that &ldquo;It was fine. &hellip; Everyone gets hit in volleyball.&rdquo; Fleming said the season was &ldquo;the darkest time in my life.&rdquo;) In December, NCAA President Charlie Baker testified to senators that out of some 510,000 NCAA student-athletes, &ldquo;less than 10&rdquo; were transgender.</p>
+
+    <p>Mailman&rsquo;s second draft post mirrored the first, this time announcing the pause of &ldquo;tens of millions from UPenn&rdquo; for having permitted a trans athlete to compete on the women&rsquo;s swimming team years prior. The university receives roughly <a href="https://www.thedp.com/article/2025/03/penn-federal-funding-data-analysis-2024" target="_blank" rel="noopener">$1 billion</a> annually in federal funding.</p>
+
+    <p>The government held significantly less leverage over San Jose State. Mailman noted that ending &ldquo;all awards&rdquo; to the campus meant &ldquo;$100k of EPA funding,&rdquo; and asked Gruenbaum to confirm if it was &ldquo;paused or revoked?&rdquo; Gruenbaum, from his perch inside the agency that directs federal contracting, acted as the White House&rsquo;s point person between various agencies.</p>
+
+    <p>He was a more than willing partner. Gruenbaum left his post at a global investment firm to join the Trump administration, calling the president&rsquo;s election and the formation of DOGE &ldquo;this coming of everything I&rsquo;ve been trying to put together,&rdquo; in a <a href="https://jewishinsider.com/2025/03/josh-gruenbaum-federal-acquisition-service-antisemitism-trump/" target="_blank" rel="noopener">profile</a> that ran in Jewish Insider just a few days before the White House accelerated its war against higher education institutions. In it, he said he was brimming at the prospect of using the federal government&rsquo;s leverage to combat antisemitism, along with cutting &ldquo;lower-hanging fruit of some things in the DEI category or in the climate and sustainability category.&rdquo;</p>
+
+    <p>The White House team peppered him with questions about the funding cutoffs.</p>
+
+    <p>&ldquo;Are these from every single agency?&rdquo; Pfeiffer asked. &ldquo;What are the deets? Once confirmed— we can get a story in a major outlet.&rdquo; Pfeiffer himself had worked as a White House correspondent for The Daily Caller during Trump&rsquo;s first year in office — landing the role at just 20 and replacing Kaitlan Collins — before serving a four-year stint as a producer for Tucker Carlson at Fox News.</p>
+
+    <p>Gruenbaum explained that there was just one grant that would be paused at San Jose State, and it was for &ldquo;healthy drinking water so up to you guys if you want to trumpet that.&rdquo; He added that it was an Environmental Protection Agency grant, and that the agency was &ldquo;concerned having their name in media but defer to you all...if going to print that will just give them a heads up, so Imk.&rdquo;</p>
+
+    <p>Half an hour later, he wrote that he &ldquo;Found another $1MM for San Jose St, stand by.&rdquo;</p>
+
+    <p>By then, it was almost 5 p.m. Officials were growing impatient.</p>
+
+    <p>&ldquo;Josh,&rdquo; Mailman wrote back. &ldquo;per Stephen, we need to get this on social media TODAY. Please no more piecemeal emails. Just one with clear bullet points on what&rsquo;s being frozen/paused and from which agency. THANK YOU!!!&rdquo;</p>
+
+    <p>&ldquo;Yep you got it,&rdquo; Gruenbaum replied. &ldquo;I didn&rsquo;t want you guys tweeting San Jose first before I cleaned up DHS and DoD hence the piecemeal, but understood.&rdquo;</p>
+
+    <p>Gruenbaum, Mailman and Miller are all involved in the administration&rsquo;s Task Force to Combat Antisemitism, which directed the stripping of $250 million from Columbia and launched investigations into the University of California system and Harvard University.</p>
+
+    <p>Over an hour later, Gruenbaum returned with the details of the funding cuts across the two universities, the specifics of which are reported here for the first time.</p>
+
+    <p>At San Jose State, &ldquo;all&rdquo; federal awards had been halted under stop-work orders, including a $17,400 Department of Defense contract and the $99,700 healthy drinking water study. A third award, this one with the Department of Homeland Security, raised red flags. The $977,000 contract was for &ldquo;the terrorist and serious criminal database support.&rdquo;</p>
+
+    <p>But exempting those funds from the stop work, Gruenbaum pointed out, would drop the San Jose State total from $1.093 million to around $120,000. Nobody on the email chain took him up on the offer to reverse the freezes.</p>
+
+    <p>There was, however, a problem with Gruenbaum&rsquo;s math. The $977,000 figure was a theoretical maximum. Only $562,585 had actually been obligated to the university, and of that $448,796 had already been used, federal records <a href="https://www.usaspending.gov/award/CONT_AWD_70T02022C7554N001_7013_-NONE-_-NONE-" target="_blank" rel="noopener">show</a>. The campus theoretically lost out on a maximum of $528,204, but the real number was likely closer to $113,789. Ultimately, the total punishment amounted to little more than a rounding error for a campus with a nearly half-billion-dollar annual budget.</p>
+
+    <p>At Penn, seven contracts were terminated. Six of them, worth a collective $26.5 million, had been awarded by the DOD and deemed &ldquo;non-mission critical.&rdquo; Secretary of Defense Pete Hegseth had approved, Gruenbaum noted.</p>
+
+    <p>The remaining award was a $146.3 million Department of Health and Human Services IDIQ contract — a type of open-ended contract that other orders are drawn from. At the time of termination, only one task order had been drawn from the massive pool of money: an &ldquo;animal infectious disease study,&rdquo; according to Gruenbaum.</p>
+
+    <p>Penn President J. Larry Jameson would later say that terminating the funds would impact &ldquo;research on preventing hospital-acquired infections, drug screening against deadly viruses, quantum computing, protections against chemical warfare, and student loan programs.&rdquo; Jameson had only officially been Penn&rsquo;s president for a few days at that point, after serving as interim president.</p>
+
+    <p>***</p>
+
+    <p>In early February, three former Penn swimmers filed a federal lawsuit against the university and the NCAA for having allowed Lia Thomas, a transgender student, to compete years earlier. The following day, Trump signed the executive order &ldquo;Keeping Men Out of Women&rsquo;s Sports.&rdquo;</p>
+
+    <p>President Donald Trump signed an executive order barring transgender female athletes from competing in women&rsquo;s or girls&rsquo; sporting events.</p>
+
+    <p>The day after the bill signing, Trump&rsquo;s Department of Education opened its Title IX investigations into Penn, San Jose State and the Massachusetts Interscholastic Athletic Association, despite the college athletes at the center of the administration&rsquo;s ire having concluded their final seasons long before. The administration gave Fox News the exclusive.</p>
+
+    <p>&ldquo;This is NOT the result of the Title IX investigation,&rdquo; Mailman wrote to Pfeiffer in March. &ldquo;UPenn and San Jose State are still at risk of losing all of their federal education program funds because of those investigations. This is immediate action to review discretionary funding streams to those universities. Early action!!&rdquo; Versions of that statement, attributed to an unnamed official, would later appear in <a href="https://www.nytimes.com/2025/03/19/us/politics/trump-to-pause-175-million-for-university-of-pennsylvania-over-transgender-policy.html" target="_blank" rel="noopener">coverage</a> of the funding pause.</p>
+
+    <p>Pfeiffer replied he would &ldquo;get this out shortly.&rdquo; The focus, he said, would be on Penn &ldquo;since it is a nice big number.&rdquo; There were still concerns about canceling the DHS grant at San Jose State.</p>
+
+    <p>Mailman asked about San Jose State&rsquo;s absence from the draft.</p>
+
+    <p>&ldquo;If the premise is we want to show we are on top of it — I think the big 175 million number to a known university will make that splash,&rdquo; Pfeiffer wrote. &ldquo;I can get San Jose State out separately post UPenn.&rdquo; Pfeiffer pushed the announcement to the following morning to avoid an already crowded news cycle. The staffers wrapped their work a little after 9 p.m., less than five hours after Mailman first pinged the communications team.</p>
+
+    <p>***</p>
+
+    <p>At 8 a.m. on March 19, Fox Business, part of Pfeiffer&rsquo;s old stomping grounds, flashed a breaking news alert. The president&rsquo;s desire for &ldquo;more action&rdquo; became a reality.</p>
+
+    <p>&ldquo;President Trump has promised to protect female athletes, he has threatened to rip federal funding away from any university that defies his executive order banning biological males from infiltrating women&rsquo;s sports, and he is doing it,&rdquo; Fox Business&rsquo; Hillary Vaughn said on air.</p>
+
+    <p>&ldquo;We are the first to report,&rdquo; Vaughn continued, looking down to read from her phone as she spoke. &ldquo;President Trump has paused $175 million in federal funding from the University of Pennsylvania over its controversial policies.&rdquo; The language largely mirrored the communications team&rsquo;s draft statement.</p>
+
+    <p>The word &ldquo;approximately,&rdquo; which appeared in the administration&rsquo;s draft statement to couch the fact that the White House had actually paused $172.8 million, did not make it onto Fox. Most other major outlets would also report the $175 million total without any such caveat.</p>
+
+    <p>&ldquo;UPenn is still at risk of losing all of their federal education program funds because of those investigations,&rdquo; the White House draft statement read.</p>
+
+    <p>&ldquo;The university is still at risk of losing all its federal funding as a result of the ongoing Title IX investigation&hellip;&rdquo; Vaughn said on air. After she wrapped, various Fox personalities took turns lauding the decision.</p>
+
+    <p>The announcement completely blindsided Penn.</p>
+
+    <p>The campus that day said it was &ldquo;aware of media reports&rdquo; that it had just lost out on $175 million, but had &ldquo;not yet received any official notification or any details.&rdquo; Penn insisted it &ldquo;has always followed NCAA and Ivy League policies.&rdquo;</p>
+
+    <p>An hour after it aired, Pfeiffer passed along the Fox Business segment to Gruenbaum, attaching the clipping posted to the White House&rsquo;s <a href="https://x.com/RapidResponse47/status/1902346386357572046" target="_blank" rel="noopener">rapid response X account</a> and a post from Mario Nawfal, one of Elon Musk&rsquo;s favorite news aggregation personalities on X, who had shared the clip with his over 2 million followers.</p>
+
+    <p>&ldquo;Awesome stuff,&rdquo; Gruenbaum wrote back. &ldquo;On standby if you guys need more actions.&rdquo;</p>
+
+    <p>Two days later, Gruenbaum pinged the email thread again. &ldquo;Per May, we are good to go on SJSU announcement that we paused ALL federal grants,&rdquo; he wrote to Pfeiffer.</p>
+
+    <p>But a post never arrived. After two weeks of inaction, Gruenbaum conceded in an email to other officials that, &ldquo;The likelihood of press only for SJSU is low.&rdquo;</p>
+
+    <p>During this back and forth, Gruenbaum forwarded the entire email thread to the four officials with whom he had been coordinating across DOD, DHS and EPA. Three of the officials — Kyle Schutt and 24-year-old Adam Hoffman at DHS, and Kathryn Loving at the EPA — were not traditional staffers (or &ldquo;careers&rdquo; as Loving would refer to them in other emails). They were members of DOGE embedded within those agencies.</p>
+
+    <p>The same day the Fox Business segment aired, a coalition of six cities and 13 nonprofits sued Trump and Musk as part of an effort to restore millions in federal funding through 38 grants DOGE had cut.</p>
+
+    <p>By April 21, tens of thousands of pages of internal EPA records had been uploaded to the court&rsquo;s website as part of the case&rsquo;s discovery process.</p>
+
+    <p>One email swept up in the discovery process, sent exactly a month prior by Gruenbaum to Loving and others, contained a notable attachment: The full &ldquo;Funding yanked from San Jose State + UPenn&rdquo; thread, allowing the public, and press, a chance to peel back the curtain of the Trump White House.</p>
+
+    <p>Last month, the administration gave an on-the-record statement exclusively to Fox News for a story it wrote targeting San Jose State and Fleming, who had long since left the campus. The message was boilerplate: Trump would continue speaking and taking action against campuses that allowed trans athletes to compete.</p>
+
+    <p>There was no mention of the fact that the White House had already axed federal funding to San Jose State for that very reason. The punishment remained a secret.</p>
+
+    <p class="credit-line">&mdash; This story was produced as part of a partnership between NOTUS and <a href="https://sanjosespotlight.com/" target="_blank" rel="noopener">San Jos&eacute; Spotlight</a>.</p>
+  </div>
+
+  <div class="penn-footer">
+    <div class="penn-wordmark">Mark Alfred Dot News</div>
+    <div class="penn-footer-credit">Designed and Developed by <b>Mark Alfred</b></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var imgs = Array.prototype.slice.call(document.querySelectorAll('.cg-img'));
+  var caps = Array.prototype.slice.call(document.querySelectorAll('.cg-cap'));
+
+  function setActive(i){
+    imgs.forEach(function(img){ img.classList.toggle('active', img.dataset.i === i); });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) setActive(entry.target.dataset.i);
+      });
+    }, { threshold: 0.5 });
+    caps.forEach(function(cap){ io.observe(cap); });
+  }
+
+  var scroller = document.getElementById('cgScroller');
+  function checkPastCollage(){
+    var pastCollage = window.scrollY >= scroller.offsetHeight - window.innerHeight * 0.5;
+    document.body.classList.toggle('cg-past-collage', pastCollage);
+  }
+  window.addEventListener('scroll', checkPastCollage, { passive: true });
+  checkPastCollage();
+})();
+</script>
+
+</body>
+</html>
