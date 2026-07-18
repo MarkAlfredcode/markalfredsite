@@ -80,6 +80,19 @@ body.cg-past-collage .cg-masthead{ opacity: 0; pointer-events: none; }
 .cg-sub{ margin-top: 10px !important; }
 .cg-sub .cg-hl{ font-size: 20px; font-weight: 400; font-style: normal; color: #383838; }
 
+.cg-exclusive{
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 7px 4px;
+  margin-bottom: 12px;
+}
+
 /* ---- article column below the collage (matches the site's Figma-exact article template) ---- */
 .penn-col{ max-width: 668px; margin: 0 auto; padding: 0 20px; }
 .penn-rule{ border-top: 2px solid #171410; margin: 46px 0 0; }
@@ -158,7 +171,7 @@ body.cg-past-collage .cg-masthead{ opacity: 0; pointer-events: none; }
 
 <div class="cg-scroller" id="cgScroller">
   <div class="cg-sticky">
-    <img class="cg-img active" data-i="0" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/b9854449-5457-4ce0-bcc9-4aefd02d4c19.jpg">
+    <img class="cg-img" data-i="0" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/b9854449-5457-4ce0-bcc9-4aefd02d4c19.jpg">
     <img class="cg-img" data-i="1" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/b1242c25-68b4-486a-a88b-1bf3ba3d256a.jpg">
     <img class="cg-img" data-i="2" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/56d117f8-e047-4db6-a4dd-a94fdb4fe92c.jpg">
     <img class="cg-img" data-i="3" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/2f0fec61-63ea-4a56-8fa7-6b5e86311b39.jpg">
@@ -185,9 +198,10 @@ body.cg-past-collage .cg-masthead{ opacity: 0; pointer-events: none; }
 
     <section class="cg-cap cg-quote" data-i="3">
       <div class="cg-cap-inner">
+        <div class="cg-exclusive">Exclusive</div>
         <p class="cg-quote-line"><span class="cg-hl">&ldquo;POTUS wants to see more action against universities,&rdquo;</span></p>
         <p class="cg-sub"><span class="cg-hl">Senior Policy Strategist May Mailman wrote in an email to senior administration officials.</span></p>
-        <p class="cg-sub"><span class="cg-hl">The officials raced to make it happen.</span></p>
+        <p class="cg-sub"><span class="cg-hl">They raced to make it happen.</span></p>
       </div>
     </section>
   </div>
@@ -356,6 +370,12 @@ body.cg-past-collage .cg-masthead{ opacity: 0; pointer-events: none; }
     }, { threshold: 0.5 });
     caps.forEach(function(cap){ io.observe(cap); });
   }
+
+  // force a genuine fade-in on the first image rather than having it appear
+  // already at full opacity on load
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){ setActive('0'); });
+  });
 
   var scroller = document.getElementById('cgScroller');
   function checkPastCollage(){

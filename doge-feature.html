@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nearly a Billion Dollars in DOGE 'Savings' Disappeared Overnight — Mark Alfred Dot News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* Recreation of the "Doge Feature" Figma frame (node 366:199, file bCwD9XOLqyZLiJG4gMONgM):
+   a scroll-driven image collage — 4 static full-bleed photos, pinned in place, that
+   quick-dissolve from one to the next as the caption text for each scrolls past.
+   Below the collage the page continues as the standard single-column article template. */
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f2ea; }
+
+.cg-masthead{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  text-align: center;
+  padding: 28px 0;
+  font-family: 'Chomsky', serif;
+  font-size: 24px;
+  letter-spacing: -0.56px;
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(0,0,0,.55);
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+.cg-masthead a{ color: inherit; text-decoration: none; pointer-events: auto; }
+body.cg-past-collage .cg-masthead{ opacity: 0; pointer-events: none; }
+
+/* ---- pinned image / scrolling caption collage ---- */
+.cg-scroller{ position: relative; height: 400vh; background:#000; }
+.cg-sticky{
+  position: sticky; top: 0;
+  height: 100vh; width: 100%;
+  overflow: hidden;
+}
+.cg-img{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .7s ease;
+  will-change: opacity;
+}
+.cg-img.active{ opacity: 1; }
+
+.cg-captions{ position: absolute; inset: 0; z-index: 2; }
+.cg-cap{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+}
+.cg-cap[data-i="0"]{ align-items: flex-start; padding-top: 62vh; }
+.cg-cap-inner{ max-width: 620px; margin: 0 auto; width: 100%; }
+
+.cg-hl{
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 25px;
+  line-height: 1.4;
+  color: #000;
+  background: #f5f2ea;
+  padding: 3px 10px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.cg-cap p{ margin: 0; }
+.cg-cap a.cg-hl{ text-decoration: underline; }
+
+.cg-quote-line .cg-hl{
+  font-weight: 700; font-style: italic; font-size: 34px; line-height: 1.3;
+  color: #fcfcfc; background: #16130c;
+  text-decoration: none;
+}
+.cg-sub{ margin-top: 10px !important; }
+.cg-sub .cg-hl{ font-size: 20px; font-weight: 400; font-style: normal; color: #383838; }
+
+.cg-exclusive{
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 7px 4px;
+  margin-bottom: 12px;
+}
+
+/* ---- article column below the collage (matches the site's Figma-exact article template) ---- */
+.penn-col{ max-width: 668px; margin: 0 auto; padding: 0 20px; }
+.penn-rule{ border-top: 2px solid #171410; margin: 46px 0 0; }
+.cg-photo-credit{
+  font-family: 'Archivo', sans-serif;
+  font-size: 9.5px;
+  letter-spacing: 0.19px;
+  color: #7a7468;
+  text-align: right;
+  margin: 10px 0 28px;
+}
+.cg-dek{
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 32px;
+  line-height: 35px;
+  letter-spacing: 0.32px;
+  color: var(--red);
+  margin: 0 0 28px;
+}
+.penn-byline{
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: #000;
+  margin: 0 0 24px;
+}
+.penn-byline .reg{ font-weight: 400; }
+.penn-body{
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: #000;
+  padding-bottom: 60px;
+}
+.penn-body p{ margin: 0 0 24px; }
+.penn-body p.penn-kicker{ font-style: italic; }
+.penn-body a{ color: #000; text-decoration: underline; text-decoration-skip-ink: none; text-underline-position: from-font; }
+
+.penn-footer{
+  border-top: 3px solid #171410;
+  padding: 24px 0 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.penn-footer .penn-wordmark{
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 31.4px;
+  letter-spacing: -1.6px;
+  color: #16130c;
+}
+.penn-footer .penn-footer-credit{
+  font-family: 'Archivo', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.22px;
+  color: #33302a;
+  text-align: right;
+}
+.penn-footer .penn-footer-credit b{ font-weight: 700; color: #16130c; }
+
+@media (prefers-reduced-motion: reduce){
+  .cg-img{ transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="cg-masthead"><a href="index.html">Mark Alfred Dot News</a></header>
+
+<div class="cg-scroller" id="cgScroller">
+  <div class="cg-sticky">
+    <img class="cg-img" data-i="0" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/ef7028a9-edca-4087-8bfe-0ffdedf3de87.">
+    <img class="cg-img" data-i="1" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/854f475f-3639-4394-9e16-d14d76af8d35.png">
+    <img class="cg-img" data-i="2" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/48198c88-ff13-4059-85f1-24bced9fa065.png">
+    <img class="cg-img" data-i="3" alt="" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/71383259-8104-4310-9c3d-c0ea787c1212.jpg">
+  </div>
+
+  <div class="cg-captions">
+    <section class="cg-cap" data-i="0">
+      <div class="cg-cap-inner">
+        <p><span class="cg-hl">The DOGE website, the only public accounting of Elon Musk and President Donald Trump&rsquo;s attempts to reduce federal government spending, is in constant flux and riddled with errors.</span></p>
+      </div>
+    </section>
+
+    <section class="cg-cap" data-i="1">
+      <div class="cg-cap-inner">
+        <p><span class="cg-hl">That includes revisions that suggest DOGE was previously overstating its savings by hundreds of millions of dollars.</span></p>
+      </div>
+    </section>
+
+    <section class="cg-cap" data-i="2">
+      <div class="cg-cap-inner">
+        <p><span class="cg-hl">On Tuesday alone, DOGE removed around $962 million in previously claimed cuts and altered hundreds of others to boost individual items&rsquo; purported &ldquo;savings&rdquo; values.</span></p>
+      </div>
+    </section>
+
+    <section class="cg-cap cg-quote" data-i="3">
+      <div class="cg-cap-inner">
+        <div class="cg-exclusive">Exclusive</div>
+        <p class="cg-quote-line"><span class="cg-hl">Nearly a Billion Dollars in DOGE &lsquo;Savings&rsquo; Disappeared Overnight</span></p>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="penn-col">
+  <div class="penn-rule"></div>
+  <div class="cg-photo-credit">Photograph by Mark Alfred</div>
+
+  <p class="cg-dek">In a late-night update to its webpage, DOGE removed hundreds of previously claimed cuts and altered scores of others to boost the items&rsquo; claimed &ldquo;savings&rdquo; values.</p>
+
+  <div class="penn-byline"><span class="reg">By</span> Mark Alfred</div>
+
+  <div class="penn-body">
+    <p class="penn-kicker">This article first appeared on NOTUS.org on July 7, 2025</p>
+
+    <p>Despite promising weekly updates and sporadically touting new contract cancellations on social media, DOGE did not update a single line of its savings website from the end of March through Monday, according to a NOTUS analysis. Then, just after midnight on Tuesday, DOGE added scores of new cancellations, quietly removed hundreds of others and altered the claimed savings of hundreds more.</p>
+
+    <p>NOTUS has identified nearly 650 grants and a few dozen contracts and leases that were scrubbed from the DOGE website over the past several weeks, almost all of them during a two-hour window between midnight and 2 a.m. on Tuesday. That list is not exhaustive; the recipients of many grants are listed as &ldquo;redacted&rdquo; or have no appended description, making it difficult to account for every listing that was added or removed.</p>
+
+    <p>DOGE has also made a habit of listing cancellations that long predate its establishment at the beginning of the Trump administration in January, helping to further overstate the scope of its cuts.</p>
+
+    <p>All told, the changes to the website and the errors it contains suggest that DOGE not only continues to overstate the amount of money it claims to be saving taxpayers, but it is also making basic mistakes. At the same time, Musk has sought to reduce expectations for what DOGE can actually achieve this year.</p>
+
+    <p>During a cabinet meeting last week, Musk lowered the $1 trillion <a href="https://x.com/elonmusk/status/1885176751036252621" target="_blank" rel="noopener">expectation</a> he had earlier set for reducing government spending this fiscal year. The billionaire instead said he expected to reduce expenditures by a markedly smaller sum of $150 billion.</p>
+
+    <p>In the hours leading up to the April 10 cabinet meeting where Musk said DOGE would reduce expenditures by $150 billion, the DOGE website&rsquo;s total claimed savings jumped from an estimated $140 billion to $150 billion. The number of contracts, grants and leases DOGE said it had terminated, however, remained exactly the same, making it impossible to determine where the new $10 billion came from.</p>
+
+    <p>The largest single instance of &ldquo;savings&rdquo; DOGE unlisted on Tuesday was a $1.1 billion contract with the Acacia Center for Justice that funded legal services for immigrant children who enter the U.S. unaccompanied. DOGE initially claimed the termination saved $367 million; now the contract isn&rsquo;t listed at all.</p>
+
+    <p>While a judge put a temporary restraining order on the administration&rsquo;s termination of that funding earlier this month, the Acacia Center told NOTUS on Tuesday its services had not been resumed.</p>
+
+    <p>Most of the unlisted grants were tied to the State Department and had descriptions of work masked to hide personally identifiable information.</p>
+
+    <p>It&rsquo;s far from the first time DOGE has backtracked on cuts it had put forward as savings. Last month, DOGE <a href="https://www.notus.org/policy/doge-cuts-blue-districts" target="_blank" rel="noopener">appeared to reverse course</a> on the termination of a quarter-billion-dollar contract tied to the Department of Energy that funded work related to energy efficiency standards.</p>
+
+    <p>DOGE has also altered the claimed savings of hundreds of terminations by increasing, decreasing or zeroing out their totals. This week alone, DOGE boosted the claimed savings from some terminations anywhere from 0.05% of their initial value to roughly 50% greater.</p>
+
+    <p>Overnight, it adjusted the savings of a dozen contracts, boosting the combined savings by $1.2 million. DOGE also tweaked the values of hundreds of grants, boosting individual savings by over $1 million in some cases.</p>
+
+    <p>The General Services Administration did not immediately respond to a request for comment.</p>
+
+    <p>Lawmakers from both parties have urged the administration to reverse course on cuts to programs in their districts, although Republicans have had far more success.</p>
+
+    <p>Some Republicans, including House Appropriations Chair Tom Cole, say DOGE has <a href="https://www.notus.org/oklahoma/tom-cole-town-hall-doge" target="_blank" rel="noopener">backed off</a> some planned terminations at their behest.</p>
+
+    <p>Democrats, however, say their <a href="https://www.notus.org/policy/doge-cuts-blue-districts" target="_blank" rel="noopener">pleas to the administration</a> have fallen on deaf ears. The vast majority of the domestic contracts cut by DOGE were for work in areas represented by Democrats, NOTUS <a href="https://www.notus.org/policy/doge-cuts-blue-districts" target="_blank" rel="noopener">found</a>.</p>
+
+    <p>The savings page itself has been plagued with errors since its inception, when it overstated the value of an $8 million contract by a factor of 1,000, listing it as $8 billion. DOGE later fixed that error, but others are still on the site and help overstate the cost-cutting endeavour&rsquo;s actual savings.</p>
+
+    <p>Among those errors are basic typos like &ldquo;Nuclear Regulatory Comission&rdquo; and outdated titles, including references to multiple state mental health facilities as &ldquo;Mental Health Retardation&rdquo; centers.</p>
+
+    <p>Other cuts DOGE has claimed on its website as savings actually long predate the cost-cutting effort and this administration.</p>
+
+    <p>For weeks, DOGE claimed it saved taxpayers over $7 million by terminating the lease of a sprawling Bureau of Labor Statistics facility in Washington, D.C. &mdash; by far the largest building DOGE has terminated the lease of at about 850,000 square feet.</p>
+
+    <p>The move out of that building, however, began under President Joe Biden.</p>
+
+    <p>&ldquo;The transition to the new BLS Headquarters located in the Suitland Federal Center (SFC) is underway and scheduled to be completed in May 2025,&rdquo; a Bureau of Labor Statistics spokesperson said in a statement to NOTUS. &ldquo;BLS began moving into SFC in December 2024.&rdquo;</p>
+
+    <p>DOGE zeroed out the claimed savings for the Bureau of Labor Statistics building not long after NOTUS asked about it, but it is still claiming other instances of &ldquo;savings&rdquo; entirely unrelated to its work.</p>
+
+    <p>It claimed credit for shuttering a 124,569-square-foot records center in Fairfield, Ohio. The decision to close the facility was made by the Biden administration and <a href="https://www.archives.gov/press/press-releases/2024/nr24-37#:~:text=Temporary%20Records%20Storage%20Facility%20in,Government%20Information%20Services%2C%20Washington%2C%20DC" target="_blank" rel="noopener">announced</a> by the National Archives in August.</p>
+
+    <p>DOGE claims $545,957 saved from a terminated lease in Atlanta, Georgia, labeled &ldquo;Allowance to Former Presidents.&rdquo; Jimmy Carter&rsquo;s presidential stipend, which funded the lease, ended upon his death in 2024.</p>
+
+    <p>DOGE still touts the &ldquo;savings.&rdquo;</p>
+  </div>
+
+  <div class="penn-footer">
+    <div class="penn-wordmark">Mark Alfred Dot News</div>
+    <div class="penn-footer-credit">Designed and Developed by <b>Mark Alfred</b></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var imgs = Array.prototype.slice.call(document.querySelectorAll('.cg-img'));
+  var caps = Array.prototype.slice.call(document.querySelectorAll('.cg-cap'));
+
+  function setActive(i){
+    imgs.forEach(function(img){ img.classList.toggle('active', img.dataset.i === i); });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) setActive(entry.target.dataset.i);
+      });
+    }, { threshold: 0.5 });
+    caps.forEach(function(cap){ io.observe(cap); });
+  }
+
+  // force a genuine fade-in on the first image rather than having it appear
+  // already at full opacity on load
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){ setActive('0'); });
+  });
+
+  var scroller = document.getElementById('cgScroller');
+  function checkPastCollage(){
+    var pastCollage = window.scrollY >= scroller.offsetHeight - window.innerHeight * 0.5;
+    document.body.classList.toggle('cg-past-collage', pastCollage);
+  }
+  window.addEventListener('scroll', checkPastCollage, { passive: true });
+  checkPastCollage();
+})();
+</script>
+
+</body>
+</html>
