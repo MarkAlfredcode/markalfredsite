@@ -18,8 +18,60 @@
 <meta name="twitter:image" content="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/eab8efa1-3478-4b6a-8e29-91b6cc18cba7.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Source+Serif+Pro:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+/* "Trump 2.0 exclusives" module (Figma "Group 17", file bCwD9XOLqyZLiJG4gMONgM) */
+.kicker-badge{
+  display:inline-block;
+  background:var(--red);
+  color:#fff;
+  font-family:"Archivo",sans-serif;
+  font-weight:800;
+  font-size:10px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  padding:5px 7px 4px;
+  margin-bottom:20px;
+}
+.t2e{
+  max-width:var(--maxw);
+  margin:40px auto 0;
+  padding:0 20px 32px;
+  border-bottom:1px solid var(--rule);
+}
+.t2e-grid{
+  display:grid;
+  grid-template-columns:1fr 1px 1fr;
+  gap:32px;
+  align-items:start;
+}
+.t2e-divider{ width:1px; background:var(--rule); align-self:stretch; }
+.t2e-feature{
+  display:grid;
+  grid-template-columns:281fr 239fr;
+  gap:20px;
+}
+.t2e-feature-img{ width:100%; aspect-ratio:281/421; object-fit:cover; display:block; }
+.t2e-feature-hl,
+.t2e-item span{
+  font-family:"Source Serif Pro",Georgia,serif;
+  font-weight:700;
+  font-size:17px;
+  line-height:1.12;
+  letter-spacing:-0.01em;
+  color:var(--ink);
+}
+.t2e-feature-hl{ text-decoration:none; }
+.t2e-list{ display:flex; flex-direction:column; gap:24px; }
+.t2e-item{ display:flex; gap:20px; align-items:flex-start; text-decoration:none; }
+.t2e-item img{ width:149px; height:149px; object-fit:cover; flex:0 0 149px; display:block; }
+@media(max-width:860px){
+  .t2e-grid{ grid-template-columns:1fr; }
+  .t2e-divider{ display:none; }
+  .t2e-feature{ grid-template-columns:1fr; }
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -38,7 +90,7 @@
   <!-- nav -->
   <nav>
     <ul>
-      <li><a href="#">News</a></li>
+      <li><a href="index.html">News</a></li>
       <li><a href="#">Photojournalism</a></li>
       <li><a href="exclusives.html">Exclusives</a></li>
       <li><a href="about.html">About</a></li>
@@ -72,6 +124,32 @@
     </div>
 
     <div class="col side" id="fold-right"></div>
+  </section>
+
+  <!-- Trump 2.0 exclusives -->
+  <section class="t2e">
+    <div class="kicker-badge">Trump 2.0 exclusives</div>
+    <div class="t2e-grid">
+      <div class="t2e-feature">
+        <a href="https://www.notus.org/donald-trump/trump-arch-taxpayer-funds"><img class="t2e-feature-img" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/c9fec3d7-b892-47f2-819d-3b8b009ab52c.jpg" alt=""></a>
+        <a href="https://www.notus.org/donald-trump/trump-arch-taxpayer-funds" class="t2e-feature-hl">Trump Will Fund New Archway With $15 Million From the National Endowment for the Humanities</a>
+      </div>
+      <div class="t2e-divider"></div>
+      <div class="t2e-list">
+        <a class="t2e-item" href="https://www.notus.org/trump-white-house/doge-gavin-kliger-us-department-of-agriculture-climate-policy">
+          <img src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/cf552979-98ec-45b3-b007-5d55b0f7705d.jpg" alt="">
+          <span>How A 25-Year-Old DOGE Staffer Set Policy at USDA</span>
+        </a>
+        <a class="t2e-item" href="https://www.notus.org/policy/doge-claimed-savings-real-estate-changing-numbers">
+          <img src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/23deba7a-b610-4d5d-9968-33f45aa777e4.jpg" alt="">
+          <span>DOGE Vastly Overstated Its Real Estate Cuts &mdash; Then Spent Two Months Backtracking</span>
+        </a>
+        <a class="t2e-item" href="https://www.notus.org/policy/doge-environmental-protection-agency-mistakes">
+          <img src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/28a9819c-00eb-448c-9ad5-ade3ddaca809.jpg" alt="">
+          <span>Inside DOGE&rsquo;s EPA Team and Its Multimillion-Dollar Mistakes</span>
+        </a>
+      </div>
+    </div>
   </section>
 
   <!-- main two zones -->
@@ -246,7 +324,7 @@ function parseCSV(text) {
 
 // ── Fallback content (renders immediately) ──────────────────────────────────
 var FALLBACK = [
-  {section:'fold-left',  kicker:'Congress',    link:'#', headline:'Republicans Target ‘RedNote’ After Law Barring TikTok', body:'With just a few days left before a looming ban on TikTok, users are flocking to another Chinese-based short-form-video platform: Xiaohongshu. Lawmakers who voted to ban TikTok now say that app is also in their crosshairs.'},
+  {section:'fold-left',  kicker:'Trump White House',    link:'college.html', headline:'White House Emails Reveal Scramble Behind Trump’s Order to Punish Colleges', body:'President Donald Trump had already cut hundreds of millions to Columbia University over antisemitism allegations and put 59 other colleges on notice when word came down to staff that he wanted to punish more campuses.'},
   {section:'fold-right', kicker:'White House', link:'#', headline:'‘Mostly Trolling’: GOP Laughs Off Trump on ‘Absorbing’ Canada', body:'GOP lawmakers might not be sure what Donald Trump wants from them at any given moment, but he’s being crystal clear on one point: He wants the United States to “absorb” Canada and make it the newest state.'},
   {section:'photo', outlet:'The Guardian',          link:'#', layout:'wide',       caption:'Photo by Mark Alfred for The Guardian', headline:'Those worried about Australia’s sovereign capability under Aukus miss the point.'},
   {section:'photo', outlet:'NOTUS',                 link:'#', layout:'split-left', caption:'Photo by Mark Alfred for NOTUS', headline:'Trump’s Final Rally — Maybe Ever — Ends With Some Reflections, Some Swears and Some Doubts'},

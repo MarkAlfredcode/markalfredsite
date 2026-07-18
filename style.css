@@ -258,7 +258,7 @@ a.hl:hover{color:var(--red)}
   font-size:24px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;
 }
 .sec-head .sub{
-  font-family:"Libre Caslon Text",serif;font-style:italic;
+  font-family:"Libre Caslon Text",serif;font-style:normal;
   font-size:13px;color:var(--ink-soft);margin-top:5px;
 }
 .zone-right .sec-head{text-align:left}
@@ -270,7 +270,7 @@ a.hl:hover{color:var(--red)}
 .story-center .outlet{
   font-family:"Libre Caslon Text",serif;font-style:italic;
   font-size:13px;color:var(--ink-soft);display:block;margin:11px 0 5px;
-  text-align:left;
+  text-align:center;
 }
 .story-center .hl{display:block;max-width:88%;margin:0 auto}
 
