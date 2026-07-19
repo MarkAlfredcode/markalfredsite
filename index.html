@@ -205,6 +205,10 @@ function esc(s) {
   return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+function firstParagraph(text) {
+  return (text || '').split(/\n\s*\n/)[0].trim();
+}
+
 function renderFold(rows) {
   var left  = rows.filter(function(r){ return r.section==='fold-left';  })[0];
   var right = rows.filter(function(r){ return r.section==='fold-right'; })[0];
@@ -214,14 +218,14 @@ function renderFold(rows) {
     lEl.innerHTML =
       '<span class="kicker">'+ esc(left.kicker) +'</span>'+
       '<a href="'+ esc(left.link) +'" class="hl hl-md">'+ left.headline +'</a>'+
-      '<div class="body-txt"><p>'+ left.body +'</p></div>'+
+      '<div class="body-txt"><p>'+ firstParagraph(left.body) +'</p></div>'+
       '<a href="'+ esc(left.link) +'" class="readmore">Read More</a>';
   }
   if (rEl && right) {
     rEl.innerHTML =
       '<span class="kicker ink">'+ esc(right.kicker) +'</span>'+
       '<a href="'+ esc(right.link) +'" class="hl hl-md" style="font-style:italic">'+ right.headline +'</a>'+
-      '<div class="body-txt"><p>'+ right.body +'</p></div>'+
+      '<div class="body-txt"><p>'+ firstParagraph(right.body) +'</p></div>'+
       '<a href="'+ esc(right.link) +'" class="readmore">Read More</a>';
   }
   var center = rows.filter(function(r){ return r.section==='fold-center'; })[0];
