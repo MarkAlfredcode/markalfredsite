@@ -44,16 +44,23 @@
   display:grid;
   grid-template-columns:1fr 1px 1fr;
   gap:32px;
-  align-items:start;
+  align-items:stretch;
 }
 .t2e-divider{ width:1px; background:var(--rule); align-self:stretch; }
-.t2e-feature{
-  display:grid;
-  grid-template-columns:281fr 239fr;
-  gap:20px;
+.t2e-feature{ position:relative; min-height:0; }
+/* hero matches the height of the right column — i.e. the bottom of the lowest thumbnail.
+   the image is absolutely positioned so its natural height doesn't drive the row height;
+   the right column (the three thumbnails) sets the height and the hero fills it. */
+.t2e-feature-link{ position:relative; display:block; height:100%; text-decoration:none; }
+.t2e-feature-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+.t2e-feature-cap{
+  position:absolute; left:50%; bottom:4%; transform:translateX(-50%);
+  width:70%; text-align:center;
+  font-family:"Source Serif Pro",Georgia,serif;
+  font-weight:700; font-style:italic;
+  font-size:17px; line-height:1.12; letter-spacing:-0.01em;
+  color:#000;
 }
-.t2e-feature-img{ width:100%; aspect-ratio:281/421; object-fit:cover; display:block; }
-.t2e-feature-hl,
 .t2e-item span{
   font-family:"Source Serif Pro",Georgia,serif;
   font-weight:700;
@@ -62,14 +69,14 @@
   letter-spacing:-0.01em;
   color:var(--ink);
 }
-.t2e-feature-hl{ text-decoration:none; }
 .t2e-list{ display:flex; flex-direction:column; gap:24px; }
 .t2e-item{ display:flex; gap:20px; align-items:flex-start; text-decoration:none; }
 .t2e-item img{ width:149px; height:149px; object-fit:cover; flex:0 0 149px; display:block; }
 @media(max-width:860px){
   .t2e-grid{ grid-template-columns:1fr; }
   .t2e-divider{ display:none; }
-  .t2e-feature{ grid-template-columns:1fr; }
+  .t2e-feature-link{ height:auto; }
+  .t2e-feature-img{ position:static; height:auto; aspect-ratio:354/530; }
 }
 </style>
 </head>
@@ -131,8 +138,10 @@
     <div class="kicker-badge">Trump 2.0 exclusives</div>
     <div class="t2e-grid">
       <div class="t2e-feature">
-        <a href="https://www.notus.org/donald-trump/trump-arch-taxpayer-funds"><img class="t2e-feature-img" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/c9fec3d7-b892-47f2-819d-3b8b009ab52c.jpg" alt=""></a>
-        <a href="https://www.notus.org/donald-trump/trump-arch-taxpayer-funds" class="t2e-feature-hl">Trump Will Fund New Archway With $15 Million From the National Endowment for the Humanities</a>
+        <a class="t2e-feature-link" href="https://www.notus.org/donald-trump/trump-arch-taxpayer-funds">
+          <img class="t2e-feature-img" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/c9fec3d7-b892-47f2-819d-3b8b009ab52c.jpg" alt="">
+          <span class="t2e-feature-cap">Trump Will Fund New Archway With $15 Million From the National Endowment for the Humanities</span>
+        </a>
       </div>
       <div class="t2e-divider"></div>
       <div class="t2e-list">
@@ -150,6 +159,7 @@
         </a>
       </div>
     </div>
+    <div class="credit">Photographs via WhiteHouse.gov</div>
   </section>
 
   <!-- main two zones -->
