@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Send a News Tip — Mark Alfred Dot News</title>
+<meta name="description" content="Have a news tip for Mark Alfred? Reach out securely over Signal, or by email and phone.">
+<link rel="canonical" href="https://markalfred.news/news-tip.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mark Alfred Dot News">
+<meta property="og:title" content="Send a News Tip — Mark Alfred Dot News">
+<meta property="og:description" content="Have a news tip for Mark Alfred? Reach out securely over Signal, or by email and phone.">
+<meta property="og:url" content="https://markalfred.news/news-tip.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Send a News Tip — Mark Alfred Dot News">
+<meta name="twitter:description" content="Have a news tip for Mark Alfred? Reach out securely over Signal, or by email and phone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── subpage layout (shared with about.html) ── */
+.section-tag{
+  display:block;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(36px,5.6vw,70px);
+  font-weight:400;
+  line-height:.9;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  -webkit-text-stroke:.5px var(--ink);
+  text-stroke:.5px var(--ink);
+  paint-order:stroke fill;
+  padding:14px 0 10px;
+  text-transform:uppercase;
+  position:relative;
+  z-index:0;
+}
+.masthead-sm{
+  font-family:"Chomsky",serif;
+  font-size:clamp(18px,2.4vw,28px);
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1;
+  text-transform:none;
+  position:static;
+  transform:none;
+  white-space:nowrap;
+}
+.masthead-sm a{color:var(--ink);text-decoration:none}
+.utility{align-items:center;padding:8px 0}
+nav a{color:var(--muted)}
+nav a:hover{color:var(--red)}
+.social a{border-color:var(--rule-soft)}
+
+/* ── news tip page ── */
+.tip-hero{
+  border-bottom:3px solid var(--rule);
+  padding-bottom:56px;
+  text-align:center;
+}
+.tip-hero .section-tag{padding-top:34px}
+.tip-body{
+  max-width:582px;
+  margin:26px auto 0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+  line-height:24px;
+  color:var(--ink);
+  text-align:left;
+}
+.tip-body p{margin-bottom:24px}
+.tip-body p:last-child{margin-bottom:0}
+.tip-signal{
+  max-width:414px;
+  margin:8px auto 0;
+  background:#6a70c4;
+  border-radius:24px;
+  padding:26px 26px 22px;
+  text-align:center;
+}
+.tip-signal img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:14px;
+}
+.tip-scan{
+  max-width:414px;
+  margin:14px auto 0;
+  font-family:"Archivo",sans-serif;
+  font-size:13px;
+  color:var(--muted);
+  text-align:center;
+  line-height:1.5;
+}
+.tip-contact{
+  max-width:582px;
+  margin:34px auto 0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:20px;
+  line-height:24px;
+  color:var(--ink);
+  text-align:left;
+}
+.tip-contact p{margin-bottom:24px}
+.tip-contact p:last-child{margin-bottom:0}
+.tip-contact b{font-weight:700}
+.tip-contact a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+.tip-contact a:hover{color:var(--red)}
+
+@media(max-width:640px){
+  .tip-body,.tip-contact{padding:0 8px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="utility">
+    <div class="masthead-sm"><a href="index.html">Mark Alfred Dot News</a></div>
+    <div class="day" id="js-day"></div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="https://markalfred.news">News</a></li>
+      <li><a href="photojournalism.html">Photojournalism</a></li>
+      <li><a href="exclusives.html">Exclusives</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="social">
+      <a href="#" title="X" aria-label="X">𝕏</a>
+      <a href="https://www.notus.org/mark-alfred" title="NOTUS" aria-label="NOTUS">N</a>
+      <a href="https://www.linkedin.com/in/mark-alfred/" title="LinkedIn" aria-label="LinkedIn">in</a>
+    </div>
+    <ul>
+      <li><a href="arcade.html">Games</a></li>
+      <li><a href="news-tip.html" style="color:var(--red)">Send a News Tip</a></li>
+    </ul>
+  </nav>
+
+  <div class="tip-hero">
+    <span class="section-tag">Have a news tip?</span>
+
+    <div class="tip-body">
+      <p><b>SIGNAL</b> is the most secure method of sharing sensitive information.</p>
+      <p>Contact me at: MarkAlfred.14</p>
+    </div>
+
+    <div class="tip-signal">
+      <img src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/d6133ff7-2438-45be-8490-3919f99017db.png" alt="Signal QR code for MarkAlfred.14">
+    </div>
+    <div class="tip-scan">Scan this QR code with your phone to chat with me on Signal.</div>
+
+    <div class="tip-contact">
+      <p><b>I can also be reached at:</b></p>
+      <p><a href="mailto:markalfred@notus.org">markalfred@notus.org</a></p>
+      <p><a href="tel:+18584137384">858-413-7384</a></p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wordmark">Mark Alfred Dot News</div>
+    <div class="credits">Designed and Developed by <b>Mark Alfred</b></div>
+  </footer>
+
+</div>
+<script>
+(function(){
+  var now=new Date();
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var d=document.getElementById('js-day');
+  if(d) d.textContent=days[now.getDay()].toUpperCase();
+})();
+</script>
+</body>
+</html>
