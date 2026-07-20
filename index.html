@@ -18,7 +18,7 @@
 <meta name="twitter:image" content="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/eab8efa1-3478-4b6a-8e29-91b6cc18cba7.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Source+Serif+Pro:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Source+Serif+Pro:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
 /* "Trump 2.0 exclusives" module (Figma "Group 17", file bCwD9XOLqyZLiJG4gMONgM) */
@@ -77,6 +77,33 @@
   .t2e-divider{ display:none; }
   .t2e-feature-link{ height:auto; }
   .t2e-feature-img{ position:static; height:auto; aspect-ratio:354/530; }
+}
+
+/* "Group 18" — headline-links grid grouped under red kickers (Figma "Group 18") */
+.g18{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:26px 20px 30px;
+  border-bottom:1px solid var(--rule);
+}
+.g18-row{ display:grid; grid-template-columns:1fr 1fr; gap:36px; }
+.g18-row + .g18-sec-bottom{ margin-top:28px; }
+.g18-sec-bottom{ width:calc(50% - 18px); }
+.g18 .kicker-badge{ margin-bottom:0; border:0.6px solid #16130c; flex:0 0 auto; }
+.g18-head{ display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.g18-rule{ flex:1 1 auto; height:1px; background:#16130c; }
+.g18-cols2{ display:grid; grid-template-columns:1fr 1fr; gap:22px 32px; }
+.g18-col{ display:flex; flex-direction:column; gap:22px; }
+.g18-link{
+  font-family:"Source Serif Pro",Georgia,serif;
+  font-weight:400; font-size:17px; line-height:1.12; letter-spacing:-0.01em;
+  color:var(--ink); text-decoration:none;
+}
+.g18-link:hover{ color:var(--red); }
+@media(max-width:860px){
+  .g18-row{ grid-template-columns:1fr; gap:26px; }
+  .g18-cols2{ grid-template-columns:1fr; }
+  .g18-sec-bottom{ width:auto; }
 }
 </style>
 </head>
@@ -158,6 +185,55 @@
       </div>
     </div>
     <div class="credit">Photographs via WhiteHouse.gov</div>
+  </section>
+
+  <!-- Group 18: headline links -->
+  <section class="g18">
+    <div class="g18-row">
+      <div class="g18-sec">
+        <div class="g18-head"><div class="kicker-badge">DOGE</div><span class="g18-rule"></span></div>
+        <div class="g18-cols2">
+          <div class="g18-col">
+            <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/trump-white-house/doge-greatest-hits-thomasville-georgia">DOGE Is Touting Its &lsquo;Greatest Hits.&rsquo; A Closer Look Reveals Crushing Cuts.</a>
+            <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/trump-white-house/doge-wins-elon-musk-exit">DOGE&rsquo;s Victory Lap Overstates Its Own Work and Contradicts Its Own Estimates</a>
+            <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/whitehouse/doge-elon-musk-100-days">DOGE Has Disrupted Washington &mdash; But Not Its Bottom Line</a>
+          </div>
+          <div class="g18-col">
+            <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/trump-white-house/doge-musk-companies-federal-funds-space-x">DOGE Has Cut Tens of Thousands of Awards. Musk&rsquo;s Companies Haven&rsquo;t Lost a Dime in Federal Funds.</a>
+            <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/whitehouse/trump-budget-wishlist-doge">The White House&rsquo;s Budget Wishlist Calls for $163 Billion in Cuts That Codify DOGE</a>
+            <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/whitehouse/doge-posts-then-redacts-sensitive-hud-contract-data">DOGE Posts &mdash; Then Redacts &mdash; Sensitive HUD Contract Data</a>
+          </div>
+        </div>
+      </div>
+      <div class="g18-sec">
+        <div class="g18-head"><div class="kicker-badge">White House</div><span class="g18-rule"></span></div>
+        <div class="g18-cols2">
+          <div class="g18-col">
+            <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/trump-white-house/artemis-moon-program-trump-cut">The Trump Administration Is Championing the Lunar Program Trump Once Sought to Eliminate</a>
+            <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/new-york/trump-mamdani-white-house-meeting">Trump and Mamdani Had a Surprisingly Friendly White House Meeting</a>
+            <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/trump-white-house/donald-trump-truth-social-posts-democratic-lawmakers-video-illegal-order">Trump Suggests Sedition Charges and &lsquo;DEATH&rsquo; for Democrats Who Told Troops to Refuse Illegal Orders</a>
+          </div>
+          <div class="g18-col">
+            <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/foreign-policy/trump-asia-trip-trade-agreements-discussions">Trump Leaves China Meeting With Key Assurances, But No Formal Trade Agreement</a>
+            <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/trump-white-house/donald-trump-democrat-programs-government-shutdown">Trump Says He&rsquo;s &lsquo;Only Cutting Democrat Programs&rsquo; During Shutdown</a>
+            <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/trump-white-house/trump-health-care-deal-democrats-chuck-schumer-hakeem-jeffries">Trump Says He&rsquo;s Discussing a Health Care Deal With Democrats. That&rsquo;s News to Them.</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="g18-sec g18-sec-bottom">
+      <div class="g18-head"><div class="kicker-badge">Congress</div><span class="g18-rule"></span></div>
+      <div class="g18-cols2">
+        <div class="g18-col">
+          <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/congress/raul-grijalva-natural-resources-democrats-jared-huffman">Ra&uacute;l Grijalva Is Running to Lead Natural Resources Again. Democrats Say He&rsquo;s Not Up to the Job.</a>
+          <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/congress/gop-lawmakers-trump-canada">&lsquo;Mostly Trolling&rsquo;: GOP Lawmakers Laugh Off Trump&rsquo;s Calls to &lsquo;Absorb&rsquo; Canada</a>
+        </div>
+        <div class="g18-col">
+          <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/congress/republicans-move-forward-trump-pardons-investigate-biden">&lsquo;There&rsquo;s a Distinction&rsquo;: Republicans Want to &lsquo;Move Forward&rsquo; From Trump&rsquo;s Pardons &mdash; And Investigate Biden&rsquo;s</a>
+          <a class="g18-link" target="_blank" rel="noopener" href="https://www.notus.org/congress/rednote-red-scare-republicans-want-to-ban-tiktok-alternative">&lsquo;RedNote&rsquo; Becomes a &lsquo;Red Scare&rsquo;: Republicans Already Want to Ban This TikTok Alternative</a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- main two zones -->
