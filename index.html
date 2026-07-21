@@ -105,6 +105,34 @@
   .g18-cols2{ grid-template-columns:1fr; }
   .g18-sec-bottom{ width:auto; }
 }
+
+/* "Group 19" — DOGE savings story + office-closures map, then a full-width spending chart (Figma "Group 19") */
+.g19{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:26px 20px 30px;
+  border-bottom:1px solid var(--rule);
+}
+.g19-top{ display:grid; grid-template-columns:291fr 766fr; gap:59px; align-items:start; }
+.g19-hl{
+  display:block;
+  font-family:"Source Serif Pro",Georgia,serif;
+  font-weight:700; font-size:28px; line-height:1.15; letter-spacing:-0.01em;
+  color:var(--ink); text-decoration:none; margin-bottom:16px;
+}
+.g19-hl:hover{ color:var(--red); }
+.g19-body{
+  font-family:"Source Serif Pro",Georgia,serif;
+  font-size:17px; line-height:1.4; color:var(--ink);
+}
+.g19-body p{ margin-bottom:16px; }
+.g19-map-link{ display:block; }
+.g19-header-img{ width:100%; display:block; margin-bottom:7px; }
+.g19-map{ width:100%; display:block; box-shadow:1px 3px 3px rgba(0,0,0,.25); }
+.g19-chart{ width:100%; display:block; margin-top:26px; }
+@media(max-width:860px){
+  .g19{ display:none; }
+}
 </style>
 </head>
 <body>
@@ -231,6 +259,24 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- Group 19: DOGE savings story + office-closures map, then spending chart -->
+  <section class="g19">
+    <div class="g19-top">
+      <div>
+        <a class="g19-hl" target="_blank" rel="noopener" href="https://www.notus.org/policy/doge-claimed-savings-removed">Nearly a Billion Dollars in DOGE &lsquo;Savings&rsquo; Disappeared Overnight</a>
+        <div class="g19-body">
+          <p>Despite promising weekly updates and sporadically touting new contract cancellations on social media, DOGE did not update a single line of its savings website from the end of March through Monday, according to a NOTUS analysis. Then, just after midnight on Tuesday, DOGE added scores of new cancellations, quietly removed hundreds of others and altered the claimed savings of hundreds more.</p>
+        </div>
+        <a class="readmore" target="_blank" rel="noopener" href="https://www.notus.org/policy/doge-claimed-savings-removed">Read More</a>
+      </div>
+      <a class="g19-map-link" target="_blank" rel="noopener" href="https://www.notus.org/policy/doge-claimed-savings-removed">
+        <img class="g19-header-img" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/b3e0dc01-df9a-4fec-b578-12d2638b8459.png" alt="">
+        <img class="g19-map" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/a11ea975-5a96-4492-aa40-ce51f337e286.png" alt="Where Federal Offices Are Said to Be Closing">
+      </a>
+    </div>
+    <img class="g19-chart" src="https://pub-7068d0e14ba74bca8e886f38f364fdf2.r2.dev/site/4b796a65-4369-4008-b55c-bfd453d8b95e.png" alt="Federal Spending Since Jan. 20 Is Higher This Year">
   </section>
 
   <!-- main two zones -->
